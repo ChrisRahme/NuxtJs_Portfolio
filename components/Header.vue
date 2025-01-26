@@ -2,7 +2,7 @@
     <!-- Under construction (only show on mobile) -->
     <div class="bg-[#E0C040] md:hidden block">
         <div class="container mx-auto px-8 py-2">
-            <p class="m-0 p-0 text-white">⚠️ This website is still under construction.</p>
+            <p class="m-0 p-0 text-white">⚠️ Mobile website is still under construction.</p>
         </div>
     </div>
 

@@ -50,6 +50,7 @@ onBeforeUnmount(function () {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    gap: 2rem;
 
     .wheel {
         @apply shadow-lg transition-500;
