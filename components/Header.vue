@@ -1,4 +1,11 @@
 <template>
+    <!-- Under construction (only show on mobile) -->
+    <div class="bg-[#E0C040] md:hidden block">
+        <div class="container mx-auto px-8 py-2">
+            <p class="m-0 p-0 text-white">⚠️ This website is still under construction.</p>
+        </div>
+    </div>
+
     <header id="header" class="bg-white shadow-sm">
         <nav class="container mx-auto px-8 py-2 flex justify-between items-center">
             <NuxtLink to="/" id="nav-icon" class="p-0 m-0">
