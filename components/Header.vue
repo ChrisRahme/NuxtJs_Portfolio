@@ -10,9 +10,9 @@
                 <li><NuxtLink to="/">Home</NuxtLink></li>
                 <li><NuxtLink to="/resume">Resume</NuxtLink></li>
                 <li><NuxtLink to="/projects">Projects</NuxtLink></li>
+                <li>|</li>
                 <li><NuxtLink to="/contact">Contact</NuxtLink></li>
-                <!-- <li>|</li> -->
-                <li><NuxtLink to="/blog">Blog</NuxtLink></li>
+                <!-- <li><NuxtLink to="/blog">Blog</NuxtLink></li> -->
                 <!-- <li><NuxtLink to="/experiments">Experiments</NuxtLink></li> -->
             </ul>
         </nav>
