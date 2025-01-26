@@ -5,6 +5,11 @@
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+// Lifecycle
+onBeforeMount(function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+})
+</script>
 
 <style scoped></style>

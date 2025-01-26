@@ -109,6 +109,10 @@ function downloadCV() {
 }
 
 // Lifecycle
+onBeforeMount(function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+})
+
 onMounted(function () {
     state['mounted'] = true
 })
