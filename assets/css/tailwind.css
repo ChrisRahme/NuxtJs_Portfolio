@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply bg-gray-950;
+    font-family: Montserrat, sans-serif;
+}
+
+h1 {
+    @apply text-4xl text-[#60C060] font-semibold mb-4;
+    @apply noselect;
+}
+
+h2 {
+    @apply text-3xl mb-3;
+}
+
+h3 {
+    @apply text-2xl mb-2;
+}
+
+h4 {
+    @apply text-xl mb-1;
+}
+
+h5 {
+    @apply text-lg mb-1;
+}
+
+h6 {
+    @apply text-base mb-1;
+}
+
+@layer components {
+    .btn {
+        @apply bg-[#60C060] text-white text-sm px-3 py-2 rounded-md shadow-md cursor-pointer;
+        @apply transition-300 noselect;
+
+        &:disabled {
+            @apply bg-gray-500 cursor-default transition-none;
+        }
+
+        &:not(:disabled):hover {
+            @apply bg-[#50B050] scale-100;
+            box-shadow: 0 0 10px 0px #70d070;
+        }
+    }
+
+    .card {
+        @apply bg-white px-3 py-2 rounded-lg shadow-md h-full;
+        @apply transition-300;
+    }
+
+    .badge {
+        @apply inline-block bg-gray-500 text-white rounded-md shadow-sm cursor-default;
+        @apply transition-300;
+        padding: 0.125rem 0.333rem;
+        font-size: 0.6rem;
+
+        &:not(:last-of-type) {
+            margin-right: 0.25rem;
+        }
+
+        &:hover {
+            @apply bg-gray-600;
+        }
+    }
+
+    .iconify {
+        @apply m-0 p-0 inline-block;
+        @apply noselect;
+        line-height: 0;
+
+        &.fix {
+            transform: translateY(10%);
+        }
+
+        &.fix10 {
+            transform: translateY(10%);
+        }
+
+        &.fix15 {
+            transform: translateY(15%);
+        }
+
+        &.fix20 {
+            transform: translateY(20%);
+        }
+    }
+
+    .noselect {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .transition-100 {
+        @apply transition-all duration-300;
+    }
+
+    .transition-300 {
+        @apply transition-all duration-300;
+    }
+
+    .transition-500 {
+        @apply transition-all duration-500;
+    }
+
+    .transition-1000 {
+        @apply transition-all duration-1000;
+    }
+
+    /* .v-enter-active,
+	.v-leave-active {
+		transition: opacity 0.5s ease;
+	}
+
+	.v-enter-from,
+	.v-leave-to {
+		opacity: 0;
+	} */
+}

@@ -1,0 +1,33 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "ssr": "nuxt build && nuxt preview",
+    "ssg": "nuxt generate && nuxt preview",
+    "expose": "ngrok http 3000"
+  },
+  "dependencies": {
+    "@nuxt/fonts": "^0.10.2",
+    "nuxt": "^3.14.1592",
+    "pinia": "^2.2.8",
+    "vue": "latest",
+    "vue-router": "latest"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "^1.6.3",
+    "@nuxt/icon": "^1.9.0",
+    "@nuxt/image": "^1.8.1",
+    "@nuxtjs/robots": "^5.0.0",
+    "@nuxtjs/sitemap": "^7.0.0",
+    "@nuxtjs/tailwindcss": "^6.12.2",
+    "@pinia/nuxt": "^0.8.0",
+    "@vueuse/nuxt": "^12.0.0",
+    "nuxt-lodash": "^2.5.3",
+    "sass-embedded": "^1.81.0"
+  }
+}
