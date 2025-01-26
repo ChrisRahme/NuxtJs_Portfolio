@@ -10,7 +10,7 @@
     "ssr": "nuxt build && nuxt preview",
     "ssg": "nuxt generate && nuxt preview",
     "expose": "ngrok http 3000",
-    "deploy": "git add . && git commit -m 'Commit' && git push"
+    "deploy": "git add . && git commit -m Commit && git push"
   },
   "dependencies": {
     "@nuxt/fonts": "^0.10.2",
