@@ -94,7 +94,7 @@ const abouts = [
         <br/><br/>
         I aim to travel at least once a year, whether to a new country, or one I've already been to a few times.
         <br/>
-        Spain, France, Germany, Switzerland, Italy, Croatia; Greene, Cyprus, Jordan, Egypt, Nepal, Japan...
+        Spain, France, Germany, Switzerland, Italy, Croatia, Greece, Cyprus, Jordan, Egypt, Nepal, Japan...
         I\'ve traveled to all these places, and some more than once.
         <br/><br/>
         Switzerland in particular has become a second home to me.
