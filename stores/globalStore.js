@@ -504,7 +504,7 @@ const socials = [
     { name: 'GitHub', icon: 'mdi:github', color: '#9942FF', link: 'https://github.com/ChrisRahme', show: true },
     { name: 'Stack Overflow', icon: 'mdi:stack-overflow', color: '#F7A664', link: 'https://stackoverflow.com/users/8978116', show: true },
     { name: 'Instagram', icon: 'mdi:instagram', color: '#D300C5', link: 'https://www.instagram.com/chris.rahme.1998', show: false },
-    { name: 'YouTube', icon: 'mdi:youtube', color: '#FF0000', link: 'https://youtube.com/channel/UC4RT-sfpBNT_H7tCPOMPiqw', show: true },
+    { name: 'YouTube', icon: 'mdi:youtube', color: '#FF0000', link: 'https://youtube.com/@chris-rahme', show: true },
 ]
 
 export const useGlobalStore = defineStore('globalStore', {
