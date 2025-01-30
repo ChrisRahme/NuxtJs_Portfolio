@@ -81,13 +81,13 @@
             <Skills :showSkillNames="state['showSkillNames']" />
         </div>
 
-        <div id="languages">
+        <!-- <div id="languages">
             <div class="flex gap-4 items-center">
                 <h2>Languages</h2>
             </div>
 
             <Languages />
-        </div>
+        </div> -->
     </div>
 </template>
 

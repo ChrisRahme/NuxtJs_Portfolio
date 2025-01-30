@@ -3,7 +3,7 @@
         <nav class="container mx-auto px-8 py-4 flex justify-between items-center">
             <div>
                 <a href="/" class="m-0 p-0 hover:text-[#60C060]">Chris Rahmé</a>
-                <p class="m-0 p-0 text-xs hover:text-[#C060C0]">Last update: {{ data['lastUpdated'] }}</p>
+                <p class="m-0 p-0 text-xs hover:text-[#C060C0]" v-if="state['lastUpdated']">Last update: {{ state['lastUpdated'] }}</p>
             </div>
 
             <!-- <ul class="flex gap-4">
@@ -11,7 +11,7 @@
             </ul> -->
 
             <ul id="socials" class="flex items-center gap-6">
-                <template v-for="social in data['socials']" :key="social['name']">
+                <template v-for="social in state['socials']" :key="social['name']">
                     <li
                         :title="social['name']"
                         :style="{
@@ -29,16 +29,23 @@
 </template>
 
 <script setup>
-const data = {
-    lastUpdated: '2025-01-26',
-    socials: [
-        { name: 'Linkedin', icon: 'mdi:linkedin', color: '#0A66C2', link: 'https://linkedin.com/in/chris-rahme' },
-        { name: 'GitHub', icon: 'mdi:github', color: '#9942FF', link: 'https://github.com/ChrisRahme' },
-        { name: 'Stack Overflow', icon: 'mdi:stack-overflow', color: '#F7A664', link: 'https://stackoverflow.com/users/8978116/chris-rahmé' },
-        { name: 'Instagram', icon: 'mdi:instagram', color: '#D300C5', link: 'https://www.instagram.com/chris.rahme.1998' },
-        { name: 'YouTube', icon: 'mdi:youtube', color: '#FF0000', link: 'https://youtube.com/channel/UC4RT-sfpBNT_H7tCPOMPiqw' },
-    ],
-}
+// State
+const state = reactive({
+    lastUpdated: '',
+    socials: [],
+})
+
+// Lifecycle
+onBeforeMount(function () {
+    const config = useRuntimeConfig()
+    const store = useGlobalStore()
+
+    state['lastUpdated'] = config['public']['lastCommit']
+
+    state['socials'] = store['socials'].filter(function (social) {
+        return social['show']
+    })
+})
 </script>
 
 <style scoped lang="scss">

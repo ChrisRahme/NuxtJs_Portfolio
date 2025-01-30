@@ -1,5 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
+import { execSync } from 'child_process'
+
 const DEBUG = true
 
 export default defineNuxtConfig({
@@ -19,6 +21,12 @@ export default defineNuxtConfig({
         //     key: 'localhost.key',
         //     cert: 'localhost.crt',
         // },
+    },
+    runtimeConfig: {
+        public: {
+            baseUrl: 'https://chrisrahme.dev',
+            lastCommit: execSync('git log -1 --format=%cd --date=short').toString().trim(),
+        },
     },
 
     // Modules
