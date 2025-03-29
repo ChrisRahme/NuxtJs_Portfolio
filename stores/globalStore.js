@@ -4,12 +4,12 @@ const quotes = [
     // 'Confident enough to deploy on a Friday.',
     // "“Knock knock” “Race condition” “Who's there?”",
     // 'Hardware eventually fails. Software eventually works.',
-    'I aspire to be the person my code thinks I am.',
-    "I don't make mistakes, I create unexpected features.",
+    // 'I aspire to be the person my code thinks I am.',
+    // "I don't make mistakes, I create unexpected features.",
     'I have once exited Vim without closing the terminal.',
     'Why finish one project when you can start five more?',
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    'Nothing is as permanent as a temporary solution that works.',
+    // 'Nothing is as permanent as a temporary solution that works.',
     // "I wrote this in Vim but I'm trying to exit it [E][Q][X]`^[]^x^c^x",
     'Why waste 5 minutes doing something when you can waste a day trying to automate it?',
     'If one programmer can do it in one week, then two programmers can do it in two weeks.',
@@ -142,7 +142,9 @@ const skills = [
             { name: 'Laravel', icon: 'simple-icons:laravel', color: '#FF2D20', showVignette: true, showSkills: true },
             { name: 'Django', icon: 'devicon-plain:django', color: '#44B78B', showVignette: true, showSkills: true },
             { name: 'Flask', icon: 'bx:bxl-flask', color: '#41ACC0', showVignette: true, showSkills: true },
+            { name: 'FastAPI', icon: 'devicon-plain:fastapi', color: '#009485', showVignette: true, showSkills: true },
             { name: 'SQLAlchemy', icon: 'devicon-plain:sqlalchemy', color: '#CB2222', showVignette: true, showSkills: true },
+            { name: 'Celery', icon: 'simple-icons:celery', color: '#B6DE64', showVignette: true, showSkills: false },
             { name: 'Express', icon: 'simple-icons:express', color: '#6B90A0', showVignette: true, showSkills: false },
             { name: 'Node-RED', icon: 'cib:node-red', color: '#900000', showVignette: true, showSkills: true },
             { name: 'RabbitMQ', icon: 'simple-icons:rabbitmq', color: '#FF6600', showVignette: true, showSkills: true },
@@ -178,7 +180,7 @@ const skills = [
             // NoSQL
             { name: 'MongoDB', icon: 'devicon-plain:mongodb', color: '#006849', showVignette: true, showSkills: true },
             { name: 'Elasticsearch', icon: 'devicon-plain:elasticsearch', color: '#FED203', showVignette: true, showSkills: true },
-            { name: 'Redis', icon: 'simple-icons:redis', color: '#FF4235' }, // New Redis Logo
+            { name: 'Redis', icon: 'simple-icons:redis', color: '#FF4235', showVignette: true, showSkills: true },
         ],
     },
     {
@@ -186,12 +188,12 @@ const skills = [
         color: '#7010F0',
         icons: [
             // AI
+            { name: 'PyTorch', icon: 'simple-icons:pytorch', color: '#EE4C2C', showVignette: true, showSkills: true },
             { name: 'TensorFlow', icon: 'simple-icons:tensorflow', color: '#FF8800', showVignette: true, showSkills: true },
             { name: 'Keras', icon: 'devicon-plain:keras', color: '#D10000', showVignette: true, showSkills: true },
-            { name: 'Pytorch', icon: 'simple-icons:pytorch', color: '#EE4C2C', showVignette: true, showSkills: true },
             { name: 'Hugging Face', icon: 'simple-icons:huggingface', color: '#FF9E00', showVignette: true, showSkills: true },
             { name: 'Rasa', icon: 'simple-icons:rasa', color: '#5A16EE', showVignette: true, showSkills: true },
-            { name: 'Langchain', icon: 'simple-icons:langchain', color: '#1D3C3E', showVignette: true, showSkills: true },
+            { name: 'LangChain', icon: 'simple-icons:langchain', color: '#1D3C3E', showVignette: true, showSkills: true },
             // Data Science
             { name: 'Pandas', icon: 'devicon-plain:pandas', color: '#E80089', showVignette: true, showSkills: true },
             { name: 'NumPy', icon: 'devicon-plain:numpy', color: '#4C78D0', showVignette: true, showSkills: true },
@@ -351,7 +353,7 @@ const experience = [
             {
                 title: 'AtriPulse Next Call Intelligence',
                 text: [
-                    'Designed and implemented an AI-powered module for AtriPulse Call Recording capable of multilingual transcription, translation, summarization, per-speaker per-sentence sentiment analysis, keyword extraction, and other advanced language processing tasks.',
+                    'Designed and implemented an AI-powered module for AtriPulse Call Recording capable of multilingual audio transcription, translation, summarization, per-speaker per-sentence sentiment analysis, keyword extraction, and other advanced language processing tasks.',
                 ],
                 skills: ['VueJs', 'Python', 'Hugging Face', 'Flask', 'SQLAlchemy', 'SQLite', 'Docker'],
             },
@@ -414,7 +416,24 @@ const experience = [
         link: 'https://innovum.co',
         color: '#21ADB2',
         description: '',
-        tasks: [],
+        tasks: [
+            {
+                title: 'Payload',
+                text: [
+                    "Worked on an AI & Big Data map visualization platform that aggregates and analyzes data about a country's infrastructure, natural features, traffic & vehicles, etc. from multiple sources.",
+                    "The platform uses clustering AI models to recommend optimal locations for the deployment of new infrastructure and services, balancing profitability and risk according to each region's environment.",
+                ],
+                skills: ['React', 'Python', 'Django', 'Scikit-Learn', 'GeoPandas', 'DeckGL', 'Amazon S3'],
+            },
+            {
+                title: 'Dory',
+                text: [
+                    'Dory Audio: Designed and implemented an AI-powered module for multilingual audio transcription and diarization.',
+                    'Dory Timeline: Designed and implemented an LLM-powered module that extracts and organizes key events, people, and locations from documents into structured timelines.',
+                ],
+                skills: ['Python', 'Hugging Face', 'LangChain', 'FastAPI', 'Celery', 'Docker'],
+            },
+        ],
     },
 ]
 

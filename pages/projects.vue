@@ -72,7 +72,7 @@ onBeforeMount(function () {
         {
             name: 'Smart WiFi Locks',
             description: `
-                A comprehensive smart WiFi lock system featuring an intuitive administrative platform, advanced user
+                A smart lock system featuring an intuitive administrative platform, advanced user
                 permission management, and customizable scheduling capabilities, designed to streamline access control
                 and enhance security.
                 <br>
