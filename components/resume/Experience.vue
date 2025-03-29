@@ -81,13 +81,18 @@
                 }"
             >
                 <template v-for="(item, index) in state['timeline']" :key="item.title">
+                    <js>
+                        {{ (isShown = index == state['selectedIndex']) }}
+                    </js>
                     <div
                         class="card px-4 py-4"
                         :style="{
                             '--theme': item.color || 'white',
                             '--separator': item.color || '#e5e7eb',
-                            'opacity': index == state['selectedIndex'] ? 1 : 0,
-                            'max-height': index == state['selectedIndex'] ? '100%' : 0,
+                            '--opacity': isShown ? 1 : 0,
+                            '--max-height': isShown ? '100%' : 0,
+                            'opacity': 'var(--opacity)',
+                            'max-height': 'var(--max-height)',
                         }"
                     >
                         <div class="flex">
@@ -111,7 +116,7 @@
 
                                         <!-- Company -->
                                         <h5 class="m-0">
-                                            <a :href="item.link" target="_blank" title="Visit website" v-if="item.link">
+                                            <a :href="item.link" target="_blank" :title="isShown ? 'Visit website' : null" v-if="item.link">
                                                 <span class="text-sm font-semibold text-[#A040A0]">{{ item.company }}</span>
                                                 <Icon
                                                     name="solar:link-bold"
@@ -162,8 +167,8 @@
                                 </div>
 
                                 <!-- Task list -->
-                                <div class="m-0" :title="item.tasks" v-if="item.tasks">
-                                    <div class="mt-4" :title="(task.skills || []).join(', ')" v-for="task in item.tasks" :key="task">
+                                <div class="m-0" :title="isShown ? item.tasks : null" v-if="item.tasks">
+                                    <div class="mt-4" :title="isShown ? (task.skills || []).join(', ') : null" v-for="task in item.tasks" :key="task">
                                         <h6 class="font-medium text-[#60C060] m-0" v-if="task.title">
                                             {{ task.title }}
                                         </h6>
