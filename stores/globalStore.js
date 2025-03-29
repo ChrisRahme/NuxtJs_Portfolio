@@ -341,7 +341,7 @@ const experience = [
         link: 'https://atriasolutions.com',
         color: '#00E2E0',
         description:
-            'I architect, develop, and deploy scalable containerized software solutions, specializing in full-stack development, AI & machine learning, with knowledge in VoIP and cloud technologies.',
+            'Designed, developed, and deployed scalable containerized software solutions, specializing in full-stack development, AI & machine learning, with knowledge in VoIP and cloud technologies.',
         tasks: [
             {
                 title: 'AtriPulse Next',
@@ -409,13 +409,13 @@ const experience = [
     {
         start: 'Feb 2025',
         end: 'Present',
-        title: 'AI Engineer',
+        title: 'AI & Full-Stack Engineer',
         type: 'Full-time',
         company: 'Innovum',
         image: '/img/logos/innovum.png',
         link: 'https://innovum.co',
         color: '#21ADB2',
-        description: '',
+        description: 'Developing AI & data science solutions on the back-end and front-end.',
         tasks: [
             {
                 title: 'Payload',
