@@ -298,18 +298,7 @@ function popIcons() {
     }, 100)
 }
 
-/*************  ✨ Codeium Command ⭐  *************/
-/**
- * Simulates typing on the page by setting the text content of
- * the two HTML elements with the IDs 'line-1' and 'line-2' to
- * the values of their 'text' attributes. The typing speed is
- * randomly varied between 7.5 and 8.5 characters per second.
- *
- * The two lines are typed with a 500ms interval between them.
- *
- * The function uses the 'text' attribute of the HTML elements
- * to get the text to type, and the 'textContent' property to
-/******  20cf382c-25c9-4cb4-94da-951377e5c4a6  *******/ function typeLines() {
+function typeLines() {
     const TYPING_SPEED = 8 // characters per second
     const TYPING_VARIANCE = 0.5 // characters per second
     const LINES_INTERVAL = 500 // ms between typing each line
