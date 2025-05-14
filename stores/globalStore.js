@@ -610,6 +610,21 @@ const projects = [
         year: 2023,
     },
     {
+        name: 'Solar Smart Home',
+        description: `
+            A smart home energy management system that integrates Deye solar inverter data with EweLink-compatible IoT
+            devices to optimize energy usage and automate actions on IoT devices based on user-defined rules related to
+            solar panels and electricity usage, inverter and batteries, IoT devices, and weather.
+            Also provides live dashboards, historical analytics, rule and scene creation, and manual commands.
+        `,
+        summary: 'A smart home energy system integrating solar inverter data and IoT devices for automated decisions and analytics.',
+        image: '/img/projects/solar-iot.jpg',
+        links: [{ icon: 'carbon:progress-bar-round' }],
+        skills: ['Python', 'NodeJs', 'Flask', 'SQLAlchemy', 'Express', 'VueJs', 'MySQL', 'MongoDB', 'RabbitMQ', 'MySQL', 'Docker'],
+        tags: ['IoT', 'Full-Stack', 'Smart Home', 'Energy'],
+        year: 2023,
+    },
+    {
         name: 'AI Forge',
         description: `
             A web application designed to offer easy-to-use and flexible tools for data science, analytics, and
