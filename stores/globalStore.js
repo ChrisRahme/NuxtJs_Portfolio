@@ -617,7 +617,7 @@ const projects = [
             solar panels and electricity usage, inverter and batteries, IoT devices, and weather.
             Also provides live dashboards, historical analytics, rule and scene creation, and manual commands.
         `,
-        summary: 'A smart home energy system integrating solar inverter data and IoT devices for automated decisions and analytics.',
+        summary: 'A smart home management system integrating solar inverters and IoT devices.',
         image: '/img/projects/solar-iot.jpg',
         links: [{ icon: 'carbon:progress-bar-round' }],
         skills: ['Python', 'NodeJs', 'Flask', 'SQLAlchemy', 'Express', 'VueJs', 'MySQL', 'MongoDB', 'RabbitMQ', 'MySQL', 'Docker'],
