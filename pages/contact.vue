@@ -1,8 +1,10 @@
 <template>
-    <!-- Under construction -->
-    <div class="bg-[#E0C040] w-100 rounded">
-        <div class="w-100 px-8 py-2">
-            <p class="m-0 p-0 text-white">⚠️ Page is still under construction.</p>
+    <div>
+        <!-- Under construction -->
+        <div class="bg-[#E0C040] w-100 rounded">
+            <div class="w-100 px-8 py-2">
+                <p class="m-0 p-0 text-white">⚠️ Page is still under construction.</p>
+            </div>
         </div>
     </div>
 </template>

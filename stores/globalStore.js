@@ -526,6 +526,166 @@ const socials = [
     { name: 'YouTube', icon: 'mdi:youtube', color: '#FF0000', link: 'https://youtube.com/@chris-rahme', show: true },
 ]
 
+const projects = [
+    {
+        name: 'Tappy Raven',
+        description: `
+            A fast-paced, Flappy Bird-inspired mobile game where you guide a raven through obstacles to achieve
+            the highest score while trying to collect as many gems as possible.
+            <br>
+            Took one day to develop it, and a week to upload it on the Google Play Store.
+        `,
+        summary: 'A Flappy Bird-style mobile game featuring a gem-collecting raven.',
+        image: '/img/projects/tappy-raven.webp',
+        links: [
+            { icon: 'mdi:web', link: 'https://play.google.com/store/apps/details?id=com.ChraGames.TappyRaven' },
+            { icon: 'mdi:github', link: 'https://github.com/ChrisRahme/TappyRaven' },
+        ],
+        skills: ['Unity', 'C#'],
+        tags: ['Gaming'],
+        year: 2020,
+    },
+    {
+        name: 'Smart WiFi Locks',
+        description: `
+            A smart lock system featuring an intuitive administrative platform, advanced user
+            permission management, and customizable scheduling capabilities, designed to streamline access control
+            and enhance security.
+            <br>
+            Built with a multidisciplinary team of engineers as part of a university project.
+        `,
+        summary: 'A smart lock access control system with scheduling and user permissions.',
+        image: '/img/projects/smart-lock.jpg',
+        links: [{ icon: 'mdi:github', link: 'https://github.com/ChrisRahme/WiFi_Locks' }],
+        skills: ['Python', 'PHP', 'MySQL', 'HTML', 'CSS', 'JavaScript', 'MQTT', 'Arduino', 'Raspberry Pi'],
+        tags: ['Full-Stack', 'IoT'],
+        year: 2021,
+    },
+    {
+        name: 'NLP AI Chatbot',
+        description: `
+            An NLP customer service chatbot powered by Rasa, equipped with a web chat widget, mobile application,
+            Slack integration, and admin interface. The chatbot helps customers of an Internet Service Provider to
+            troubleshoot their internet connection issues, and understands English, French, Arabic, and Armenian.
+            <br>
+            Built by myself as part of my engineering final year project.
+        `,
+        summary: 'A multilingual AI chatbot for ISP customer support && services built with Rasa.',
+        image: '/img/projects/nlp-chatbot.png',
+        links: [{ icon: 'mdi:github', link: 'https://github.com/ChrisRahme/FYP-Chatbot' }],
+        skills: ['Python', 'Rasa', 'MySQL', 'Kotlin', 'HTML', 'CSS', 'JavaScript', 'Docker', 'Kubernetes', 'Helm'],
+        tags: ['AI', 'Full-Stack'],
+        year: 2022,
+    },
+    {
+        name: 'VueJS Personal Website',
+        description: `
+            The first iteration of my personal website, built to learn VueJS and how to deploy static websites.
+            Explore who I am, my resume, and my projects.
+        `,
+        summary: 'My first personal website created to learn VueJS and static deployment.',
+        image: '/img/projects/vuejs-website.png',
+        links: [
+            { icon: 'mdi:web', link: 'https://chrisrahme-v1.netlify.app' },
+            { icon: 'mdi:github', link: 'https://github.com/ChrisRahme/VueJs_Portfolio' },
+        ],
+        skills: ['VueJs', 'Netlify'],
+        tags: ['Front-End'],
+        year: 2022,
+    },
+    {
+        name: 'AI Speech Emotion Recognition',
+        description: `
+            An ensemble of speech emotion recognition AI models created to analyze multilingual speech.
+            The model provides insights through visualizations, such as emotion charts per-speaker per-second to
+            track sentiment changes throughout conversations.
+            <br>
+            Built by myself for my master's thesis and integrated into Synergi SER for Data Consult.
+        `,
+        summary: 'Multilingual speech emotion recognition ML model with visual analytics.',
+        image: '/img/projects/speech-emotion-recognition.jpg',
+        links: [{ icon: 'mdi:github', link: 'https://github.com/ChrisRahme/Speech_Emotion_Recognition' }],
+        skills: ['Python', 'Flask', 'Keras', 'Librosa'],
+        tags: ['AI', 'Full-Stack'],
+        year: 2023,
+    },
+    {
+        name: 'AI Forge',
+        description: `
+            A web application designed to offer easy-to-use and flexible tools for data science, analytics, and
+            machine learning workflows for both technical and non-technical users to quickly build AI models.
+            <br>
+            Built as a successor to MindForge from Data Consult as a personal project.
+        `,
+        summary: 'A web platform to facilitate data science, analytics, and machine learning workflows.',
+        image: '/img/projects/ai-forge.png',
+        links: [{ icon: 'carbon:progress-bar-round' }],
+        skills: ['VueJs', 'Python', 'Flask', 'SQLAlchemy', 'Scikit-Learn', 'Pandas', 'MySQL'],
+        tags: ['AI', 'Data Science', 'Full-Stack'],
+        year: 2024,
+    },
+    {
+        name: 'NewsFinder',
+        description: `
+            An LLM search engine web application that uses RAG techniques to search offline documents for relevant
+            news articles, and extends the search online when needed.
+        `,
+        summary: 'A RAG-powered LLM search engine for news across local and online sources.',
+        image: '/img/projects/newsfinder.png',
+        links: [{ icon: 'mdi:github', link: 'https://github.com/ChrisRahme/NewsFinder' }],
+        skills: ['VueJs', 'Python', 'Flask', 'LangChain', 'Chroma'],
+        tags: ['AI', 'Full-Stack', 'LLM'],
+        year: 2024,
+    },
+    {
+        name: 'NuxtJS Personal Website',
+        description: `
+            The second version of my personal website, built from the ground up with NuxtJs this time.
+            It's where you are now!
+            <br>
+            Discover more about me, my professional journey, and the projects I've been working on.
+        `,
+        summary: 'The second version of my personal website (you are here!), built with NuxtJS.',
+        image: '/img/projects/nuxtjs-website.png',
+        links: [
+            { icon: 'mdi:web', link: 'https://chrisrahme.netlify.app' },
+            { icon: 'mdi:github', link: 'https://github.com/ChrisRahme/NuxtJs_Portfolio' },
+        ],
+        skills: ['NuxtJs', 'VueJs', 'Netlify'],
+        tags: ['Front-End'],
+        year: 2025,
+    },
+    {
+        name: 'GPT-Me',
+        description: `
+            An AI clone of yourself, built by fine-tuning GPT-2, that learns how you speak and interact with different
+            people based on your text conversations (e.g. exported WhatsApp chats), and can reply to new messages as if
+            they were from you.
+        `,
+        summary: 'An LLM fine-tuned on your WhatsApp data to emulate how you talk and respond to different people.',
+        image: '/img/projects/gpt-me.jpg',
+        links: [{ icon: 'carbon:progress-bar-round' }],
+        skills: ['Python', 'PyTorch', 'Hugging Face'],
+        tags: ['AI', 'LLM'],
+        year: 2025,
+    },
+    {
+        name: 'Live OBD',
+        description: `
+            A Raspberry Pi-powered OBD-II car telemetry system that captures real-time vehicle metrics such as RPM,
+            speed, fuel consumption, etc. The data is saved, processed, and visualized live through customizable,
+            dynamic charts for analysis and trend tracking to help you better understand your vehicle's performance,
+            your driving habits, and how different metrics affect each other.
+        `,
+        summary: 'A real-time OBD-II dashboard with live charts and historical analysis.',
+        image: '/img/projects/live-obd.png',
+        links: [{ icon: 'carbon:progress-bar-round' }],
+        skills: ['Python', 'VueJs', 'FastAPI', 'SQLAlchemy', 'Docker', 'Raspberry Pi'],
+        tags: ['Data Science', 'Full-Stack', 'IoT'],
+        year: 2025,
+    },
+]
+
 export const useGlobalStore = defineStore('globalStore', {
     state: function () {
         return {
@@ -536,6 +696,7 @@ export const useGlobalStore = defineStore('globalStore', {
             skills,
             languages,
             socials,
+            projects,
         }
     },
     actions: {
