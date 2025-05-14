@@ -53,14 +53,24 @@ onBeforeMount(function () {
     }
 
     .project-card-wrapper {
-        --n-items: 3;
         --gap: 1rem;
-        --width: calc(100% / var(--n-items) - 2 * var(--gap));
+        --n-items: 1;
 
-        width: var(--width);
-        max-width: 500px;
+        @media (width >= theme('screens.lg')) {
+            --n-items: 2;
+        }
+        @media (width >= theme('screens.xl')) {
+            --n-items: 3;
+        }
+        @media (width >= theme('screens.3xl')) {
+            --n-items: 4;
+        }
 
-        padding: var(--gap);
+        & {
+            width: calc(100% / var(--n-items) - 2 * var(--gap));
+            // max-width: 500px;
+            padding: var(--gap);
+        }
     }
 }
 </style>
