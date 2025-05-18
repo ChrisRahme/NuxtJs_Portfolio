@@ -53,10 +53,6 @@ onBeforeMount(function () {
     }
 
     #cards {
-        @media (width < theme('screens.lg')) {
-            padding: 0 0.5rem;
-        }
-
         .project-card-wrapper {
             padding: 0;
             width: 100%;

@@ -19,5 +19,12 @@
 <style scoped lang="scss">
 #default-layout {
     background-color: var(--color-background-light);
+
+    & > main {
+        @media (width < theme('screens.lg')) {
+            padding-right: 1rem;
+            padding-left: 1rem;
+        }
+    }
 }
 </style>
