@@ -74,7 +74,7 @@ onBeforeMount(function () {
     })
 
     state['friends'] = [
-        { name: 'Threads of Joy', link: 'https://joy-of.dev', icon: 'joy-of-dev.png', color: '#2DC9A5' },
+        { name: 'Threads of Joy', link: 'https://joy-of.dev', icon: 'joy-of-dev.png', color: '#C3F9E0' }, // #2DC9A5
         { name: "Introverts' Crate", link: 'https://introvertscrate.com', icon: 'introverts-crate.png', color: '#0087DC' },
     ]
 })
