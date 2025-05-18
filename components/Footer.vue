@@ -122,6 +122,7 @@ footer {
 
                                 .mask {
                                     background-color: var(--color);
+                                    transform: scale(1.05);
                                 }
                             }
 
