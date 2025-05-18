@@ -14,19 +14,44 @@
             </NuxtLink>
 
             <ul class="flex gap-4">
-                <li><NuxtLink to="/">Home</NuxtLink></li>
-                <li><NuxtLink to="/resume">Resume</NuxtLink></li>
-                <li><NuxtLink to="/projects">Projects</NuxtLink></li>
-                <li>|</li>
-                <li><NuxtLink to="/contact">Contact</NuxtLink></li>
-                <!-- <li><NuxtLink to="/blog">Blog</NuxtLink></li> -->
-                <!-- <li><NuxtLink to="/experiments">Experiments</NuxtLink></li> -->
+                <template v-for="link in state['links']" :key="link['text']">
+                    <li>
+                        <template v-if="link['link']">
+                            <NuxtLink :to="link['link']" class="hover:text-[#60C060]">
+                                <Icon :name="link['icon']" class="mr-2" v-if="link['icon']" />
+                                <span>
+                                    {{ link['text'] }}
+                                </span>
+                            </NuxtLink>
+                        </template>
+                        <template v-else>
+                            <Icon :name="link['icon']" class="mr-2" v-if="link['icon']" />
+                            <span>
+                                {{ link['text'] }}
+                            </span>
+                        </template>
+                    </li>
+                </template>
             </ul>
         </nav>
     </header>
 </template>
 
-<script setup></script>
+<script setup>
+const state = reactive({
+    links: [
+        { text: 'Home', link: '/', icon: 'ph:house-line' },
+        { text: 'Resume', link: '/resume', icon: 'ph:user-list' },
+        { text: 'Projects', link: '/projects', icon: 'ph:chalkboard-simple' },
+        // { text: '|' },
+        // { text: 'Contact', link: '/contact', icon: 'ph:envelope' },
+        // { name: 'Blog', link: '/blog' },
+        // { name: 'Experiments', link: '/experiments' },
+    ],
+})
+
+onBeforeMount(function () {})
+</script>
 
 <style scoped lang="scss">
 @import '/assets/css/tailwind.css';
@@ -100,6 +125,10 @@ header {
 
                     &.router-link-active {
                         color: #60c060;
+                    }
+
+                    .iconify {
+                        transform: translateY(15%);
                     }
                 }
             }
