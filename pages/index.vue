@@ -507,6 +507,7 @@ onBeforeUnmount(function () {
         --avatar-height: calc(var(--hero-height) * 0.4);
         --h1-fs: min(calc(var(--hero-height) * 0.15), 20vw);
         --h2-fs: calc(var(--h1-fs) * 0.4);
+        --h3-fs: calc(var(--h1-fs) * 0.4);
         --blur-spread: 80px;
 
         height: var(--hero-height);
@@ -557,12 +558,12 @@ onBeforeUnmount(function () {
                         }
                     }
 
-                    h3 > span {
+                    h3 {
                         @apply transition-100;
 
                         font-family: 'Itim', 'Montserrat', sans-serif;
-                        font-size: var(--h2-fs);
-                        line-height: var(--h2-fs);
+                        font-size: var(--h3-fs);
+                        line-height: var(--h3-fs);
 
                         color: var(--color-background);
 
@@ -570,6 +571,26 @@ onBeforeUnmount(function () {
 
                         &:hover {
                             color: var(--ci);
+                        }
+                    }
+
+                    @media (width < theme('screens.lg')) {
+                        h1 {
+                            @apply mt-8 mb-8;
+                            font-size: calc(var(--h1-fs) * 1);
+                            line-height: calc(var(--h1-fs) * 1);
+                        }
+
+                        h2 {
+                            @apply mt-0 mb-4;
+                            font-size: calc(var(--h2-fs) * 0.8);
+                            line-height: calc(var(--h2-fs) * 0.8);
+                        }
+
+                        h3 {
+                            @apply m-0;
+                            font-size: calc(var(--h3-fs) * 0.8);
+                            line-height: calc(var(--h3-fs) * 0.8);
                         }
                     }
                 }
@@ -718,11 +739,11 @@ onBeforeUnmount(function () {
 
     #about {
         #about-select {
-            @apply flex lg:flex-col gap-4 lg:items-center justify-evenly flex-wrap mb-4 lg:mb-0;
+            @apply flex lg:flex-col gap-0 lg:gap-4 lg:items-center justify-evenly flex-wrap mb-4 lg:mb-0;
 
             .emoji-button {
                 --fs: 2rem;
-                --padding: 0.6rem;
+                --padding: calc(var(--fs) / 4);
                 --size: calc(var(--fs) + var(--padding) * 2);
 
                 @apply inline-block m-0 p-0 shadow-lg transition-300;
@@ -731,13 +752,21 @@ onBeforeUnmount(function () {
                 border-radius: 100%;
                 border: 2px solid var(--cp);
 
+                margin: 0.5rem 0.75rem;
                 width: var(--size);
                 height: var(--size);
-                padding: var(--padding);
+                max-width: var(--size);
+                max-height: var(--size);
+                min-width: var(--size);
+                min-height: var(--size);
 
-                &:hover {
-                    .emoji {
-                        transform: scale(2.2);
+                @media (width >= theme('screens.lg')) {
+                    margin: 0;
+
+                    &:hover {
+                        .emoji {
+                            transform: translate(-12.5%, -17.5%) scale(1.5);
+                        }
                     }
                 }
 
@@ -747,7 +776,9 @@ onBeforeUnmount(function () {
 
                 .emoji {
                     @apply inline-block transition-300;
-                    transform: scale(2);
+                    padding: var(--padding);
+                    transform: translate(-12.5%, -17.5%);
+                    font-size: calc(var(--fs));
                 }
             }
         }

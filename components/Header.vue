@@ -87,6 +87,7 @@ header {
                     @media (width < theme('screens.md')) {
                         .iconify {
                             font-size: calc(var(--header-height) / 2.5);
+                            transform: translateY(10%);
                         }
                     }
 
