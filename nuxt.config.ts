@@ -7,7 +7,8 @@ const DEBUG = true
 export default defineNuxtConfig({
     // Meta
     appId: 'chrisrahme.dev',
-    compatibilityDate: '2024-11-01',
+    compatibilityDate: '2025-05-18',
+    ssr: true,
 
     // Debug & Development
     devtools: { enabled: DEBUG },
