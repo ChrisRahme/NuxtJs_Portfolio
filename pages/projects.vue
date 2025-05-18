@@ -1,6 +1,6 @@
 <template>
     <div id="projects" class="flex flex-col justify-center">
-        <div class="flex justify-center my-4">
+        <div class="flex justify-center mt-4 mb-8">
             <h1>Projects</h1>
         </div>
 
