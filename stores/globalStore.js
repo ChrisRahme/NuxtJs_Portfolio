@@ -570,7 +570,7 @@ const projects = [
             <br>
             Built by myself as part of my engineering final year project.
         `,
-        summary: 'A multilingual AI chatbot for ISP customer support && services built with Rasa.',
+        summary: 'A multilingual AI chatbot for ISP customer support and services, with mobile and web apps.',
         image: '/img/projects/nlp-chatbot.png',
         links: [{ icon: 'mdi:github', link: 'https://github.com/ChrisRahme/FYP-Chatbot' }],
         skills: ['Python', 'Rasa', 'MySQL', 'Kotlin', 'HTML', 'CSS', 'JavaScript', 'Docker', 'Kubernetes', 'Helm'],
@@ -605,7 +605,7 @@ const projects = [
         summary: 'Multilingual speech emotion recognition ML model with visual analytics.',
         image: '/img/projects/speech-emotion-recognition.jpg',
         links: [{ icon: 'mdi:github', link: 'https://github.com/ChrisRahme/Speech_Emotion_Recognition' }],
-        skills: ['Python', 'Flask', 'Keras', 'Librosa'],
+        skills: ['Python', 'Flask', 'Keras', 'Scikit-Learn', 'Librosa'],
         tags: ['AI', 'Full-Stack'],
         year: 2023,
     },
@@ -685,7 +685,7 @@ const projects = [
         year: 2025,
     },
     {
-        name: 'Live OBD',
+        name: 'Live Car Stats',
         description: `
             A Raspberry Pi-powered OBD-II car telemetry system that captures real-time vehicle metrics such as RPM,
             speed, fuel consumption, etc. The data is saved, processed, and visualized live through customizable,
