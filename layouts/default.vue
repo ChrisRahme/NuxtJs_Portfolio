@@ -2,7 +2,7 @@
     <div id="default-layout">
         <Header />
 
-        <main class="container mx-auto">
+        <main class="container mx-auto py-4">
             <div id="main">
                 <slot></slot>
             </div>
@@ -13,15 +13,11 @@
 </template>
 
 <script setup>
-    // import Navbar from '~/components/Navbar.vue'
+// import Navbar from '~/components/Navbar.vue'
 </script>
 
 <style scoped lang="scss">
-    #default-layout {
-        background-color: var(--color-background-light);
-
-        .container {
-            padding: var(--content-py) var(--content-px);
-        }
-    }
+#default-layout {
+    background-color: var(--color-background-light);
+}
 </style>

@@ -4,7 +4,7 @@
             <h1>Projects</h1>
         </div>
 
-        <div class="flex flex-wrap justify-center">
+        <div id="cards" class="flex flex-wrap gap-4 justify-center">
             <template v-for="project in state['projects']" :key="project['name']">
                 <div class="project-card-wrapper">
                     <Project :project="project" :long="state['long']" />
@@ -52,24 +52,30 @@ onBeforeMount(function () {
         }
     }
 
-    .project-card-wrapper {
-        --gap: 1rem;
-        --n-items: 1;
-
-        @media (width >= theme('screens.lg')) {
-            --n-items: 2;
-        }
-        @media (width >= theme('screens.xl')) {
-            --n-items: 3;
-        }
-        @media (width >= theme('screens.3xl')) {
-            --n-items: 4;
+    #cards {
+        @media (width < theme('screens.lg')) {
+            padding: 0 0.5rem;
         }
 
-        & {
-            width: calc(100% / var(--n-items) - 2 * var(--gap));
-            // max-width: 500px;
-            padding: var(--gap);
+        .project-card-wrapper {
+            padding: 0;
+            width: 100%;
+
+            @media (width < theme('screens.md')) {
+                max-width: 100%;
+            }
+
+            @media (width >= theme('screens.md')) and (width < theme('screens.lg')) {
+                max-width: 350px;
+            }
+
+            @media (width >= theme('screens.lg')) and (width < theme('screens.2xl')) {
+                max-width: 400px;
+            }
+
+            @media (width >= theme('screens.2xl')) {
+                max-width: 500px;
+            }
         }
     }
 }
