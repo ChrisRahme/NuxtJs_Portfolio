@@ -535,7 +535,7 @@ const projects = [
             <br>
             Took one day to develop it, and a week to upload it on the Google Play Store.
         `,
-        summary: 'A Flappy Bird-style mobile game featuring a gem-collecting raven.',
+        summary: 'A Flappy Bird-style mobile game featuring a gem-collecting raven',
         image: '/img/projects/tappy-raven.webp',
         links: [
             { icon: 'mdi:web', link: 'https://play.google.com/store/apps/details?id=com.ChraGames.TappyRaven' },
@@ -554,7 +554,7 @@ const projects = [
             <br>
             Built with a multidisciplinary team of engineers as part of a university project.
         `,
-        summary: 'A smart lock access control system with scheduling and user permissions.',
+        summary: 'A smart lock access control system with scheduling and user permissions',
         image: '/img/projects/smart-lock.jpg',
         links: [{ icon: 'mdi:github', link: 'https://github.com/ChrisRahme/WiFi_Locks' }],
         skills: ['Python', 'PHP', 'MySQL', 'HTML', 'CSS', 'JavaScript', 'MQTT', 'Arduino', 'Raspberry Pi'],
@@ -570,7 +570,7 @@ const projects = [
             <br>
             Built by myself as part of my engineering final year project.
         `,
-        summary: 'A multilingual AI chatbot for ISP customer support and services, with mobile and web apps.',
+        summary: 'A multilingual AI chatbot for ISP customer support and services, with mobile and web apps',
         image: '/img/projects/nlp-chatbot.png',
         links: [{ icon: 'mdi:github', link: 'https://github.com/ChrisRahme/FYP-Chatbot' }],
         skills: ['Python', 'Rasa', 'MySQL', 'Kotlin', 'HTML', 'CSS', 'JavaScript', 'Docker', 'Kubernetes', 'Helm'],
@@ -583,7 +583,7 @@ const projects = [
             The first iteration of my personal website, built to learn VueJS and how to deploy static websites.
             Explore who I am, my resume, and my projects.
         `,
-        summary: 'My first personal website created to learn VueJS and static deployment.',
+        summary: 'My first personal website created to learn VueJS and static deployment',
         image: '/img/projects/vuejs-website.png',
         links: [
             { icon: 'mdi:web', link: 'https://chrisrahme-v1.netlify.app' },
@@ -602,7 +602,7 @@ const projects = [
             <br>
             Built by myself for my master's thesis and integrated into Synergi SER for Data Consult.
         `,
-        summary: 'Multilingual speech emotion recognition ML model with visual analytics.',
+        summary: 'Multilingual speech emotion recognition ML model with visual analytics',
         image: '/img/projects/speech-emotion-recognition.jpg',
         links: [{ icon: 'mdi:github', link: 'https://github.com/ChrisRahme/Speech_Emotion_Recognition' }],
         skills: ['Python', 'Flask', 'Keras', 'Scikit-Learn', 'Librosa'],
@@ -617,7 +617,7 @@ const projects = [
             solar panels and electricity usage, inverter and batteries, IoT devices, and weather.
             Also provides live dashboards, historical analytics, rule and scene creation, and manual commands.
         `,
-        summary: 'A smart home management system integrating solar inverters and IoT devices.',
+        summary: 'A smart home management system integrating solar inverters and IoT devices',
         image: '/img/projects/solar-iot.jpg',
         links: [{ icon: 'carbon:progress-bar-round' }],
         skills: ['Python', 'NodeJs', 'Flask', 'SQLAlchemy', 'Express', 'VueJs', 'MySQL', 'MongoDB', 'RabbitMQ', 'MySQL', 'Docker'],
@@ -632,7 +632,7 @@ const projects = [
             <br>
             Built as a successor to MindForge from Data Consult as a personal project.
         `,
-        summary: 'A web platform to facilitate data science, analytics, and machine learning workflows.',
+        summary: 'A web platform to facilitate data science, analytics, and machine learning workflows',
         image: '/img/projects/ai-forge.png',
         links: [{ icon: 'carbon:progress-bar-round' }],
         skills: ['VueJs', 'Python', 'Flask', 'SQLAlchemy', 'Scikit-Learn', 'Pandas', 'MySQL'],
@@ -645,7 +645,7 @@ const projects = [
             An LLM search engine web application that uses RAG techniques to search offline documents for relevant
             news articles, and extends the search online when needed.
         `,
-        summary: 'A RAG-powered LLM search engine for news across local and online sources.',
+        summary: 'A RAG-powered LLM search engine for news across local and online sources',
         image: '/img/projects/newsfinder.png',
         links: [{ icon: 'mdi:github', link: 'https://github.com/ChrisRahme/NewsFinder' }],
         skills: ['VueJs', 'Python', 'Flask', 'LangChain', 'Chroma'],
@@ -660,7 +660,7 @@ const projects = [
             <br>
             Discover more about me, my professional journey, and the projects I've been working on.
         `,
-        summary: 'The second version of my personal website (you are here!), built with NuxtJS.',
+        summary: 'The second version of my personal website (you are here!), built with NuxtJS',
         image: '/img/projects/nuxtjs-website.png',
         links: [
             { icon: 'mdi:web', link: 'https://chrisrahme.netlify.app' },
@@ -677,7 +677,7 @@ const projects = [
             people based on your text conversations (e.g. exported WhatsApp chats), and can reply to new messages as if
             they were from you.
         `,
-        summary: 'An LLM fine-tuned on your WhatsApp data to emulate how you talk and respond to different people.',
+        summary: 'An LLM fine-tuned on your WhatsApp data to emulate how you talk and respond to different people',
         image: '/img/projects/gpt-me.jpg',
         links: [{ icon: 'carbon:progress-bar-round' }],
         skills: ['Python', 'PyTorch', 'Hugging Face'],
@@ -692,7 +692,7 @@ const projects = [
             dynamic charts for analysis and trend tracking to help you better understand your vehicle's performance,
             your driving habits, and how different metrics affect each other.
         `,
-        summary: 'A real-time OBD-II dashboard with live charts and historical analysis.',
+        summary: 'A real-time OBD-II dashboard with live charts and historical analysis',
         image: '/img/projects/live-obd.png',
         links: [{ icon: 'carbon:progress-bar-round' }],
         skills: ['Python', 'VueJs', 'FastAPI', 'SQLAlchemy', 'Docker', 'Raspberry Pi'],
