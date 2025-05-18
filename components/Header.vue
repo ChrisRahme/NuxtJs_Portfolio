@@ -25,7 +25,6 @@
                             </NuxtLink>
                         </template>
                         <template v-else>
-                            <Icon :name="link['icon']" class="mr-2" v-if="link['icon']" />
                             <span>
                                 {{ link['text'] }}
                             </span>
@@ -67,7 +66,7 @@ header {
         height: var(--header-height);
 
         #nav-icon {
-            @apply transition-300 hover:scale-105 opacity-80 hover:opacity-100;
+            @apply hidden md:block transition-300 hover:scale-105 opacity-80 hover:opacity-100;
             height: calc(var(--header-height) / 1.5);
             width: calc(var(--header-height) / 1.5);
         }
@@ -127,9 +126,22 @@ header {
                         color: #60c060;
                     }
 
-                    .iconify {
-                        transform: translateY(15%);
+                    @media (width < theme('screens.md')) {
+                        .iconify {
+                            font-size: 1.5rem;
+                        }
                     }
+
+                    @media (width >= theme('screens.md')) {
+                        .iconify {
+                            font-size: 1rem;
+                            transform: translateY(-20%);
+                        }
+                    }
+                }
+
+                span {
+                    @apply hidden md:inline-block;
                 }
             }
         }
