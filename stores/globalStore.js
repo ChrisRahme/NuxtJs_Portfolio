@@ -426,10 +426,10 @@ const experience = [
                 skills: ['React', 'Python', 'Django', 'Scikit-Learn', 'GeoPandas', 'DeckGL', 'Amazon S3'],
             },
             {
-                title: 'Dory',
+                title: 'Nemo',
                 text: [
-                    'Dory Audio: Designed and implemented an AI-powered module for multilingual audio transcription and diarization.',
-                    'Dory Timeline: Designed and implemented an LLM-powered module that extracts and organizes key events, people, and locations from documents into structured timelines.',
+                    '<b class="font-medium">Nemo Audio:</b> Designed and implemented an AI-powered module for multilingual audio transcription and diarization, with LLM-powered transformations such as summarization and categorization.',
+                    '<b class="font-medium">Nemo Timeline:</b> Designed and implemented an LLM-powered module that extracts and organizes key events, people, and locations from documents into structured timelines.',
                 ],
                 skills: ['Python', 'Hugging Face', 'LangChain', 'FastAPI', 'Celery', 'Docker'],
             },

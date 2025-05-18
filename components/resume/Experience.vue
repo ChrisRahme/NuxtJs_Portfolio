@@ -107,7 +107,7 @@
 
                             <div class="pl-4 w-full">
                                 <!-- Position -->
-                                <div class="flex justify-between">
+                                <div class="position flex justify-between">
                                     <div class="block">
                                         <!-- Job title -->
                                         <h4 class="m-0 -mb-2">
@@ -162,12 +162,12 @@
                                 </p>
 
                                 <!-- Description -->
-                                <div class="mt-2" v-if="item.description">
+                                <div class="description mt-2" v-if="item.description">
                                     <p v-html="item.description"></p>
                                 </div>
 
                                 <!-- Task list -->
-                                <div class="m-0" :title="isShown ? item.tasks : null" v-if="item.tasks">
+                                <div class="tasks m-0" :title="isShown ? item.tasks : null" v-if="item.tasks">
                                     <div class="mt-4" :title="isShown ? (task.skills || []).join(', ') : null" v-for="task in item.tasks" :key="task">
                                         <h6 class="font-medium text-[#60C060] m-0" v-if="task.title">
                                             {{ task.title }}

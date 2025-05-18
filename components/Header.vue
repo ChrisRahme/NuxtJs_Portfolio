@@ -1,10 +1,9 @@
 <template>
-    <!-- Under construction (only show on mobile) -->
-    <div class="bg-[#E0C040] lg:hidden block">
+    <!-- <div class="bg-[#E0C040] lg:hidden block">
         <div class="container mx-auto px-8 py-2">
             <p class="m-0 p-0 text-white">⚠️ Mobile website is still under construction.</p>
         </div>
-    </div>
+    </div> -->
 
     <header id="header" class="bg-white shadow-sm">
         <nav class="container mx-auto px-8 py-2">

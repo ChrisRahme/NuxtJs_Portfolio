@@ -7,7 +7,7 @@
     <div id="home">
         <div id="hero" class="noselect bg-9">
             <div id="vignette">
-                <div class="container lg:mx-auto" style="z-index: 1">
+                <div class="container mx-auto" style="z-index: 1">
                     <div class="container lg:flex justify-between items-center">
                         <div id="hero-text" class="flex flex-col items-center text-center lg:block lg:text-left">
                             <h3 class="none lg:inline-block mb-0">
@@ -71,7 +71,7 @@
                             </span>
                             <span
                                 id="squiggle"
-                                :title="`[/src/pages/index.vue] SyntaxError: Unexpected end of quote; expected '”' at position ${state.quote.length}.`"
+                                :title="`[/src/pages/index.vue] SyntaxError: Unexpected end of quote; expected '”' at position ${state.quote.length}. (This is on purpose)`"
                             >
                                 &nbsp;&nbsp;
                             </span>
@@ -87,7 +87,7 @@
                     <h2 class="text-4xl text-left mb-10">About Me</h2>
 
                     <div class="lg:flex gap-8 px-8 justify-between items-start">
-                        <div id="about-select" class="flex flex-col gap-4 items-center">
+                        <div id="about-select">
                             <template v-for="(about, index) in state['abouts']" :key="about['title']">
                                 <button
                                     class="emoji-button"
@@ -718,6 +718,8 @@ onBeforeUnmount(function () {
 
     #about {
         #about-select {
+            @apply flex lg:flex-col gap-4 lg:items-center justify-evenly flex-wrap mb-4 lg:mb-0;
+
             .emoji-button {
                 --fs: 2rem;
                 --padding: 0.6rem;
@@ -751,7 +753,14 @@ onBeforeUnmount(function () {
         }
 
         #about-image {
-            max-width: 40%;
+            @media (width < theme('screens.lg')) {
+                @apply mt-4;
+                max-width: 100%;
+            }
+
+            @media (width >= theme('screens.lg')) {
+                max-width: 40%;
+            }
 
             &:hover {
                 img {
