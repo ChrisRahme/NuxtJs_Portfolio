@@ -7,19 +7,19 @@
     </div>
 
     <header id="header" class="bg-white shadow-sm">
-        <nav class="container mx-auto px-8 py-2 flex justify-between items-center">
-            <NuxtLink to="/" id="nav-icon" class="p-0 m-0">
+        <nav class="container mx-auto px-8 py-2">
+            <NuxtLink id="nav-icon" to="/">
                 <!-- <Avatar /> -->
                 <img src="/img/icon.min.svg" alt="Home" />
             </NuxtLink>
 
-            <ul class="flex gap-4">
+            <ul class="flex gap-8">
                 <template v-for="link in state['links']" :key="link['text']">
                     <li>
                         <template v-if="link['link']">
                             <NuxtLink :to="link['link']" class="hover:text-[#60C060]">
-                                <Icon :name="link['icon']" class="mr-2" v-if="link['icon']" />
-                                <span>
+                                <Icon :name="link['icon']" v-if="link['icon']" />
+                                <span :class="link['icon'] ? 'ml-2' : ''">
                                     {{ link['text'] }}
                                 </span>
                             </NuxtLink>
@@ -56,17 +56,16 @@ onBeforeMount(function () {})
 @import '/assets/css/tailwind.css';
 
 header {
-    // height: min(10vh, 60px);
-
     * {
         overflow: hidden;
     }
 
     nav {
+        @apply flex items-center justify-between;
         height: var(--header-height);
 
         #nav-icon {
-            @apply hidden md:block transition-300 hover:scale-105 opacity-80 hover:opacity-100;
+            @apply transition-300 hover:scale-105 opacity-80 hover:opacity-100 p-0 m-0;
             height: calc(var(--header-height) / 1.5);
             width: calc(var(--header-height) / 1.5);
         }
@@ -78,23 +77,34 @@ header {
                 display: flex;
                 align-items: center;
                 height: 100%;
-                margin-right: 1rem;
 
                 a {
                     text-decoration: none;
 
-                    &:not(.router-link-active) {
-                        transform: translateY(0); // Removing this will break the position of the underline
+                    &.router-link-active {
+                        color: #60c060;
+                    }
 
-                        &::before,
-                        &::after {
-                            content: '';
-                            display: block;
-                            width: 100%;
-                            height: 2px;
-                            position: absolute;
-                            bottom: 0;
-                            border-radius: 1px;
+                    @media (width < theme('screens.md')) {
+                        .iconify {
+                            font-size: calc(var(--header-height) / 2.5);
+                        }
+                    }
+
+                    @media (width >= theme('screens.md')) {
+                        &:not(.router-link-active) {
+                            transform: translateY(0); // Removing this will break the position of the underline
+
+                            &::before,
+                            &::after {
+                                content: '';
+                                display: block;
+                                width: 100%;
+                                height: 2px;
+                                position: absolute;
+                                bottom: 0;
+                                border-radius: 1px;
+                            }
                         }
 
                         &:not(:hover) {
@@ -120,19 +130,7 @@ header {
                                 background-color: transparent;
                             }
                         }
-                    }
 
-                    &.router-link-active {
-                        color: #60c060;
-                    }
-
-                    @media (width < theme('screens.md')) {
-                        .iconify {
-                            font-size: 1.5rem;
-                        }
-                    }
-
-                    @media (width >= theme('screens.md')) {
                         .iconify {
                             font-size: 1rem;
                             transform: translateY(-20%);
