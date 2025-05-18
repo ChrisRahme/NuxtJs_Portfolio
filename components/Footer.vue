@@ -33,11 +33,12 @@
                                 :title="friend['name']"
                                 :style="{
                                     '--color': friend['color'],
-                                    'transform': 'translateY(-30%)',
+                                    '--image': `url(/img/friends/${friend['icon']})`,
                                 }"
                             >
                                 <a :href="friend['link']" target="_blank">
-                                    <img class="iconify" :src="`/img/friends/${friend['icon']}`" />
+                                    <!-- <img class="iconify" :src="`/img/friends/${friend['icon']}`" /> -->
+                                    <div class="mask"></div>
                                 </a>
                             </li>
                         </template>
@@ -73,8 +74,8 @@ onBeforeMount(function () {
     })
 
     state['friends'] = [
-        { name: 'Threads of Joy', link: 'https://joy-of.dev', icon: 'joy-of-dev.png', color: '#2dc9a5' },
-        { name: "Introverts' Crate", link: 'https://introvertscrate.com', icon: 'introverts-crate.png', color: '#2dc9a5' },
+        { name: 'Threads of Joy', link: 'https://joy-of.dev', icon: 'joy-of-dev.png', color: '#2DC9A5' },
+        { name: "Introverts' Crate", link: 'https://introvertscrate.com', icon: 'introverts-crate.png', color: '#0087DC' },
     ]
 })
 </script>
@@ -109,20 +110,39 @@ footer {
                         }
 
                         li {
-                            font-size: 2rem;
-                            max-height: 2rem;
+                            --size: 2rem;
+                            font-size: var(--size);
+                            max-height: var(--size);
 
                             &:hover {
                                 .iconify {
                                     color: var(--color) !important;
                                     transform: scale(1.05);
                                 }
+
+                                .mask {
+                                    background-color: var(--color);
+                                }
                             }
 
                             .iconify {
                                 @apply transition-300;
-                                font-size: 2rem;
-                                max-height: 2rem;
+                                font-size: var(--size);
+                            }
+
+                            .mask {
+                                @apply transition-300;
+                                width: var(--size);
+                                height: var(--size);
+                                background-color: white;
+                                mask-image: var(--image);
+                                mask-size: contain;
+                                mask-position: center;
+                                mask-repeat: no-repeat;
+                                -webkit-mask-image: var(--image);
+                                -webkit-mask-size: contain;
+                                -webkit-mask-position: center;
+                                -webkit-mask-repeat: no-repeat;
                             }
                         }
                     }
