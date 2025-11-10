@@ -27,9 +27,25 @@ onBeforeMount(function () {
     window.scrollTo({ top: 0, behavior: 'smooth' })
     const store = useGlobalStore()
 
-    state['projects'] = store['projects'].sort(function (a, b) {
-        return b['year'] - a['year']
-    })
+    state['projects'] = store['projects']
+        .map(function (project, index) {
+            return {
+                ...project,
+                index: index,
+            }
+        })
+        .sort(function (a, b) {
+            // Sort by year descending, or by index if same year
+            if (b['year'] !== a['year']) {
+                return b['year'] - a['year']
+            }
+            return b['index'] - a['index']
+        })
+        .map(function (data) {
+            // Remove index after sorting
+            const { index, ...project } = data
+            return project
+        })
 })
 </script>
 

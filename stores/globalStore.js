@@ -706,7 +706,7 @@ const projects = [
             { icon: 'mdi:web', link: 'https://chrisrahme.netlify.app' },
             { icon: 'mdi:github', link: 'https://github.com/ChrisRahme/NuxtJs_Portfolio' },
         ],
-        skills: ['NuxtJs', 'VueJs', 'Netlify'],
+        skills: ['NuxtJs', 'Netlify'],
         tags: ['Front-End'],
         year: 2025,
     },
@@ -735,8 +735,36 @@ const projects = [
         summary: 'A real-time OBD-II dashboard with live charts and historical analysis',
         image: '/img/projects/live-obd.png',
         links: [{ icon: 'carbon:progress-bar-round' }],
-        skills: ['Python', 'VueJs', 'FastAPI', 'SQLAlchemy', 'Docker', 'Raspberry Pi'],
+        skills: ['Python', 'NuxtJs', 'FastAPI', 'SQLAlchemy', 'Docker', 'Raspberry Pi'],
         tags: ['Data Science', 'Full-Stack', 'IoT'],
+        year: 2025,
+    },
+    {
+        name: 'Music Analyzer',
+        description: `
+            An AI music analysis tool that extracts various audio features & embeddings from music tracks, split into
+            chunks. The chunks and songs are clustered and compared, to find similar chunks and/or songs, integrated
+            with a user-based rating system to recommend similar music based on user preferences.
+        `,
+        summary: 'An AI music analysis and recommendation system',
+        image: '/img/projects/music-analyzer.jpg',
+        links: [{ icon: 'carbon:progress-bar-round' }],
+        skills: ['Python', 'NuxtJs', 'FastAPI', 'SQLAlchemy', 'Chroma', 'Librosa'],
+        tags: ['AI', 'Data Science', 'Full-Stack'],
+        year: 2025,
+    },
+    {
+        name: 'MyAssistant',
+        description: `
+            An agentic AI personal assistant that has access to my system information, files, cloud data, calendar,
+            email, smart home devices, web search, memories, and more, to help me manage and centralize my information
+            and integrate these services together for improved productivity and automation.
+        `,
+        summary: 'My agentic personal assistant that integrates multiple services',
+        image: '/img/projects/myassistant.png',
+        links: [{ icon: 'mdi:github', link: 'https://github.com/ChrisRahme/MyAssistant' }],
+        skills: ['Python', 'Agno', 'FastAPI', 'Chroma', 'NuxtJs'],
+        tags: ['AI', 'Full-Stack', 'LLM'],
         year: 2025,
     },
 ]
