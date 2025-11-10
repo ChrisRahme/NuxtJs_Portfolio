@@ -133,21 +133,22 @@ const skills = [
             { name: 'Python', icon: 'devicon-plain:python', color: '#FFD538', showVignette: true, showSkills: true },
             { name: 'NodeJs', icon: 'devicon-plain:nodejs', color: '#5FA14D', showVignette: true, showSkills: true },
             { name: 'TypeScript', icon: 'devicon-plain:typescript', color: '#2D79C7', showVignette: true, showSkills: true },
-            { name: 'PHP', icon: 'devicon-plain:php', color: '#787CB4', showVignette: true, showSkills: true },
-            { name: 'Go', icon: 'fa6-brands:golang', color: '#00AED8', showVignette: true, showSkills: false },
+            { name: 'PHP', icon: 'devicon-plain:php', color: '#787CB4', showVignette: true, showSkills: false },
+            { name: 'Go', icon: 'fa7-brands:golang', color: '#00AED8', showVignette: true, showSkills: true },
             { name: 'C#', icon: 'simple-icons:csharp', color: '#6E4DDC', showVignette: true, showSkills: false },
             { name: 'Java', icon: 'devicon-plain:java', color: '#F89917', showVignette: true, showSkills: false },
             { name: 'Bash', icon: 'devicon-plain:bash', color: '#45B452', showVignette: true, showSkills: true },
             // Frameworks
             { name: 'Laravel', icon: 'simple-icons:laravel', color: '#FF2D20', showVignette: true, showSkills: true },
             { name: 'Django', icon: 'devicon-plain:django', color: '#44B78B', showVignette: true, showSkills: true },
-            { name: 'Flask', icon: 'bx:bxl-flask', color: '#41ACC0', showVignette: true, showSkills: true },
+            { name: 'Flask', icon: 'bxl:flask', color: '#41ACC0', showVignette: true, showSkills: false },
             { name: 'FastAPI', icon: 'devicon-plain:fastapi', color: '#009485', showVignette: true, showSkills: true },
             { name: 'SQLAlchemy', icon: 'devicon-plain:sqlalchemy', color: '#CB2222', showVignette: true, showSkills: true },
+            { name: 'Pydantic', icon: 'simple-icons:pydantic', color: '#E92063', showVignette: true, showSkills: true },
             { name: 'Celery', icon: 'simple-icons:celery', color: '#B6DE64', showVignette: true, showSkills: false },
-            { name: 'Express', icon: 'simple-icons:express', color: '#6B90A0', showVignette: true, showSkills: false },
-            { name: 'Node-RED', icon: 'cib:node-red', color: '#900000', showVignette: true, showSkills: true },
-            { name: 'RabbitMQ', icon: 'simple-icons:rabbitmq', color: '#FF6600', showVignette: true, showSkills: true },
+            { name: 'Express', icon: 'simple-icons:express', color: '#6B90A0', showVignette: true, showSkills: true },
+            { name: 'Node-RED', icon: 'simple-icons:nodered', color: '#900000', showVignette: true, showSkills: true },
+            { name: 'RabbitMQ', icon: 'simple-icons:rabbitmq', color: '#FF6600', showVignette: true, showSkills: false },
         ],
     },
     {
@@ -157,7 +158,7 @@ const skills = [
             // Languages
             { name: 'HTML', icon: 'devicon-plain:html5', color: '#E54C21', showVignette: true, showSkills: true },
             { name: 'CSS', icon: 'devicon-plain:css3', color: '#214CE5', showVignette: true, showSkills: true },
-            { name: 'SASS / SCSS', icon: 'fa6-brands:sass', color: '#CE679A', showVignette: true, showSkills: true },
+            { name: 'SASS / SCSS', icon: 'fa7-brands:sass', color: '#CE679A', showVignette: true, showSkills: true },
             { name: 'JavaScript', icon: 'devicon-plain:javascript', color: '#F0DC4E', showVignette: true, showSkills: true },
             // Frameworks
             { name: 'React', icon: 'simple-icons:react', color: '#017FA5', showVignette: true, showSkills: true },
@@ -194,6 +195,9 @@ const skills = [
             { name: 'Hugging Face', icon: 'simple-icons:huggingface', color: '#FF9E00', showVignette: true, showSkills: true },
             { name: 'Rasa', icon: 'simple-icons:rasa', color: '#5A16EE', showVignette: true, showSkills: true },
             { name: 'LangChain', icon: 'simple-icons:langchain', color: '#1D3C3E', showVignette: true, showSkills: true },
+            { name: 'Agno', icon: 'tabler:hexagon-letter-a', color: '#F53D16', showVignette: false, showSkills: true }, // TODO: Logo
+            { name: 'Chroma', icon: 'tabler:hexagon-letter-c', color: '#FF6447', showVignette: false, showSkills: true }, // TODO: Logo
+            { name: 'Qdrant', icon: 'tabler:hexagon-letter-q', color: '#DC244C', showVignette: false, showSkills: true }, // TODO: Logo
             // Data Science
             { name: 'Pandas', icon: 'devicon-plain:pandas', color: '#E80089', showVignette: true, showSkills: true },
             { name: 'NumPy', icon: 'devicon-plain:numpy', color: '#4C78D0', showVignette: true, showSkills: true },
@@ -212,6 +216,8 @@ const skills = [
             { name: 'Linux', icon: 'simple-icons:linux', color: '#F5BE04', showVignette: true, showSkills: true },
             { name: 'Docker', icon: 'simple-icons:docker', color: '#1F97EE', showVignette: true, showSkills: true },
             { name: 'Git', icon: 'devicon-plain:git', color: '#F05030', showVignette: true, showSkills: true },
+            { name: 'Grafana', icon: 'simple-icons:grafana', color: '#FF671D', showVignette: true, showSkills: true },
+            { name: 'Prometheus', icon: 'simple-icons:prometheus', color: '#E6522C', showVignette: true, showSkills: true },
             // Systems
             { name: 'Asterisk', icon: 'simple-icons:asterisk', color: '#F69018', showVignette: true, showSkills: true },
         ],
@@ -428,10 +434,44 @@ const experience = [
             {
                 title: 'Nemo',
                 text: [
-                    '<b class="font-medium">Nemo Audio:</b> Designed and implemented an AI-powered module for multilingual audio transcription and diarization, with LLM-powered transformations such as summarization and categorization.',
-                    '<b class="font-medium">Nemo Timeline:</b> Designed and implemented an LLM-powered module that extracts and organizes key events, people, and locations from documents into structured timelines.',
+                    '<b class="font-medium">Search:</b> Worked on and deployed multiple RAG chatbot solutions for document search and question answering, with Google Drive and/or Website crawlers as data sources.',
+                    '<b class="font-medium">Docs:</b> Worked on the implementation of an LLM-powered summarization module that generates summaries of text, documents, or webpages.',
+                    '<b class="font-medium">Timeline:</b> Designed and implemented an LLM-powered module that extracts and organizes key events, people, and locations from documents into structured timelines.',
+                    '<b class="font-medium">Audio:</b> Designed and implemented an AI-powered module for multilingual audio transcription and diarization, with LLM-powered transformations such as summarization and categorization.',
+                    '<b class="font-medium">Live Transcription:</b> Extended Nemo Audio to support multi-session real-time VoIP call transcription, using audio packets sent over WebSockets or WebRTC connections via a Go-based gatway.',
                 ],
-                skills: ['Python', 'Hugging Face', 'LangChain', 'FastAPI', 'Celery', 'Docker'],
+                skills: [
+                    'Python',
+                    'Go',
+                    'Hugging Face',
+                    'LangChain',
+                    'Agno',
+                    'Pydantic',
+                    'FastAPI',
+                    'WebRTC',
+                    'WebSockets',
+                    'Celery',
+                    'Qdrant',
+                    'Docker',
+                    'Apify',
+                ],
+            },
+            {
+                title: 'Independent LLM-based Projects',
+                text: [
+                    "Developed an LLM-powered solution that rates a website's AI-SEO performance, compares with competitors, provides improvement suggestions, and more.",
+                    "Developed an agent that helps complete a webshop's catalog by searching for missing product information online, such as weight, dimensions, or vendor serial number.",
+                    'Developed an agentic DevOps assistant with access to GitHub, Notion, Linear, and AWS CloudWatch to monitor, identify, and resolve issues in deployed applications.',
+                ],
+                skills: ['Python', 'LangChain', 'Agno', 'FastAPI', 'Apify'],
+            },
+            {
+                title: 'DevOps',
+                text: [
+                    'Build CI/CD pipelines for automated testing and deployment of applications.',
+                    'Create Grafana dashboards for monitoring deployed applications and services.',
+                ],
+                skills: ['GitHub Actions', 'Grafana', 'Prometheus'],
             },
         ],
     },

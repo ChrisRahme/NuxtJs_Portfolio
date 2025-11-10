@@ -167,8 +167,8 @@
                                 </div>
 
                                 <!-- Task list -->
-                                <div class="tasks m-0" :title="isShown ? item.tasks : null" v-if="item.tasks">
-                                    <div class="mt-4" :title="isShown ? (task.skills || []).join(', ') : null" v-for="task in item.tasks" :key="task">
+                                <div class="tasks m-0" v-if="item.tasks">
+                                    <div class="mt-4" v-for="task in item.tasks" :key="task">
                                         <h6 class="font-medium text-[#60C060] m-0" v-if="task.title">
                                             {{ task.title }}
                                         </h6>
