@@ -438,7 +438,7 @@ const experience = [
                     '<b class="font-medium">Docs:</b> Worked on the implementation of an LLM-powered summarization module that generates summaries of text, documents, or webpages.',
                     '<b class="font-medium">Timeline:</b> Designed and implemented an LLM-powered module that extracts and organizes key events, people, and locations from documents into structured timelines.',
                     '<b class="font-medium">Audio:</b> Designed and implemented an AI-powered module for multilingual audio transcription and diarization, with LLM-powered transformations such as summarization and categorization.',
-                    '<b class="font-medium">Live Transcription:</b> Extended Nemo Audio to support multi-session real-time VoIP call transcription, using audio packets sent over WebSockets or WebRTC connections via a Go-based gatway.',
+                    '<b class="font-medium">Live Transcription:</b> Extended Nemo Audio to support multi-session real-time call transcription, using audio packets sent over WebSockets or WebRTC connections via a Go-based gatway.',
                 ],
                 skills: [
                     'Python',
@@ -457,13 +457,20 @@ const experience = [
                 ],
             },
             {
-                title: 'Independent LLM-based Projects',
+                title: 'Misc. LLM-based Projects',
                 text: [
                     "Developed an LLM-powered solution that rates a website's AI-SEO performance, compares with competitors, provides improvement suggestions, and more.",
                     "Developed an agent that helps complete a webshop's catalog by searching for missing product information online, such as weight, dimensions, or vendor serial number.",
-                    'Developed an agentic DevOps assistant with access to GitHub, Notion, Linear, and AWS CloudWatch to monitor, identify, and resolve issues in deployed applications.',
+                    'Developed an agentic DevOps assistant with access to GitHub, Notion, Linear, AWS CloudWatch, etc. to monitor, identify, and resolve issues in deployed applications.',
                 ],
-                skills: ['Python', 'LangChain', 'Agno', 'FastAPI', 'Apify'],
+                skills: ['Python', 'LangChain', 'Agno', 'FastAPI', 'Streamlit', 'Apify'],
+            },
+            {
+                title: 'Misc. AI Projects',
+                text: [
+                    'Developed a pipeline for intruder detection and face recognition in live surveillance camera footage using various pre-trained and custom models.',
+                ],
+                skills: ['Python', 'PyTorch', 'Scikit-Learn', 'Hugging Face', 'FastAPI'],
             },
             {
                 title: 'DevOps',
@@ -471,7 +478,7 @@ const experience = [
                     'Build CI/CD pipelines for automated testing and deployment of applications.',
                     'Create Grafana dashboards for monitoring deployed applications and services.',
                 ],
-                skills: ['GitHub Actions', 'Grafana', 'Prometheus'],
+                skills: ['Docker', 'GitHub Actions', 'Prometheus', 'Grafana'],
             },
         ],
     },

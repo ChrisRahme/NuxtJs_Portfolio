@@ -7,15 +7,19 @@
         <div id="cards" class="flex flex-wrap gap-4 justify-center">
             <template v-for="project in state['projects']" :key="project['name']">
                 <div class="project-card-wrapper">
-                    <Project :project="project" :long="state['long']" />
+                    <ProjectCard :project="project" :long="state['long']" />
                 </div>
             </template>
+        </div>
+
+        <div class="flex justify-center mt-8 mb-4">
+            <span class="italic text-gray-600 text-sm"> And many unfinished projects... </span>
         </div>
     </div>
 </template>
 
 <script setup>
-import Project from '../components/projects/Project.vue'
+import ProjectCard from '../components/projects/ProjectCard.vue'
 
 const state = reactive({
     projects: [],
