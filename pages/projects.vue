@@ -6,7 +6,7 @@
 
         <div id="cards" class="flex flex-wrap gap-4 justify-center">
             <template v-for="project in state['projects']" :key="project['name']">
-                <div class="project-card-wrapper">
+                <div class="project-card-wrapper" @click="openModal(project)">
                     <ProjectCard :project="project" :long="state['long']" />
                 </div>
             </template>
@@ -15,16 +15,58 @@
         <div class="flex justify-center mt-8 mb-4">
             <span class="italic text-gray-600 text-sm"> And many unfinished projects... </span>
         </div>
+
+        <ProjectModal
+            :project="state['selectedProject']"
+            :visible="state['modalVisible']"
+            @close="closeModal"
+            @next="nextProject"
+            @previous="previousProject"
+        />
     </div>
 </template>
 
 <script setup>
 import ProjectCard from '../components/projects/ProjectCard.vue'
+import ProjectModal from '../components/projects/ProjectModal.vue'
 
 const state = reactive({
     projects: [],
     long: false,
+    selectedProject: null,
+    modalVisible: false,
 })
+
+// Methods
+function openModal(project) {
+    state['selectedProject'] = project
+    state['modalVisible'] = true
+}
+
+function closeModal() {
+    state['modalVisible'] = false
+}
+
+function navigateProject(direction) {
+    const currentIndex = state['projects'].findIndex((p) => p['name'] === state['selectedProject']['name'])
+    let newIndex = currentIndex
+
+    if (direction > 0) {
+        newIndex = currentIndex === state['projects'].length - 1 ? 0 : currentIndex + 1
+    } else {
+        newIndex = currentIndex === 0 ? state['projects'].length - 1 : currentIndex - 1
+    }
+
+    state['selectedProject'] = state['projects'][newIndex]
+}
+
+function nextProject() {
+    navigateProject(+1)
+}
+
+function previousProject() {
+    navigateProject(-1)
+}
 
 // Lifecycle
 onBeforeMount(function () {
@@ -76,6 +118,7 @@ onBeforeMount(function () {
         .project-card-wrapper {
             padding: 0;
             width: 100%;
+            cursor: pointer;
 
             @media (width < theme('screens.md')) {
                 max-width: 100%;

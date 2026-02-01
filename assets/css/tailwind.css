@@ -99,7 +99,7 @@ h6 {
     }
 
     .transition-100 {
-        @apply transition-all duration-300;
+        @apply transition-all duration-100;
     }
 
     .transition-300 {
