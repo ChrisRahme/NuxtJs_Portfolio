@@ -137,9 +137,10 @@ const skills = [
             { name: 'Go', icon: 'fa7-brands:golang', color: '#00AED8', showVignette: true, showSkills: true },
             { name: 'C#', icon: 'simple-icons:csharp', color: '#6E4DDC', showVignette: true, showSkills: false },
             { name: 'Java', icon: 'devicon-plain:java', color: '#F89917', showVignette: true, showSkills: false },
-            { name: 'Bash', icon: 'devicon-plain:bash', color: '#45B452', showVignette: true, showSkills: true },
+            { name: 'Bash', icon: 'devicon-plain:bash', color: '#45B452', showVignette: true, showSkills: false },
             // Frameworks
             { name: 'Laravel', icon: 'simple-icons:laravel', color: '#FF2D20', showVignette: true, showSkills: true },
+            { name: 'Streamlit', icon: 'simple-icons:streamlit', color: '#FF4B4B', showVignette: true, showSkills: true },
             { name: 'Django', icon: 'devicon-plain:django', color: '#44B78B', showVignette: true, showSkills: true },
             { name: 'Flask', icon: 'bxl:flask', color: '#41ACC0', showVignette: true, showSkills: false },
             { name: 'FastAPI', icon: 'devicon-plain:fastapi', color: '#009485', showVignette: true, showSkills: true },
@@ -191,16 +192,16 @@ const skills = [
             // AI
             { name: 'PyTorch', icon: 'simple-icons:pytorch', color: '#EE4C2C', showVignette: true, showSkills: true },
             { name: 'TensorFlow', icon: 'simple-icons:tensorflow', color: '#FF8800', showVignette: true, showSkills: true },
-            { name: 'Keras', icon: 'devicon-plain:keras', color: '#D10000', showVignette: true, showSkills: true },
+            { name: 'Keras', icon: 'devicon-plain:keras', color: '#D10000', showVignette: true, showSkills: false },
             { name: 'Hugging Face', icon: 'simple-icons:huggingface', color: '#FF9E00', showVignette: true, showSkills: true },
-            { name: 'Rasa', icon: 'simple-icons:rasa', color: '#5A16EE', showVignette: true, showSkills: true },
+            { name: 'Rasa', icon: 'simple-icons:rasa', color: '#5A16EE', showVignette: true, showSkills: false },
             { name: 'LangChain', icon: 'simple-icons:langchain', color: '#1D3C3E', showVignette: true, showSkills: true },
             { name: 'Agno', icon: 'tabler:hexagon-letter-a', color: '#F53D16', showVignette: false, showSkills: true }, // TODO: Logo
             { name: 'Chroma', icon: 'tabler:hexagon-letter-c', color: '#FF6447', showVignette: false, showSkills: true }, // TODO: Logo
             { name: 'Qdrant', icon: 'tabler:hexagon-letter-q', color: '#DC244C', showVignette: false, showSkills: true }, // TODO: Logo
             // Data Science
             { name: 'Pandas', icon: 'devicon-plain:pandas', color: '#E80089', showVignette: true, showSkills: true },
-            { name: 'NumPy', icon: 'devicon-plain:numpy', color: '#4C78D0', showVignette: true, showSkills: true },
+            { name: 'NumPy', icon: 'devicon-plain:numpy', color: '#4C78D0', showVignette: true, showSkills: false },
             { name: 'Scikit-Learn', icon: 'devicon-plain:scikitlearn', color: '#F89A36', showVignette: true, showSkills: true },
             { name: 'Matplotlib', icon: 'devicon-plain:matplotlib', color: '#1F77B4', showVignette: true, showSkills: true },
         ],
