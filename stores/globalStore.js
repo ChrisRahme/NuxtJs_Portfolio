@@ -196,9 +196,9 @@ const skills = [
             { name: 'Hugging Face', icon: 'simple-icons:huggingface', color: '#FF9E00', showVignette: true, showSkills: true },
             { name: 'Rasa', icon: 'simple-icons:rasa', color: '#5A16EE', showVignette: true, showSkills: false },
             { name: 'LangChain', icon: 'simple-icons:langchain', color: '#1D3C3E', showVignette: true, showSkills: true },
-            { name: 'Agno', icon: 'tabler:hexagon-letter-a', color: '#F53D16', showVignette: false, showSkills: true }, // TODO: Logo
-            { name: 'Chroma', icon: 'tabler:hexagon-letter-c', color: '#FF6447', showVignette: false, showSkills: true }, // TODO: Logo
-            { name: 'Qdrant', icon: 'tabler:hexagon-letter-q', color: '#DC244C', showVignette: false, showSkills: true }, // TODO: Logo
+            { name: 'Agno', icon: 'tabler:hexagon-letter-a', color: '#FC6546', showVignette: false, showSkills: true }, // TODO: Logo
+            { name: 'Chroma', img: '/img/skills/chroma.svg', color: '#FF6447', showVignette: true, showSkills: true },
+            { name: 'Qdrant', img: '/img/skills/qdrant.svg', color: '#7589BE', showVignette: true, showSkills: true },
             // Data Science
             { name: 'Pandas', icon: 'devicon-plain:pandas', color: '#E80089', showVignette: true, showSkills: true },
             { name: 'NumPy', icon: 'devicon-plain:numpy', color: '#4C78D0', showVignette: true, showSkills: false },
@@ -425,7 +425,7 @@ const experience = [
         description: 'Developing AI & data science solutions on the back-end and front-end.',
         tasks: [
             {
-                title: 'Payload',
+                title: 'Payload Data Portal',
                 text: [
                     "Worked on an AI & Big Data map visualization platform that aggregates and analyzes data about a country's infrastructure, natural features, traffic & vehicles, etc. from multiple sources.",
                     "The platform uses clustering AI models to recommend optimal locations for the deployment of new infrastructure and services, balancing profitability and risk according to each region's environment.",
@@ -435,11 +435,12 @@ const experience = [
             {
                 title: 'Nemo',
                 text: [
-                    '<b class="font-medium">Search:</b> Worked on and deployed multiple RAG chatbot solutions for document search and question answering, with Google Drive and/or Website crawlers as data sources.',
-                    '<b class="font-medium">Docs:</b> Worked on the implementation of an LLM-powered summarization module that generates summaries of text, documents, or webpages.',
-                    '<b class="font-medium">Timeline:</b> Designed and implemented an LLM-powered module that extracts and organizes key events, people, and locations from documents into structured timelines.',
-                    '<b class="font-medium">Audio:</b> Designed and implemented an AI-powered module for multilingual audio transcription and diarization, with LLM-powered transformations such as summarization and categorization.',
-                    '<b class="font-medium">Live Transcription:</b> Extended Nemo Audio to support multi-session real-time call transcription, using audio packets sent over WebSockets or WebRTC connections via a Go-based gatway.',
+                    '<b>Search:</b> Worked on and deployed multiple RAG chatbot solutions for document search and question answering, with Google Drive and/or Website crawlers as data sources.',
+                    '<b>Docs:</b> Worked on the implementation of an LLM-powered summarization module that generates summaries of text, documents, or webpages.',
+                    '<b>Timeline:</b> Designed and implemented an LLM-powered module that extracts and organizes key events, people, and locations from documents into structured timelines.',
+                    '<b>Audio:</b> Created a set of audio utility tools such as signal processing denoising, ML denoising and enhancement, analysis, and activity detection.',
+                    '<b>Transcription:</b> Designed and implemented an AI-powered module for multilingual audio transcription and diarization, with LLM-powered transformations such as summarization, categorization, and tag extraction.',
+                    '<b>Live Transcription:</b> Extended Nemo Audio to support multi-session real-time call transcription, using audio packets sent over WebSockets and WebRTC connections via a Go-based gateway, along with metrics and monitoring.',
                 ],
                 skills: [
                     'Python',
@@ -453,25 +454,28 @@ const experience = [
                     'WebSockets',
                     'Celery',
                     'Qdrant',
+                    'PostgreSQL',
                     'Docker',
+                    'Grafana',
+                    'Prometheus',
                     'Apify',
                 ],
             },
             {
                 title: 'Misc. LLM-based Projects',
                 text: [
-                    "Developed an LLM-powered solution that rates a website's AI-SEO performance, compares with competitors, provides improvement suggestions, and more.",
-                    "Developed an agent that helps complete a webshop's catalog by searching for missing product information online, such as weight, dimensions, or vendor serial number.",
+                    "Developed an LLM-powered solution that rates a website's AI-SEO performance by checking the HTML structure, content readability, etc., comparing with competitors and providing improvement suggestions.",
+                    "Developed multiple LLM-powered database fillers, including an agent that completes a webshop's catalog by searching for missing product information online, or an agent that categorizes companies into industries.",
                     'Developed an agentic DevOps assistant with access to GitHub, Notion, Linear, AWS CloudWatch, etc. to monitor, identify, and resolve issues in deployed applications.',
                 ],
-                skills: ['Python', 'LangChain', 'Agno', 'FastAPI', 'Streamlit', 'Apify'],
+                skills: ['Python', 'Pandas', 'LangChain', 'Agno', 'FastAPI', 'Streamlit', 'Apify'],
             },
             {
                 title: 'Misc. AI Projects',
                 text: [
                     'Developed a pipeline for intruder detection and face recognition in live surveillance camera footage using various pre-trained and custom models.',
                 ],
-                skills: ['Python', 'PyTorch', 'Scikit-Learn', 'Hugging Face', 'FastAPI'],
+                skills: ['Python', 'PyTorch', 'Scikit-Learn', 'Hugging Face', 'FastAPI', 'Streamlit', 'SQLite'],
             },
             {
                 title: 'DevOps',
@@ -758,7 +762,7 @@ const projects = [
         image: '/img/projects/music-analyzer.jpg',
         links: [{ icon: 'carbon:progress-bar-round' }],
         skills: ['Python', 'NuxtJs', 'FastAPI', 'SQLAlchemy', 'Chroma', 'Librosa'],
-        tags: ['AI', 'Data Science', 'Full-Stack'],
+        tags: ['AI', 'Data Science', 'Full-Stack', 'Music'],
         year: 2025,
     },
     {
@@ -774,6 +778,20 @@ const projects = [
         skills: ['Python', 'Agno', 'FastAPI', 'Chroma', 'NuxtJs'],
         tags: ['AI', 'Full-Stack', 'LLM'],
         year: 2025,
+    },
+    {
+        name: 'Piano Trainer',
+        description: `
+            A simple web application that helps you learn the piano by providing a virtual keyboard, interactive
+            lessons with raining tiles when uploading a MIDI, or free-play mode. Record plays and convert to MIDI,
+            change key mappings, and more. 
+        `,
+        summary: 'A web app to learn the piano with interactive lessons',
+        image: '/img/projects/piano-trainer.png',
+        links: [{ icon: 'carbon:progress-bar-round' }],
+        skills: ['VueJs', 'Tone.js'],
+        tags: ['Front-End', 'Music'],
+        year: 2026,
     },
 ]
 

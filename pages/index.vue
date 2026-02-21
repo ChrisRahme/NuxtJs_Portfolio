@@ -44,9 +44,10 @@
                 </div>
 
                 <div id="hero-icons">
-                    <template v-for="icon in state['skills']" :key="icon">
+                    <template v-for="icon in state['skills']" :key="icon['name']">
                         <div class="hero-icon" style="position: absolute; z-index: 0">
-                            <Icon :data-name="icon" :name="icon" />
+                            <span v-if="!icon['icon'] && icon['img']" v-html="state['svgCache'][icon['img']]"></span>
+                            <Icon v-else :data-name="icon['icon']" :name="icon['icon']" />
                         </div>
                     </template>
                 </div>
@@ -159,6 +160,7 @@ const state = reactive({
     quote: null,
 
     skills: [],
+    svgCache: {},
 
     abouts: [],
     aboutIndex: 0,
@@ -332,9 +334,12 @@ function typeLines() {
 
         startTyping(line1, text1)
 
-        setTimeout(function () {
-            startTyping(line2, text2)
-        }, LINES_INTERVAL + (1000 * text1.length) / TYPING_SPEED)
+        setTimeout(
+            function () {
+                startTyping(line2, text2)
+            },
+            LINES_INTERVAL + (1000 * text1.length) / TYPING_SPEED
+        )
     }
 
     const interval = setInterval(function () {
@@ -417,9 +422,6 @@ onBeforeMount(function () {
         .filter(function (icon) {
             return icon && icon['showVignette']
         })
-        .map(function (icon) {
-            return icon['icon']
-        })
 
     state['quotes'] = store['quotes']
 
@@ -434,13 +436,22 @@ onMounted(async function () {
     changeQuote()
     changeAbout(0)
 
+    // Fetch and cache all custom SVGs
+    const imgPaths = state['skills']
+        .filter((icon) => !icon['icon'] && icon['img'])
+        .map((icon) => icon['img'])
+        .filter((path, index, self) => self.indexOf(path) === index)
+
+    await Promise.all(
+        imgPaths.map(async function (path) {
+            const response = await fetch(path)
+            state['svgCache'][path] = await response.text()
+        })
+    )
+
     typeLines()
     popIcons()
     watchScroll()
-
-    // const store = useGlobalStore()
-    // await store.asyncTest()
-    // console.log(store.name, store.description)
 
     state['isLoaded'] = true
 })
@@ -518,7 +529,9 @@ onBeforeUnmount(function () {
             @apply flex flex-col justify-center w-full overflow-hidden text-white lg:rounded-[50%];
 
             height: 100%;
-            box-shadow: inset 0 0 var(--blur-spread) var(--color-background-9), 0 0 var(--blur-spread) var(--color-background-8);
+            box-shadow:
+                inset 0 0 var(--blur-spread) var(--color-background-9),
+                0 0 var(--blur-spread) var(--color-background-8);
             // border-radius: 100%;
             background-color: var(--color-background-8);
             backdrop-filter: blur(var(--blur-spread));

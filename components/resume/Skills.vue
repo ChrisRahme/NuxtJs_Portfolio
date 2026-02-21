@@ -10,7 +10,8 @@
                     <template v-for="(item, i) in group.icons" :key="item.name || i">
                         <div class="skill-item flex flex-col justify-center content-center items-center" :style="`--color: ${item.color};`">
                             <div class="skill-icon transition-500" :title="item.name">
-                                <Icon :name="item.icon" :class="item.class" />
+                                <span v-if="!item.icon && item.img" class="skill-img" v-html="state['svgCache'][item.img]"></span>
+                                <Icon v-else :name="item.icon" :class="item.class" />
                             </div>
 
                             <small class="skill-name text-sm text-center transition-500" v-if="state['showSkillNames']"> {{ item.name }} </small>
@@ -38,6 +39,7 @@ const state = reactive({
 
     skills: [],
     showSkillNames: false,
+    svgCache: {},
 })
 
 // Functions
@@ -91,8 +93,22 @@ onBeforeMount(function () {
     })
 })
 
-onMounted(function () {
+onMounted(async function () {
     state['mounted'] = true
+
+    // Fetch and cache all custom SVGs
+    const imgPaths = state['skills']
+        .flatMap((group) => group['icons'])
+        .filter((icon) => !icon['icon'] && icon['img'])
+        .map((icon) => icon['img'])
+        .filter((path, index, self) => self.indexOf(path) === index) // deduplicate
+
+    await Promise.all(
+        imgPaths.map(async function (path) {
+            const response = await fetch(path)
+            state['svgCache'][path] = await response.text()
+        })
+    )
 
     highlightSkill()
 })
@@ -169,9 +185,27 @@ onBeforeUnmount(function () {
                 }
 
                 .skill-icon {
-                    display: inline-block;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                     font-size: 2.5rem;
                     margin: auto;
+
+                    .skill-img {
+                        display: flex;
+                        width: 2.5rem;
+                        height: 2.5rem;
+
+                        svg {
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+                }
+
+                &:hover,
+                &.colored {
+                    color: var(--color);
                 }
 
                 .skill-name {
