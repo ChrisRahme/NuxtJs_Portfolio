@@ -196,7 +196,7 @@ const skills = [
             { name: 'Hugging Face', icon: 'simple-icons:huggingface', color: '#FF9E00', showVignette: true, showSkills: true },
             { name: 'Rasa', icon: 'simple-icons:rasa', color: '#5A16EE', showVignette: true, showSkills: false },
             { name: 'LangChain', icon: 'simple-icons:langchain', color: '#1D3C3E', showVignette: true, showSkills: true },
-            { name: 'Agno', icon: 'tabler:hexagon-letter-a', color: '#FC6546', showVignette: false, showSkills: true }, // TODO: Logo
+            { name: 'Agno', img: '/img/skills/agno.svg', color: '#FC6546', showVignette: false, showSkills: true },
             { name: 'Chroma', img: '/img/skills/chroma.svg', color: '#FF6447', showVignette: true, showSkills: true },
             { name: 'Qdrant', img: '/img/skills/qdrant.svg', color: '#7589BE', showVignette: true, showSkills: true },
             // Data Science
