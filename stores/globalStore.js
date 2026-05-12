@@ -139,9 +139,9 @@ const skills = [
             { name: 'Java', icon: 'devicon-plain:java', color: '#F89917', showVignette: true, showSkills: false },
             { name: 'Bash', icon: 'devicon-plain:bash', color: '#45B452', showVignette: true, showSkills: false },
             // Frameworks
-            { name: 'Laravel', icon: 'simple-icons:laravel', color: '#FF2D20', showVignette: true, showSkills: true },
+            { name: 'Laravel', icon: 'simple-icons:laravel', color: '#FF2D20', showVignette: true, showSkills: false },
             { name: 'Streamlit', icon: 'simple-icons:streamlit', color: '#FF4B4B', showVignette: true, showSkills: true },
-            { name: 'Django', icon: 'devicon-plain:django', color: '#44B78B', showVignette: true, showSkills: true },
+            { name: 'Django', icon: 'devicon-plain:django', color: '#44B78B', showVignette: true, showSkills: false },
             { name: 'Flask', icon: 'bxl:flask', color: '#41ACC0', showVignette: true, showSkills: false },
             { name: 'FastAPI', icon: 'devicon-plain:fastapi', color: '#009485', showVignette: true, showSkills: true },
             { name: 'SQLAlchemy', icon: 'devicon-plain:sqlalchemy', color: '#CB2222', showVignette: true, showSkills: true },
@@ -165,7 +165,7 @@ const skills = [
             { name: 'React', icon: 'simple-icons:react', color: '#017FA5', showVignette: true, showSkills: true },
             { name: 'VueJs', icon: 'simple-icons:vuedotjs', color: '#3FB984', showVignette: true, showSkills: true },
             { name: 'NuxtJs', icon: 'simple-icons:nuxtdotjs', color: '#00DD83', showVignette: true, showSkills: true },
-            { name: 'Pinia', icon: 'mdi:vuejs', color: '#FFDA58', showVignette: true, showSkills: false },
+            { name: 'Pinia', icon: 'simple-icons:pinia', color: '#FFDA58', showVignette: true, showSkills: false },
             { name: 'Bootstrap', icon: 'devicon-plain:bootstrap', color: '#6F06E3', showVignette: true, showSkills: true },
             { name: 'Tailwind', icon: 'simple-icons:tailwindcss', color: '#35BEF8', showVignette: true, showSkills: true },
         ],
@@ -183,6 +183,9 @@ const skills = [
             { name: 'MongoDB', icon: 'devicon-plain:mongodb', color: '#006849', showVignette: true, showSkills: true },
             { name: 'Elasticsearch', icon: 'devicon-plain:elasticsearch', color: '#FED203', showVignette: true, showSkills: true },
             { name: 'Redis', icon: 'simple-icons:redis', color: '#FF4235', showVignette: true, showSkills: true },
+            // Vector
+            { name: 'Chroma', img: '/img/skills/chroma.svg', color: '#FF6447', showVignette: true, showSkills: true },
+            { name: 'Qdrant', img: '/img/skills/qdrant.svg', color: '#7589BE', showVignette: true, showSkills: true },
         ],
     },
     {
@@ -197,8 +200,6 @@ const skills = [
             { name: 'Rasa', icon: 'simple-icons:rasa', color: '#5A16EE', showVignette: true, showSkills: false },
             { name: 'LangChain', icon: 'simple-icons:langchain', color: '#1D3C3E', showVignette: true, showSkills: true },
             { name: 'Agno', img: '/img/skills/agno.svg', color: '#FC6546', showVignette: false, showSkills: true },
-            { name: 'Chroma', img: '/img/skills/chroma.svg', color: '#FF6447', showVignette: true, showSkills: true },
-            { name: 'Qdrant', img: '/img/skills/qdrant.svg', color: '#7589BE', showVignette: true, showSkills: true },
             // Data Science
             { name: 'Pandas', icon: 'devicon-plain:pandas', color: '#E80089', showVignette: true, showSkills: true },
             { name: 'NumPy', icon: 'devicon-plain:numpy', color: '#4C78D0', showVignette: true, showSkills: false },
@@ -212,10 +213,13 @@ const skills = [
         icons: [
             // Cloud
             { name: 'Google Cloud', icon: 'devicon-plain:googlecloud', color: '#4086F4', showVignette: true, showSkills: true },
+            { name: 'Amazon Web Services', icon: 'mdi:aws', color: '#FF9900', showVignette: true, showSkills: false },
+            { name: 'Terraform', icon: 'devicon-plain:terraform', color: '#7B42BC', showVignette: true, showSkills: false },
             { name: 'Netlify', icon: 'devicon-plain:netlify', color: '#00BEBB', showVignette: true, showSkills: true },
             // DevOps
             { name: 'Linux', icon: 'simple-icons:linux', color: '#F5BE04', showVignette: true, showSkills: true },
             { name: 'Docker', icon: 'simple-icons:docker', color: '#1F97EE', showVignette: true, showSkills: true },
+            { name: 'Kubernetes', icon: 'simple-icons:kubernetes', color: '#326CE5', showVignette: true, showSkills: false },
             { name: 'Git', icon: 'devicon-plain:git', color: '#F05030', showVignette: true, showSkills: true },
             { name: 'Grafana', icon: 'simple-icons:grafana', color: '#FF671D', showVignette: true, showSkills: true },
             { name: 'Prometheus', icon: 'simple-icons:prometheus', color: '#E6522C', showVignette: true, showSkills: true },
@@ -422,7 +426,8 @@ const experience = [
         image: '/img/logos/innovum.png',
         link: 'https://innovum.co',
         color: '#21ADB2',
-        description: 'Developing AI & data science solutions on the back-end and front-end.',
+        description:
+            'Developing AI & data science solutions on the back-end and front-end, specializing in audio processing, ML for audio, and LLM-powered applications.',
         tasks: [
             {
                 title: 'Payload Data Portal',
@@ -440,7 +445,7 @@ const experience = [
                     '<b>Timeline:</b> Designed and implemented an LLM-powered module that extracts and organizes key events, people, and locations from documents into structured timelines.',
                     '<b>Audio:</b> Created a set of audio utility tools such as signal processing denoising, ML denoising and enhancement, analysis, and activity detection.',
                     '<b>Transcription:</b> Designed and implemented an AI-powered module for multilingual audio transcription and diarization, with LLM-powered transformations such as summarization, categorization, and tag extraction.',
-                    '<b>Live Transcription:</b> Extended Nemo Audio to support multi-session real-time call transcription, using audio packets sent over WebSockets and WebRTC connections via a Go-based gateway, along with metrics and monitoring.',
+                    '<b>Live Transcription:</b> Extended Nemo Audio to support multi-session real-time call transcription and translation, using audio packets sent over WebSockets and WebRTC connections via a Go-based gateway, along with metrics and monitoring.',
                 ],
                 skills: [
                     'Python',
@@ -456,13 +461,14 @@ const experience = [
                     'Qdrant',
                     'PostgreSQL',
                     'Docker',
-                    'Grafana',
                     'Prometheus',
+                    'Grafana',
                     'Apify',
+                    'vLLM',
                 ],
             },
             {
-                title: 'Misc. LLM-based Projects',
+                title: 'Misc. LLM Projects',
                 text: [
                     "Developed an LLM-powered solution that rates a website's AI-SEO performance by checking the HTML structure, content readability, etc., comparing with competitors and providing improvement suggestions.",
                     "Developed multiple LLM-powered database fillers, including an agent that completes a webshop's catalog by searching for missing product information online, or an agent that categorizes companies into industries.",
@@ -471,7 +477,7 @@ const experience = [
                 skills: ['Python', 'Pandas', 'LangChain', 'Agno', 'FastAPI', 'Streamlit', 'Apify'],
             },
             {
-                title: 'Misc. AI Projects',
+                title: 'Misc. ML Projects',
                 text: [
                     'Developed a pipeline for intruder detection and face recognition in live surveillance camera footage using various pre-trained and custom models.',
                 ],
@@ -482,8 +488,9 @@ const experience = [
                 text: [
                     'Build CI/CD pipelines for automated testing and deployment of applications.',
                     'Create Grafana dashboards for monitoring deployed applications and services.',
+                    'Set up Terraform configurations for infrastructure provisioning and management.',
                 ],
-                skills: ['Docker', 'GitHub Actions', 'Prometheus', 'Grafana'],
+                skills: ['Docker', 'GitHub Actions', 'Prometheus', 'Grafana', 'Terraform', 'Metabase', 'vLLM'],
             },
         ],
     },
@@ -754,9 +761,9 @@ const projects = [
     {
         name: 'Music Analyzer',
         description: `
-            An AI music analysis tool that extracts various audio features & embeddings from music tracks, split into
-            chunks. The chunks and songs are clustered and compared, to find similar chunks and/or songs, integrated
-            with a user-based rating system to recommend similar music based on user preferences.
+            A data science experiment born out of curiosity about what makes me like a song, or in particular which parts of a song.
+            It breaks a song into chunks, extracts audio features and embeddings from each chunk, then clusters and compares them to find patterns.
+            Paired with a personal rating system, and you get a system that can recommend you songs or even specific parts of songs.
         `,
         summary: 'An AI music analysis and recommendation system',
         image: '/img/projects/music-analyzer.jpg',
@@ -791,6 +798,43 @@ const projects = [
         links: [{ icon: 'carbon:progress-bar-round' }],
         skills: ['VueJs', 'Tone.js'],
         tags: ['Front-End', 'Music'],
+        year: 2026,
+    },
+    {
+        name: 'NoteBlocks',
+        description: `
+            Learning piano is nice, but I could not manage to read sheet music efficiently.
+            I kept writing down the note names on paper, losing all sense of tempo and timing in the process.
+            So I built NoteBlocks, an interactive music sheet viewer designed for beginners.
+            Upload a MIDI, MusicXML, MuseScore, or even audio and PDF file and get a sheet music layout, but instead of traditional notation,
+            each stave displays note blocks, labeled with the note name and sized proportionally to its duration.
+            Supports multiple staves/tracks that can be reordered, muted, and assigned different instruments.
+            Highly configurable with color palettes, layouts, notation options, preferences, and more.
+            NoteBlocks started small, but I kept adding features until it turned into a full-fledged music editing and viewing tool, and the biggest project I've ever built for myself.
+        `,
+        summary: 'An music viewer & editor app to convert music into easy-to-read note blocks',
+        image: '/img/projects/noteblocks.png',
+        links: [{ icon: 'carbon:progress-bar-round' }],
+        skills: ['Python', 'FastAPI', 'VueJs', 'PyInstaller'],
+        tags: ['Full-Stack', 'Music'],
+        year: 2026,
+    },
+    {
+        name: 'Amazing Chessboard Patterns',
+        description: `
+            Inspired by two Numberphile videos, this interactive web app visualizes the spiral placement of fairy-chess leaper pieces on a square grid.
+            Pieces walk outward in spiral order, each claiming the next available cell and marking attacked cells to block opposing colors.
+            Supports 12 built-in pieces as well as custom ones.
+            Features interactive playback, live stats, and image and video export.
+        `,
+        summary: 'An interactive visualizer for fairy-chess leaper spiral patterns on a chessboard',
+        image: '/img/projects/chessboard-patterns.png',
+        links: [
+            { icon: 'mdi:web', link: 'https://chrisrahme.github.io/Chessboard_Patterns/' },
+            { icon: 'mdi:github', link: 'https://github.com/ChrisRahme/Chessboard_Patterns' },
+        ],
+        skills: ['VueJs', 'TypeScript', 'Vite'],
+        tags: ['Front-End', 'Maths'],
         year: 2026,
     },
 ]
