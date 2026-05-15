@@ -2,7 +2,7 @@
     <Teleport to="body">
         <Transition name="modal">
             <div
-                v-if="state['visible']"
+                v-if="props['visible']"
                 ref="overlayRef"
                 class="modal-overlay"
                 role="dialog"
@@ -19,9 +19,9 @@
                         <Icon name="mdi:close" />
                     </button>
 
-                    <div class="modal-content" v-if="state['project']">
+                    <div class="modal-content" v-if="props['project']">
                         <div class="modal-image" v-if="images.length">
-                            <NuxtImg :src="images[state['imageIndex']]" :alt="state['project']['name']" width="960" height="540" format="webp" />
+                            <NuxtImg :src="images[state['imageIndex']]" :alt="props['project']['name']" width="960" height="540" format="webp" />
 
                             <template v-if="images.length > 1">
                                 <button class="image-nav image-nav-left" @click.stop="previousImage" title="Previous image" aria-label="Previous image">
@@ -49,35 +49,36 @@
 
                         <div class="modal-body">
                             <div class="modal-header">
-                                <h2 :id="titleId" class="modal-title">{{ state['project']['name'] }}</h2>
-                                <span class="modal-year">{{ state['project']['year'] }}</span>
+                                <h2 :id="titleId" class="modal-title">{{ props['project']['name'] }}</h2>
+                                <span class="modal-year">{{ props['project']['year'] }}</span>
                             </div>
 
-                            <div class="modal-description" v-if="state['project']['description']">
-                                <p v-html="state['project']['description']"></p>
+                            <div class="modal-description" v-if="props['project']['description']">
+                                <!-- hardcoded content from data/projects.js only — do not pipe user input here -->
+                                <p v-html="props['project']['description']"></p>
                             </div>
 
-                            <div class="modal-skills" v-if="state['project']['skills'] && state['project']['skills'].length">
+                            <div class="modal-skills" v-if="props['project']['skills'] && props['project']['skills'].length">
                                 <h4>Skills & Technologies</h4>
 
                                 <div class="tags-list mb-1">
-                                    <template v-for="skill in state['project']['tags']" :key="skill">
+                                    <template v-for="skill in props['project']['tags']" :key="skill">
                                         <div class="badge">{{ skill }}</div>
                                     </template>
                                 </div>
 
                                 <div class="skills-list">
-                                    <template v-for="skill in state['project']['skills']" :key="skill">
+                                    <template v-for="skill in props['project']['skills']" :key="skill">
                                         <div class="badge">{{ skill }}</div>
                                     </template>
                                 </div>
                             </div>
 
-                            <div class="modal-links -mb-4" v-if="state['project']['links'] && state['project']['links'].length">
+                            <div class="modal-links -mb-4" v-if="props['project']['links'] && props['project']['links'].length">
                                 <h4>Links</h4>
 
                                 <div class="links-list">
-                                    <template v-for="link in state['project']['links']" :key="link['icon']">
+                                    <template v-for="link in props['project']['links']" :key="link['icon']">
                                         <a v-if="link['link']" :href="link['link']" target="_blank" rel="noopener noreferrer" class="modal-link" :title="link['title'] || 'View project'">
                                             <Icon :name="link['icon']" />
                                         </a>
@@ -120,13 +121,11 @@ const titleId = useId()
 let triggerElement = null
 
 const state = reactive({
-    visible: false,
-    project: null,
     imageIndex: 0,
 })
 
 const images = computed(function () {
-    const list = state['project'] && state['project']['images']
+    const list = props['project'] && props['project']['images']
     return list && list.length ? list : []
 })
 
@@ -161,7 +160,7 @@ function getFocusable() {
 }
 
 function handleKeydown(event) {
-    if (!state['visible']) return
+    if (!props['visible']) return
 
     if (event.key === 'Escape') {
         event.preventDefault()
@@ -188,16 +187,16 @@ function handleKeydown(event) {
 }
 
 // Watchers
-watchEffect(function () {
-    state['project'] = props['project']
-    state['imageIndex'] = 0
-})
+watch(
+    () => props['project'],
+    function () {
+        state['imageIndex'] = 0
+    }
+)
 
 watch(
     () => props['visible'],
     function (visible) {
-        state['visible'] = visible
-
         if (typeof document === 'undefined') return
 
         if (visible) {
@@ -451,10 +450,6 @@ onBeforeUnmount(function () {
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem;
-    }
-
-    .tags-list .badge {
-        background-color: var(--color-primary);
     }
 
     .tags-list .badge {

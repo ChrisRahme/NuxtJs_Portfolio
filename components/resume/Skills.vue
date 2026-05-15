@@ -14,7 +14,7 @@
                                 <Icon v-else :name="item.icon" :class="item.class" />
                             </div>
 
-                            <small class="skill-name text-sm text-center transition-500" v-if="state['showSkillNames']"> {{ item.name }} </small>
+                            <small class="skill-name text-sm text-center transition-500" v-if="props['showSkillNames']"> {{ item.name }} </small>
                         </div>
                     </template>
                 </div>
@@ -37,11 +37,8 @@ const props = defineProps({
 
 // State
 const state = reactive({
-    mounted: false,
     unmount: false,
-
     skills: [],
-    showSkillNames: false,
 })
 
 // Functions
@@ -77,11 +74,6 @@ function highlightSkill(skills, index) {
     )
 }
 
-// Watchers
-watchEffect(function () {
-    state['showSkillNames'] = props['showSkillNames']
-})
-
 // Lifecycle
 onBeforeMount(function () {
     state['skills'] = skills.map(function (group) {
@@ -94,8 +86,6 @@ onBeforeMount(function () {
 })
 
 onMounted(function () {
-    state['mounted'] = true
-
     highlightSkill()
 })
 

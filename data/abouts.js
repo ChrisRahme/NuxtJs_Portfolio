@@ -35,7 +35,7 @@ export const abouts = [
         when I became a board member (and then president) of the Saint Joseph University Astronomy Club for six incredible years.
         <br/><br/>
         From organizing stargazing nights, campings, events, and festivals, to leading educational talks,
-        I had an immense plreasure in sharing the science of the universe with others.
+        I had an immense pleasure in sharing the science of the universe with others.
         Even today, I continue to give astronomy talks, hoping to inspire people to look up at the night sky with the same sense of wonder I do.
         <br/><br/>
         There\'s something humbling about understanding our place in the vastness of the universe,

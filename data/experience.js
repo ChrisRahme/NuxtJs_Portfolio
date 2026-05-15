@@ -13,7 +13,7 @@ export const experience = [
             {
                 title: 'Implify',
                 text: [
-                    'Developeed a GWT Java application to manipulate and query a MySQL database, respecting the database schema and logic to ensure data integrity while pushing and pulling data.',
+                    'Developed a GWT Java application to manipulate and query a MySQL database, respecting the database schema and logic to ensure data integrity while pushing and pulling data.',
                     'Designed and implemented MySQL database schemas, ensuring carefully planned table structures, optimized relationships, and adherence to best practices.',
                     'Built a pretty, responsive, user-friendly interface for seamless queries and interaction with the underlying workflows.',
                 ],
@@ -38,7 +38,7 @@ export const experience = [
                     "Designed and implemented a custom Drupal theme, ensuring it adhered to the university's branding guidelines and provided a modern, user-friendly interface.",
                     'Created and tested key functionalities, improving overall usability and design consistency.',
                     "Optimized the website's performance by re-thinking its JavaScript code.",
-                    "Optimized the website's administrative and development processess by making use of the content management system.",
+                    "Optimized the website's administrative and development processes by making use of the content management system.",
                 ],
                 skills: ['Drupal', 'Twig', 'HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL'],
             },
@@ -77,7 +77,7 @@ export const experience = [
         image: '/img/logos/dataconsult.webp',
         link: 'https://dcgroup.com',
         color: '#001B71',
-        description: 'Developed and maitained containerized web applications, with knowledge in AI and Cisco VoIP integration.',
+        description: 'Developed and maintained containerized web applications, with knowledge in AI and Cisco VoIP integration.',
         tasks: [
             {
                 title: 'Synergi',
@@ -113,7 +113,7 @@ export const experience = [
     },
     {
         start: 'Oct 2023',
-        end: 'Feb 2025 ',
+        end: 'Feb 2025',
         title: 'Senior Full-Stack & AI Engineer',
         type: 'Full-time',
         company: 'Atria Solutions',
@@ -126,7 +126,7 @@ export const experience = [
             {
                 title: 'AtriPulse Next',
                 text: [
-                    'Developed a comprehensive call center solution featuring mutli-vendor call recording, live wallboards, analytics, and additional advanced functionalities.',
+                    'Developed a comprehensive call center solution featuring multi-vendor call recording, live wallboards, analytics, and additional advanced functionalities.',
                 ],
                 skills: ['VueJs', 'Laravel', 'NodeJs', 'PHP', 'MySQL', 'MongoDB', 'ElasticSearch', 'Redis', 'Docker', 'Asterisk', 'RabbitMQ'],
             },
@@ -153,7 +153,7 @@ export const experience = [
             },
             {
                 title: 'MindForge',
-                text: ['Improved this AI-builder web application that I developed at Data Consult.', 'Depolyed the application to client servers.'],
+                text: ['Improved this AI-builder web application that I developed at Data Consult.', 'Deployed the application to client servers.'],
                 skills: ['VueJs', 'Python', 'Flask', 'SQLAlchemy', 'Scikit-Learn', 'Pandas', 'MySQL'],
             },
             {

@@ -81,16 +81,13 @@
                 }"
             >
                 <template v-for="(item, index) in state['timeline']" :key="item.title">
-                    <js>
-                        {{ (isShown = index == state['selectedIndex']) }}
-                    </js>
                     <div
                         class="card px-4 py-4"
                         :style="{
                             '--theme': item.color || 'white',
                             '--separator': item.color || '#e5e7eb',
-                            '--opacity': isShown ? 1 : 0,
-                            '--max-height': isShown ? '100%' : 0,
+                            '--opacity': index === state['selectedIndex'] ? 1 : 0,
+                            '--max-height': index === state['selectedIndex'] ? '100%' : 0,
                             'opacity': 'var(--opacity)',
                             'max-height': 'var(--max-height)',
                         }"
@@ -116,7 +113,7 @@
 
                                         <!-- Company -->
                                         <h5 class="m-0">
-                                            <a :href="item.link" target="_blank" rel="noopener noreferrer" :title="isShown ? 'Visit website' : null" v-if="item.link">
+                                            <a :href="item.link" target="_blank" rel="noopener noreferrer" :title="index === state['selectedIndex'] ? 'Visit website' : null" v-if="item.link">
                                                 <span class="text-sm font-semibold text-[#A040A0]">{{ item.company }}</span>
                                                 <Icon
                                                     name="solar:link-bold"
@@ -166,6 +163,7 @@
 
                                 <!-- Description -->
                                 <div class="description mt-2" v-if="item.description">
+                                    <!-- hardcoded content from data/experience.js only — do not pipe user input here -->
                                     <p v-html="item.description"></p>
                                 </div>
 
@@ -179,6 +177,7 @@
                                         <template v-for="subtask in task.text" :key="subtask">
                                             <ul class="list-disc list-outside text-black">
                                                 <li :class="task.title && task.text.length < 2 ? 'text-transparent ml-4' : 'text-black ml-8'">
+                                                    <!-- hardcoded content from data/experience.js only — do not pipe user input here -->
                                                     <span class="text-black" v-html="subtask"></span>
                                                 </li>
                                             </ul>
@@ -249,9 +248,6 @@ const props = defineProps({
 
 // State
 const state = reactive({
-    mounted: false,
-    unmount: false,
-
     timeline: [],
     selectedIndex: props['selectedIndex'],
     selectedItem: null,
@@ -260,7 +256,7 @@ const state = reactive({
 // Methods
 function selectItem(index) {
     const maxIndex = state['timeline'].length - 1
-    state['selectedIndex'] = Math.min(Math.max(0, index), index, maxIndex)
+    state['selectedIndex'] = Math.max(0, Math.min(index, maxIndex))
     state['selectedItem'] = state['timeline'][state['selectedIndex']]
 }
 
@@ -270,13 +266,7 @@ onBeforeMount(function () {
 })
 
 onMounted(function () {
-    state['mounted'] = true
-
     selectItem(props['selectedIndex'] || state['timeline'].length)
-})
-
-onBeforeUnmount(function () {
-    state['unmount'] = true
 })
 </script>
 

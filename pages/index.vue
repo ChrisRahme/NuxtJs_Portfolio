@@ -2,6 +2,11 @@
     <Head>
         <Title>Chris Rahmé | Home</Title>
         <Meta name="description" content="Chris Rahmé - Full-Stack & AI Engineer" />
+        <Meta property="og:title" content="Chris Rahmé | Home" />
+        <Meta property="og:description" content="Chris Rahmé - Full-Stack & AI Engineer" />
+        <Meta property="og:url" content="https://chrisrahme.dev" />
+        <Meta name="twitter:title" content="Chris Rahmé | Home" />
+        <Meta name="twitter:description" content="Chris Rahmé - Full-Stack & AI Engineer" />
     </Head>
 
     <div id="home">
@@ -416,8 +421,6 @@ function changeAbout(index) {
 // Lifecycle
 
 onBeforeMount(function () {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-
     state['skills'] = skills
         .map(function (group) {
             return group['icons']
@@ -436,6 +439,7 @@ onBeforeMount(function () {
 
 onMounted(function () {
     state['mounted'] = true
+    window.scrollTo({ top: 0, behavior: 'smooth' })
 
     changeQuote()
     changeAbout(0)

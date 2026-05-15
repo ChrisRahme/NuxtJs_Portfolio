@@ -5,7 +5,7 @@
         </div>
     </div> -->
 
-    <header id="header" class="bg-white shadow-sm">
+    <header id="header" class="bg-white shadow-sm noselect">
         <nav class="container mx-auto px-8 py-2">
             <NuxtLink id="nav-icon" to="/">
                 <!-- <Avatar /> -->
@@ -55,8 +55,6 @@ onBeforeMount(function () {})
 @import '/assets/css/tailwind.css';
 
 header {
-    user-select: none;
-
     * {
         overflow: hidden;
     }

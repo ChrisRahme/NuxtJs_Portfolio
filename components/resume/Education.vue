@@ -82,9 +82,6 @@ const props = defineProps({})
 
 // State
 const state = reactive({
-    mounted: false,
-    unmount: false,
-
     timeline: [],
     selectedIndex: props['selectedIndex'],
 })
@@ -92,7 +89,7 @@ const state = reactive({
 // Methods
 function selectDot(index) {
     const maxIndex = state['timeline'].length - 1
-    state['selectedIndex'] = Math.min(Math.max(0, index), index, maxIndex)
+    state['selectedIndex'] = Math.max(0, Math.min(index, maxIndex))
 }
 
 // Lifecycle
@@ -101,13 +98,7 @@ onBeforeMount(function () {
 })
 
 onMounted(function () {
-    state['mounted'] = true
-
     selectDot(props['selectedIndex'] || state['timeline'].length)
-})
-
-onBeforeUnmount(function () {
-    state['unmount'] = true
 })
 </script>
 

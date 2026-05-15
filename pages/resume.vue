@@ -97,6 +97,18 @@ import Education from '../components/resume/Education.vue'
 import Skills from '../components/resume/Skills.vue'
 import Languages from '../components/resume/Languages.vue'
 
+useHead({
+    title: 'Resume | Chris Rahmé',
+    meta: [
+        { name: 'description', content: 'Resume of Chris Rahmé — full-stack and AI engineer. Experience, education, and skills.' },
+        { property: 'og:title', content: 'Resume | Chris Rahmé' },
+        { property: 'og:description', content: 'Resume of Chris Rahmé — full-stack and AI engineer. Experience, education, and skills.' },
+        { property: 'og:url', content: 'https://chrisrahme.dev/resume' },
+        { name: 'twitter:title', content: 'Resume | Chris Rahmé' },
+        { name: 'twitter:description', content: 'Resume of Chris Rahmé — full-stack and AI engineer. Experience, education, and skills.' },
+    ],
+})
+
 // State
 const state = reactive({
     mounted: false,
@@ -109,15 +121,10 @@ function downloadCV() {
 }
 
 // Lifecycle
-onBeforeMount(function () {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-})
-
 onMounted(function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
     state['mounted'] = true
 })
-
-onBeforeUnmount(function () {})
 </script>
 
 <style lang="scss" scoped>

@@ -53,8 +53,6 @@ export default defineNuxtConfig({
 
     // Head
     app: {
-        pageTransition: { name: 'page', mode: 'out-in' },
-        layoutTransition: { name: 'layout', mode: 'out-in' },
         head: {
             title: 'Chris Rahmé',
             meta: [
@@ -66,26 +64,6 @@ export default defineNuxtConfig({
                     name: 'author',
                     content: 'Chris Rahmé',
                 },
-                // { // Not recommended to use keywords
-                //     name: 'keywords',
-                //     content: [
-                //         'Chris Rahmé',
-                //         'Full-Stack',
-                //         'Back-end',
-                //         'Front-end',
-                //         'AI',
-                //         'Artificial Intelligence',
-                //         'ML',
-                //         'Machine Learning',
-                //         'Software',
-                //         'Engineer',
-                //         'Developer',
-                //         'Programmer',
-                //         'Portfolio',
-                //         'Lebanon',
-                //         'Hire',
-                //     ].join(', '),
-                // },
                 {
                     name: 'viewport',
                     content: 'width=device-width, initial-scale=1, user-scalable=1',
@@ -98,6 +76,17 @@ export default defineNuxtConfig({
                     name: 'robots',
                     content: 'index, follow',
                 },
+                // OpenGraph defaults — overridden per-page via useHead
+                { property: 'og:site_name', content: 'Chris Rahmé' },
+                { property: 'og:type', content: 'website' },
+                { property: 'og:title', content: 'Chris Rahmé' },
+                { property: 'og:description', content: 'Chris Rahmé - Full-Stack & AI Engineer' },
+                { property: 'og:image', content: 'https://chrisrahme.dev/img/avatar.svg' },
+                { property: 'og:url', content: 'https://chrisrahme.dev' },
+                { name: 'twitter:card', content: 'summary_large_image' },
+                { name: 'twitter:title', content: 'Chris Rahmé' },
+                { name: 'twitter:description', content: 'Chris Rahmé - Full-Stack & AI Engineer' },
+                { name: 'twitter:image', content: 'https://chrisrahme.dev/img/avatar.svg' },
             ],
             link: [
                 {

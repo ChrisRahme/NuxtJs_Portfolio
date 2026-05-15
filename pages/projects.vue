@@ -31,6 +31,18 @@ import ProjectCard from '../components/projects/ProjectCard.vue'
 import ProjectModal from '../components/projects/ProjectModal.vue'
 import { projects } from '~/data/projects'
 
+useHead({
+    title: 'Projects | Chris Rahmé',
+    meta: [
+        { name: 'description', content: 'Selected projects by Chris Rahmé — full-stack apps, AI/ML systems, IoT, music tools, and more.' },
+        { property: 'og:title', content: 'Projects | Chris Rahmé' },
+        { property: 'og:description', content: 'Selected projects by Chris Rahmé — full-stack apps, AI/ML systems, IoT, music tools, and more.' },
+        { property: 'og:url', content: 'https://chrisrahme.dev/projects' },
+        { name: 'twitter:title', content: 'Projects | Chris Rahmé' },
+        { name: 'twitter:description', content: 'Selected projects by Chris Rahmé — full-stack apps, AI/ML systems, IoT, music tools, and more.' },
+    ],
+})
+
 const state = reactive({
     projects: [],
     long: false,
@@ -70,9 +82,11 @@ function previousProject() {
 }
 
 // Lifecycle
-onBeforeMount(function () {
+onMounted(function () {
     window.scrollTo({ top: 0, behavior: 'smooth' })
+})
 
+onBeforeMount(function () {
     state['projects'] = projects
         .map(function (project, index) {
             return {
