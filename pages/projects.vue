@@ -29,6 +29,7 @@
 <script setup>
 import ProjectCard from '../components/projects/ProjectCard.vue'
 import ProjectModal from '../components/projects/ProjectModal.vue'
+import { projects } from '~/data/projects'
 
 const state = reactive({
     projects: [],
@@ -71,9 +72,8 @@ function previousProject() {
 // Lifecycle
 onBeforeMount(function () {
     window.scrollTo({ top: 0, behavior: 'smooth' })
-    const store = useGlobalStore()
 
-    state['projects'] = store['projects']
+    state['projects'] = projects
         .map(function (project, index) {
             return {
                 ...project,

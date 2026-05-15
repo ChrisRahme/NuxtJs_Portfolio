@@ -75,6 +75,8 @@
 </template>
 
 <script setup>
+import { education } from '~/data/education'
+
 // Props
 const props = defineProps({})
 
@@ -95,9 +97,7 @@ function selectDot(index) {
 
 // Lifecycle
 onBeforeMount(function () {
-    const store = useGlobalStore()
-
-    state['timeline'] = store['education']
+    state['timeline'] = education
 })
 
 onMounted(function () {

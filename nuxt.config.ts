@@ -38,9 +38,7 @@ export default defineNuxtConfig({
         '@nuxtjs/tailwindcss',
         '@nuxtjs/robots',
         '@nuxtjs/sitemap',
-        '@pinia/nuxt',
         '@vueuse/nuxt',
-        'nuxt-lodash',
     ],
 
     tailwindcss: {

@@ -3,7 +3,7 @@
         <div id="title" class="md:flex justify-between items-center mb-10">
             <div class="sm:flex items-center gap-4">
                 <div id="avatar" class="hover:scale-110 hidden sm:block transition-300">
-                    <img class="avatar" src="/img/avatar.svg" alt="Avatar" style="max-height: 12rem; max-width: 12rem; transform: translateY(-7px)" />
+                    <NuxtImg class="avatar" src="/img/avatar.svg" alt="Avatar" style="max-height: 12rem; max-width: 12rem; transform: translateY(-7px)" />
                 </div>
 
                 <div id="info">

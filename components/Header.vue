@@ -9,7 +9,7 @@
         <nav class="container mx-auto px-8 py-2">
             <NuxtLink id="nav-icon" to="/">
                 <!-- <Avatar /> -->
-                <img src="/img/icon.min.svg" alt="Home" />
+                <NuxtImg src="/img/icon.min.svg" alt="Home" />
             </NuxtLink>
 
             <ul class="flex gap-8">

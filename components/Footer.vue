@@ -55,6 +55,8 @@
 </template>
 
 <script setup>
+import { socials } from '~/data/socials'
+
 // State
 const state = reactive({
     lastUpdated: '',
@@ -65,11 +67,10 @@ const state = reactive({
 // Lifecycle
 onBeforeMount(function () {
     const config = useRuntimeConfig()
-    const store = useGlobalStore()
 
     state['lastUpdated'] = config['public']['lastCommit']
 
-    state['socials'] = store['socials'].filter(function (social) {
+    state['socials'] = socials.filter(function (social) {
         return social['show']
     })
 

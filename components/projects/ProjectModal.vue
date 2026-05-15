@@ -13,7 +13,7 @@
 
                     <div class="modal-content" v-if="state['project']">
                         <div class="modal-image" v-if="images.length">
-                            <img :src="images[state['imageIndex']]" :alt="state['project']['name']" />
+                            <NuxtImg :src="images[state['imageIndex']]" :alt="state['project']['name']" width="960" height="540" format="webp" />
 
                             <template v-if="images.length > 1">
                                 <button class="image-nav image-nav-left" @click.stop="previousImage" title="Previous image">

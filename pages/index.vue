@@ -38,7 +38,7 @@
                         </div>
 
                         <div id="avatar" class="hidden lg:block">
-                            <img class="avatar" src="/img/avatar.svg" alt="Avatar" />
+                            <NuxtImg class="avatar" src="/img/avatar.svg" alt="Avatar" />
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                 <div id="hero-icons">
                     <template v-for="icon in state['skills']" :key="icon['name']">
                         <div class="hero-icon" style="position: absolute; z-index: 0">
-                            <span v-if="!icon['icon'] && icon['img']" v-html="state['svgCache'][icon['img']]"></span>
+                            <span v-if="!icon['icon'] && icon['img']" v-html="skillIcons[icon['img']]"></span>
                             <Icon v-else :data-name="icon['icon']" :name="icon['icon']" />
                         </div>
                     </template>
@@ -99,10 +99,14 @@
                                     <span class="emoji">
                                         {{ about['emoji'] }}
                                     </span>
-                                    <img
+                                    <NuxtImg
                                         :src="about['image']"
                                         :alt="about['title']"
                                         :title="about['title']"
+                                        width="640"
+                                        height="480"
+                                        format="webp"
+                                        loading="lazy"
                                         style="max-width: 1px; max-height: 1px; position: absolute; top: 0; left: 0; opacity: 0"
                                     />
                                 </button>
@@ -129,7 +133,7 @@
                                     '--rotation-hover': state['aboutImageRotation'][1],
                                 }"
                             >
-                                <img :src="state['about']['image']" :alt="state['about']['label']" :title="state['about']['label']" />
+                                <NuxtImg :src="state['about']['image']" :alt="state['about']['label']" :title="state['about']['label']" width="640" height="480" format="webp" />
 
                                 <figcaption>
                                     {{ state['about']['label'] }}
@@ -144,7 +148,10 @@
 </template>
 
 <script setup>
-import { useGlobalStore } from '~/stores/globalStore'
+import { quotes } from '~/data/quotes'
+import { abouts } from '~/data/abouts'
+import { skills } from '~/data/skills'
+import { skillIcons } from '~/composables/skillIcons'
 
 definePageMeta({
     layout: 'home', // No need to mention if default
@@ -160,7 +167,6 @@ const state = reactive({
     quote: null,
 
     skills: [],
-    svgCache: {},
 
     abouts: [],
     aboutIndex: 0,
@@ -412,9 +418,7 @@ function changeAbout(index) {
 onBeforeMount(function () {
     window.scrollTo({ top: 0, behavior: 'smooth' })
 
-    const store = useGlobalStore()
-
-    state['skills'] = store['skills']
+    state['skills'] = skills
         .map(function (group) {
             return group['icons']
         })
@@ -423,31 +427,18 @@ onBeforeMount(function () {
             return icon && icon['showVignette']
         })
 
-    state['quotes'] = store['quotes']
+    state['quotes'] = quotes
 
-    state['abouts'] = store['abouts'].filter(function (about) {
+    state['abouts'] = abouts.filter(function (about) {
         return about['show']
     })
 })
 
-onMounted(async function () {
+onMounted(function () {
     state['mounted'] = true
 
     changeQuote()
     changeAbout(0)
-
-    // Fetch and cache all custom SVGs
-    const imgPaths = state['skills']
-        .filter((icon) => !icon['icon'] && icon['img'])
-        .map((icon) => icon['img'])
-        .filter((path, index, self) => self.indexOf(path) === index)
-
-    await Promise.all(
-        imgPaths.map(async function (path) {
-            const response = await fetch(path)
-            state['svgCache'][path] = await response.text()
-        })
-    )
 
     typeLines()
     popIcons()

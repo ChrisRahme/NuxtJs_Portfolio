@@ -1,0 +1,32 @@
+export const education = [
+    {
+        start: 2001,
+        end: 2016,
+        title: 'Life Sciences Baccalaureate',
+        institution: 'Sainte Famille Fanar',
+        image: '/img/logos/CSFF.png',
+        link: 'https://csff.edu.lb',
+        color: '#6cc0e5',
+        icon: 'ph:book',
+    },
+    {
+        start: 2016,
+        end: 2021,
+        title: 'Software & Telecommunication Engineering',
+        institution: 'Saint Joseph University of Beirut',
+        image: '/img/logos/USJ.png',
+        link: 'https://usj.edu.lb',
+        color: '#fb4f4f',
+        icon: 'ph:gear',
+    },
+    {
+        start: 2021,
+        end: 2023,
+        title: "Master's Degree in Artificial Intelligence",
+        institution: 'Saint Joseph University of Beirut',
+        image: '/img/logos/USJ.png',
+        link: 'https://usj.edu.lb',
+        color: '#fbc93d',
+        icon: 'ph:lightbulb',
+    },
+]

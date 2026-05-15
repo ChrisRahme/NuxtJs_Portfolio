@@ -141,10 +141,13 @@
                                     <!-- Image -->
                                     <div class="hidden md:block" v-if="item.image">
                                         <component :is="item.link ? 'a' : 'span'" :href="item.link" target="_blank">
-                                            <img
+                                            <NuxtImg
                                                 :src="item.image"
                                                 :alt="`${item.company} Logo`"
                                                 class="rounded-lg"
+                                                width="48"
+                                                height="48"
+                                                format="webp"
                                                 :style="{
                                                     'max-height': 'calc(1.75rem + 1.75rem - 0.5rem)',
                                                 }"
@@ -202,6 +205,8 @@
 </template>
 
 <script setup>
+import { experience } from '~/data/experience'
+
 // Props
 const props = defineProps({
     dotSize: {
@@ -261,9 +266,7 @@ function selectItem(index) {
 
 // Lifecycle
 onBeforeMount(function () {
-    const store = useGlobalStore()
-
-    state['timeline'] = store['experience']
+    state['timeline'] = experience
 })
 
 onMounted(function () {

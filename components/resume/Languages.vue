@@ -15,6 +15,8 @@
 </template>
 
 <script setup>
+import { languages } from '~/data/languages'
+
 // Props
 const props = defineProps({})
 
@@ -28,9 +30,7 @@ const state = reactive({
 
 // Lifecycle
 onBeforeMount(function () {
-    const store = useGlobalStore()
-
-    state['languages'] = store['languages']
+    state['languages'] = languages
 })
 
 onMounted(function () {

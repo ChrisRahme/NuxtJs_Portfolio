@@ -1,7 +1,7 @@
 <template>
     <div class="project-card card" v-if="state['project']">
         <div class="project-image mb-4" v-if="previewImage && state['long']">
-            <img :src="previewImage" :alt="state['project']['name']" class="rounded shadow-sm" />
+            <NuxtImg :src="previewImage" :alt="state['project']['name']" class="rounded shadow-sm" width="500" height="280" loading="lazy" format="webp" />
         </div>
 
         <div class="project-title mb-1" v-if="state['project']['name']">
@@ -24,7 +24,7 @@
         </div>
 
         <div class="project-image my-4" v-if="previewImage && !state['long']">
-            <img :src="previewImage" :alt="state['project']['name']" class="rounded shadow-sm" />
+            <NuxtImg :src="previewImage" :alt="state['project']['name']" class="rounded shadow-sm" width="500" height="280" loading="lazy" format="webp" />
         </div>
 
         <div class="project-skills mb-2" v-if="state['project']['skills'] && state['project']['skills'].length">

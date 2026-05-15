@@ -10,7 +10,7 @@
                     <template v-for="(item, i) in group.icons" :key="item.name || i">
                         <div class="skill-item flex flex-col justify-center content-center items-center" :style="`--color: ${item.color};`">
                             <div class="skill-icon transition-500" :title="item.name">
-                                <span v-if="!item.icon && item.img" class="skill-img" v-html="state['svgCache'][item.img]"></span>
+                                <span v-if="!item.icon && item.img" class="skill-img" v-html="skillIcons[item.img]"></span>
                                 <Icon v-else :name="item.icon" :class="item.class" />
                             </div>
 
@@ -24,6 +24,9 @@
 </template>
 
 <script setup>
+import { skillIcons } from '~/composables/skillIcons'
+import { skills } from '~/data/skills'
+
 // Props
 const props = defineProps({
     showSkillNames: {
@@ -39,7 +42,6 @@ const state = reactive({
 
     skills: [],
     showSkillNames: false,
-    svgCache: {},
 })
 
 // Functions
@@ -82,9 +84,7 @@ watchEffect(function () {
 
 // Lifecycle
 onBeforeMount(function () {
-    const store = useGlobalStore()
-
-    state['skills'] = store['skills'].map(function (group) {
+    state['skills'] = skills.map(function (group) {
         group['icons'] = group['icons'].filter(function (icon) {
             return icon['showSkills']
         })
@@ -93,22 +93,8 @@ onBeforeMount(function () {
     })
 })
 
-onMounted(async function () {
+onMounted(function () {
     state['mounted'] = true
-
-    // Fetch and cache all custom SVGs
-    const imgPaths = state['skills']
-        .flatMap((group) => group['icons'])
-        .filter((icon) => !icon['icon'] && icon['img'])
-        .map((icon) => icon['img'])
-        .filter((path, index, self) => self.indexOf(path) === index) // deduplicate
-
-    await Promise.all(
-        imgPaths.map(async function (path) {
-            const response = await fetch(path)
-            state['svgCache'][path] = await response.text()
-        })
-    )
 
     highlightSkill()
 })
