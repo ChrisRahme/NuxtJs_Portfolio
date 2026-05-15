@@ -9,6 +9,8 @@
                 aria-modal="true"
                 :aria-labelledby="titleId"
                 @click.self="close"
+                @touchstart="handleTouchStart"
+                @touchend="handleTouchEnd"
             >
                 <button class="modal-nav modal-nav-left" @click="previous" title="Previous project" aria-label="Previous project">
                     <Icon name="mdi:chevron-left" />
@@ -21,7 +23,16 @@
 
                     <div class="modal-content" v-if="props['project']">
                         <div class="modal-image" v-if="images.length">
-                            <NuxtImg :src="images[state['imageIndex']]" :alt="props['project']['name']" width="960" height="540" format="webp" />
+                            <Transition name="image-fade" mode="out-in">
+                                <NuxtImg
+                                    :key="images[state['imageIndex']]"
+                                    :src="images[state['imageIndex']]"
+                                    :alt="props['project']['name']"
+                                    width="960"
+                                    height="540"
+                                    format="webp"
+                                />
+                            </Transition>
 
                             <template v-if="images.length > 1">
                                 <button class="image-nav image-nav-left" @click.stop="previousImage" title="Previous image" aria-label="Previous image">
@@ -74,7 +85,7 @@
                                 </div>
                             </div>
 
-                            <div class="modal-links -mb-4" v-if="props['project']['links'] && props['project']['links'].length">
+                            <div class="modal-links" v-if="props['project']['links'] && props['project']['links'].length">
                                 <h4>Links</h4>
 
                                 <div class="links-list">
@@ -90,6 +101,8 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="modal-fade" aria-hidden="true"></div>
                 </div>
 
                 <button class="modal-nav modal-nav-right" @click="next" title="Next project" aria-label="Next project">
@@ -119,6 +132,7 @@ const emit = defineEmits(['close', 'next', 'previous'])
 const overlayRef = ref(null)
 const titleId = useId()
 let triggerElement = null
+let touchStart = null
 
 const state = reactive({
     imageIndex: 0,
@@ -152,6 +166,27 @@ function previousImage() {
     state['imageIndex'] = (state['imageIndex'] - 1 + images.value.length) % images.value.length
 }
 
+function handleTouchStart(event) {
+    if (event.touches.length !== 1) return
+    const t = event.touches[0]
+    touchStart = { x: t.clientX, y: t.clientY, time: Date.now() }
+}
+
+function handleTouchEnd(event) {
+    if (!touchStart) return
+    const t = event.changedTouches[0]
+    const dx = t.clientX - touchStart.x
+    const dy = t.clientY - touchStart.y
+    const dt = Date.now() - touchStart.time
+    touchStart = null
+
+    // Horizontal swipe: 60px+ horizontal, mostly horizontal (1.5x more horiz than vert), under 600ms
+    if (Math.abs(dx) >= 60 && Math.abs(dx) > Math.abs(dy) * 1.5 && dt < 600) {
+        if (dx < 0) next()
+        else previous()
+    }
+}
+
 function getFocusable() {
     if (!overlayRef.value) return []
     return Array.from(
@@ -165,9 +200,13 @@ function handleKeydown(event) {
     if (event.key === 'Escape') {
         event.preventDefault()
         close()
-    } else if (event.key === 'ArrowRight' && !event.shiftKey && !event.metaKey && !event.ctrlKey) {
+    } else if (event.key === 'ArrowRight' && event.shiftKey && !event.metaKey && !event.ctrlKey) {
+        if (images.value.length > 1) nextImage()
+    } else if (event.key === 'ArrowLeft' && event.shiftKey && !event.metaKey && !event.ctrlKey) {
+        if (images.value.length > 1) previousImage()
+    } else if (event.key === 'ArrowRight' && !event.metaKey && !event.ctrlKey) {
         next()
-    } else if (event.key === 'ArrowLeft' && !event.shiftKey && !event.metaKey && !event.ctrlKey) {
+    } else if (event.key === 'ArrowLeft' && !event.metaKey && !event.ctrlKey) {
         previous()
     } else if (event.key === 'Tab') {
         const focusables = getFocusable()
@@ -282,8 +321,7 @@ onBeforeUnmount(function () {
     position: relative;
     background: var(--color-background, #ffffff);
     border-radius: 0.75rem;
-    max-width: 50vw;
-    width: 100%;
+    width: min(720px, 92vw);
     max-height: 90vh;
     overflow-y: auto;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
@@ -293,6 +331,19 @@ onBeforeUnmount(function () {
     &::-webkit-scrollbar {
         display: none;
     }
+}
+
+.modal-fade {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2.5rem;
+    margin-top: -2.5rem;
+    background: linear-gradient(to bottom, transparent, var(--color-background, #ffffff));
+    pointer-events: none;
+    z-index: 5;
+    border-radius: 0 0 0.75rem 0.75rem;
 }
 
 .modal-close {
@@ -328,6 +379,16 @@ onBeforeUnmount(function () {
         height: auto;
         display: block;
         border-radius: 0.75rem 0.75rem 0 0;
+    }
+
+    .image-fade-enter-active,
+    .image-fade-leave-active {
+        transition: opacity 0.18s ease-in-out;
+    }
+
+    .image-fade-enter-from,
+    .image-fade-leave-to {
+        opacity: 0;
     }
 
     .image-nav {
