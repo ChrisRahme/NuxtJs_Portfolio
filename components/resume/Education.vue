@@ -27,7 +27,7 @@
 
                         <!-- Institution -->
                         <h5 class="m-0 mb-2">
-                            <a :href="item.link" target="_blank" title="Visit website" v-if="item.link">
+                            <a :href="item.link" target="_blank" rel="noopener noreferrer" title="Visit website" v-if="item.link">
                                 <span class="text-sm font-semibold text-[#A040A0]">{{ item.institution }}</span>
                                 <Icon name="solar:link-bold" class="fix text-sm inline-block ml-2 hover:scale-110 hover:text-[#4060E0] transition-300" />
                             </a>
@@ -57,7 +57,7 @@
                         </h4>
 
                         <h5 class="m-0 mb-2">
-                            <a :href="item.link" target="_blank" title="Visit website" v-if="item.link">
+                            <a :href="item.link" target="_blank" rel="noopener noreferrer" title="Visit website" v-if="item.link">
                                 <span class="text-sm font-medium text-[#A040A0]">{{ item.institution }}</span>
                             </a>
 

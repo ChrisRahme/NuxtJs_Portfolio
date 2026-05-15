@@ -1,13 +1,21 @@
 <template>
     <Teleport to="body">
         <Transition name="modal">
-            <div v-if="state['visible']" class="modal-overlay" @click.self="close">
-                <button class="modal-nav modal-nav-left" @click="previous" title="Previous">
+            <div
+                v-if="state['visible']"
+                ref="overlayRef"
+                class="modal-overlay"
+                role="dialog"
+                aria-modal="true"
+                :aria-labelledby="titleId"
+                @click.self="close"
+            >
+                <button class="modal-nav modal-nav-left" @click="previous" title="Previous project" aria-label="Previous project">
                     <Icon name="mdi:chevron-left" />
                 </button>
 
                 <div class="modal-container">
-                    <button class="modal-close" @click="close" title="Close">
+                    <button class="modal-close" @click="close" title="Close" aria-label="Close project details">
                         <Icon name="mdi:close" />
                     </button>
 
@@ -16,11 +24,11 @@
                             <NuxtImg :src="images[state['imageIndex']]" :alt="state['project']['name']" width="960" height="540" format="webp" />
 
                             <template v-if="images.length > 1">
-                                <button class="image-nav image-nav-left" @click.stop="previousImage" title="Previous image">
+                                <button class="image-nav image-nav-left" @click.stop="previousImage" title="Previous image" aria-label="Previous image">
                                     <Icon name="mdi:chevron-left" />
                                 </button>
 
-                                <button class="image-nav image-nav-right" @click.stop="nextImage" title="Next image">
+                                <button class="image-nav image-nav-right" @click.stop="nextImage" title="Next image" aria-label="Next image">
                                     <Icon name="mdi:chevron-right" />
                                 </button>
 
@@ -31,7 +39,9 @@
                                         class="image-dot"
                                         :class="{ active: state['imageIndex'] === index }"
                                         @click.stop="state['imageIndex'] = index"
-                                        :title="`Image ${index + 1}`"
+                                        :title="`Image ${index + 1} of ${images.length}`"
+                                        :aria-label="`Show image ${index + 1} of ${images.length}`"
+                                        :aria-current="state['imageIndex'] === index ? 'true' : undefined"
                                     ></button>
                                 </div>
                             </template>
@@ -39,7 +49,7 @@
 
                         <div class="modal-body">
                             <div class="modal-header">
-                                <h2 class="modal-title">{{ state['project']['name'] }}</h2>
+                                <h2 :id="titleId" class="modal-title">{{ state['project']['name'] }}</h2>
                                 <span class="modal-year">{{ state['project']['year'] }}</span>
                             </div>
 
@@ -68,7 +78,7 @@
 
                                 <div class="links-list">
                                     <template v-for="link in state['project']['links']" :key="link['icon']">
-                                        <a v-if="link['link']" :href="link['link']" target="_blank" class="modal-link" :title="link['title'] || 'View project'">
+                                        <a v-if="link['link']" :href="link['link']" target="_blank" rel="noopener noreferrer" class="modal-link" :title="link['title'] || 'View project'">
                                             <Icon :name="link['icon']" />
                                         </a>
                                         <span v-else class="modal-link disabled" :title="link['title'] || 'Not published'">
@@ -81,7 +91,7 @@
                     </div>
                 </div>
 
-                <button class="modal-nav modal-nav-right" @click="next" title="Next">
+                <button class="modal-nav modal-nav-right" @click="next" title="Next project" aria-label="Next project">
                     <Icon name="mdi:chevron-right" />
                 </button>
             </div>
@@ -104,6 +114,10 @@ const props = defineProps({
 
 // Emits
 const emit = defineEmits(['close', 'next', 'previous'])
+
+const overlayRef = ref(null)
+const titleId = useId()
+let triggerElement = null
 
 const state = reactive({
     visible: false,
@@ -139,15 +153,37 @@ function previousImage() {
     state['imageIndex'] = (state['imageIndex'] - 1 + images.value.length) % images.value.length
 }
 
-function handleKeyup(event) {
+function getFocusable() {
+    if (!overlayRef.value) return []
+    return Array.from(
+        overlayRef.value.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')
+    ).filter((el) => el.offsetParent !== null || el === document.activeElement)
+}
+
+function handleKeydown(event) {
     if (!state['visible']) return
 
     if (event.key === 'Escape') {
+        event.preventDefault()
         close()
-    } else if (event.key === 'ArrowRight') {
+    } else if (event.key === 'ArrowRight' && !event.shiftKey && !event.metaKey && !event.ctrlKey) {
         next()
-    } else if (event.key === 'ArrowLeft') {
+    } else if (event.key === 'ArrowLeft' && !event.shiftKey && !event.metaKey && !event.ctrlKey) {
         previous()
+    } else if (event.key === 'Tab') {
+        const focusables = getFocusable()
+        if (!focusables.length) return
+
+        const first = focusables[0]
+        const last = focusables[focusables.length - 1]
+
+        if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault()
+            last.focus()
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault()
+            first.focus()
+        }
     }
 }
 
@@ -157,17 +193,41 @@ watchEffect(function () {
     state['imageIndex'] = 0
 })
 
-watchEffect(function () {
-    state['visible'] = props['visible']
-})
+watch(
+    () => props['visible'],
+    function (visible) {
+        state['visible'] = visible
+
+        if (typeof document === 'undefined') return
+
+        if (visible) {
+            triggerElement = document.activeElement instanceof HTMLElement ? document.activeElement : null
+            document.body.style.overflow = 'hidden'
+            nextTick(function () {
+                const closeBtn = overlayRef.value && overlayRef.value.querySelector('.modal-close')
+                if (closeBtn) closeBtn.focus()
+            })
+        } else {
+            document.body.style.overflow = ''
+            if (triggerElement && typeof triggerElement.focus === 'function') {
+                triggerElement.focus()
+            }
+            triggerElement = null
+        }
+    },
+    { immediate: true }
+)
 
 // Lifecycle
 onMounted(function () {
-    window.addEventListener('keyup', handleKeyup)
+    window.addEventListener('keydown', handleKeydown)
 })
 
 onBeforeUnmount(function () {
-    window.removeEventListener('keyup', handleKeyup)
+    window.removeEventListener('keydown', handleKeydown)
+    if (typeof document !== 'undefined') {
+        document.body.style.overflow = ''
+    }
 })
 </script>
 

@@ -6,9 +6,9 @@
 
         <div id="cards" class="flex flex-wrap gap-4 justify-center">
             <template v-for="project in state['projects']" :key="project['name']">
-                <div class="project-card-wrapper" @click="openModal(project)">
+                <button type="button" class="project-card-wrapper" @click="openModal(project)" :aria-label="`Open details for ${project['name']}`">
                     <ProjectCard :project="project" :long="state['long']" />
-                </div>
+                </button>
             </template>
         </div>
 
@@ -116,9 +116,22 @@ onBeforeMount(function () {
 
     #cards {
         .project-card-wrapper {
+            appearance: none;
+            background: none;
+            border: none;
             padding: 0;
+            margin: 0;
             width: 100%;
             cursor: pointer;
+            text-align: inherit;
+            font: inherit;
+            color: inherit;
+
+            &:focus-visible {
+                outline: 2px solid var(--color-primary);
+                outline-offset: 4px;
+                border-radius: 0.5rem;
+            }
 
             @media (width < theme('screens.md')) {
                 max-width: 100%;

@@ -17,7 +17,7 @@
                                     '--color': social['color'],
                                 }"
                             >
-                                <a :href="social['link']" target="_blank">
+                                <a :href="social['link']" target="_blank" rel="noopener noreferrer">
                                     <Icon :name="social['icon']" />
                                 </a>
                             </li>
@@ -36,7 +36,7 @@
                                     '--image': `url(/img/friends/${friend['icon']})`,
                                 }"
                             >
-                                <a :href="friend['link']" target="_blank">
+                                <a :href="friend['link']" target="_blank" rel="noopener noreferrer">
                                     <!-- <img class="iconify" :src="`/img/friends/${friend['icon']}`" /> -->
                                     <div class="mask"></div>
                                 </a>

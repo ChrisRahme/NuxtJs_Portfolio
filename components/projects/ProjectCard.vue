@@ -44,7 +44,7 @@
                 <template v-for="link in state['project']['links']" :key="link['icon']">
                     <div class="project-link ms-2">
                         <span :title="link['title'] || (link['link'] ? 'Check project' : 'Not published')">
-                            <a :href="link['link']" target="_blank" v-if="link['link']">
+                            <a :href="link['link']" target="_blank" rel="noopener noreferrer" v-if="link['link']">
                                 <Icon :name="link['icon']" class="fix" />
                             </a>
                             <template v-else>

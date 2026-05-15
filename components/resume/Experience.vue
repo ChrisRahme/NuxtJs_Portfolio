@@ -116,7 +116,7 @@
 
                                         <!-- Company -->
                                         <h5 class="m-0">
-                                            <a :href="item.link" target="_blank" :title="isShown ? 'Visit website' : null" v-if="item.link">
+                                            <a :href="item.link" target="_blank" rel="noopener noreferrer" :title="isShown ? 'Visit website' : null" v-if="item.link">
                                                 <span class="text-sm font-semibold text-[#A040A0]">{{ item.company }}</span>
                                                 <Icon
                                                     name="solar:link-bold"
@@ -140,7 +140,7 @@
 
                                     <!-- Image -->
                                     <div class="hidden md:block" v-if="item.image">
-                                        <component :is="item.link ? 'a' : 'span'" :href="item.link" target="_blank">
+                                        <component :is="item.link ? 'a' : 'span'" :href="item.link" target="_blank" rel="noopener noreferrer">
                                             <NuxtImg
                                                 :src="item.image"
                                                 :alt="`${item.company} Logo`"
