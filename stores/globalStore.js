@@ -595,7 +595,7 @@ const projects = [
             Took one day to develop it, and a week to upload it on the Google Play Store.
         `,
         summary: 'A Flappy Bird-style mobile game featuring a gem-collecting raven',
-        image: '/img/projects/tappy-raven.webp',
+        images: ['/img/projects/tappy-raven.webp'],
         links: [
             { icon: 'mdi:web', link: 'https://play.google.com/store/apps/details?id=com.ChraGames.TappyRaven' },
             { icon: 'mdi:github', link: 'https://github.com/ChrisRahme/TappyRaven' },
@@ -614,7 +614,7 @@ const projects = [
             Built with a multidisciplinary team of engineers as part of a university project.
         `,
         summary: 'A smart lock access control system with scheduling and user permissions',
-        image: '/img/projects/smart-lock.jpg',
+        images: ['/img/projects/smart-lock.jpg'],
         links: [{ icon: 'mdi:github', link: 'https://github.com/ChrisRahme/WiFi_Locks' }],
         skills: ['Python', 'PHP', 'MySQL', 'HTML', 'CSS', 'JavaScript', 'MQTT', 'Arduino', 'Raspberry Pi'],
         tags: ['Full-Stack', 'IoT'],
@@ -630,7 +630,7 @@ const projects = [
             Built by myself as part of my engineering final year project.
         `,
         summary: 'A multilingual AI chatbot for ISP customer support and services, with mobile and web apps',
-        image: '/img/projects/nlp-chatbot.png',
+        images: ['/img/projects/nlp-chatbot.png'],
         links: [{ icon: 'mdi:github', link: 'https://github.com/ChrisRahme/FYP-Chatbot' }],
         skills: ['Python', 'Rasa', 'MySQL', 'Kotlin', 'HTML', 'CSS', 'JavaScript', 'Docker', 'Kubernetes', 'Helm'],
         tags: ['AI', 'Full-Stack'],
@@ -643,7 +643,7 @@ const projects = [
             Explore who I am, my resume, and my projects.
         `,
         summary: 'My first personal website created to learn VueJS and static deployment',
-        image: '/img/projects/vuejs-website.png',
+        images: ['/img/projects/vuejs-website.png'],
         links: [
             { icon: 'mdi:web', link: 'https://chrisrahme-v1.netlify.app' },
             { icon: 'mdi:github', link: 'https://github.com/ChrisRahme/VueJs_Portfolio' },
@@ -662,7 +662,7 @@ const projects = [
             Built by myself for my master's thesis and integrated into Synergi SER for Data Consult.
         `,
         summary: 'Multilingual speech emotion recognition ML model with visual analytics',
-        image: '/img/projects/speech-emotion-recognition.jpg',
+        images: ['/img/projects/speech-emotion-recognition.jpg'],
         links: [{ icon: 'mdi:github', link: 'https://github.com/ChrisRahme/Speech_Emotion_Recognition' }],
         skills: ['Python', 'Flask', 'Keras', 'Scikit-Learn', 'Librosa'],
         tags: ['AI', 'Full-Stack'],
@@ -677,7 +677,7 @@ const projects = [
             Also provides live dashboards, historical analytics, rule and scene creation, and manual commands.
         `,
         summary: 'A smart home management system integrating solar inverters and IoT devices',
-        image: '/img/projects/solar-iot.jpg',
+        images: ['/img/projects/solar-iot.jpg'],
         links: [{ icon: 'carbon:progress-bar-round' }],
         skills: ['Python', 'NodeJs', 'Flask', 'SQLAlchemy', 'Express', 'VueJs', 'MySQL', 'MongoDB', 'RabbitMQ', 'MySQL', 'Docker'],
         tags: ['IoT', 'Full-Stack', 'Smart Home', 'Energy'],
@@ -692,7 +692,7 @@ const projects = [
             Built as a successor to MindForge from Data Consult as a personal project.
         `,
         summary: 'A web platform to facilitate data science, analytics, and machine learning workflows',
-        image: '/img/projects/ai-forge.png',
+        images: ['/img/projects/ai-forge.png'],
         links: [{ icon: 'carbon:progress-bar-round' }],
         skills: ['VueJs', 'Python', 'Flask', 'SQLAlchemy', 'Scikit-Learn', 'Pandas', 'MySQL'],
         tags: ['AI', 'Data Science', 'Full-Stack'],
@@ -705,7 +705,7 @@ const projects = [
             news articles, and extends the search online when needed.
         `,
         summary: 'A RAG-powered LLM search engine for news across local and online sources',
-        image: '/img/projects/newsfinder.png',
+        images: ['/img/projects/newsfinder.png'],
         links: [{ icon: 'mdi:github', link: 'https://github.com/ChrisRahme/NewsFinder' }],
         skills: ['VueJs', 'Python', 'Flask', 'LangChain', 'Chroma'],
         tags: ['AI', 'Full-Stack', 'LLM'],
@@ -720,7 +720,7 @@ const projects = [
             Discover more about me, my professional journey, and the projects I've been working on.
         `,
         summary: 'The second version of my personal website (you are here!), built with NuxtJS',
-        image: '/img/projects/nuxtjs-website.png',
+        images: ['/img/projects/nuxtjs-website.png'],
         links: [
             { icon: 'mdi:web', link: 'https://chrisrahme.netlify.app' },
             { icon: 'mdi:github', link: 'https://github.com/ChrisRahme/NuxtJs_Portfolio' },
@@ -737,7 +737,7 @@ const projects = [
             they were from you.
         `,
         summary: 'An LLM fine-tuned on your WhatsApp data to emulate how you talk and respond to different people',
-        image: '/img/projects/gpt-me.jpg',
+        images: ['/img/projects/gpt-me.jpg'],
         links: [{ icon: 'carbon:progress-bar-round' }],
         skills: ['Python', 'PyTorch', 'Hugging Face'],
         tags: ['AI', 'LLM'],
@@ -752,7 +752,7 @@ const projects = [
             your driving habits, and how different metrics affect each other.
         `,
         summary: 'A real-time OBD-II dashboard with live charts and historical analysis',
-        image: '/img/projects/live-obd.png',
+        images: ['/img/projects/live-obd.png'],
         links: [{ icon: 'carbon:progress-bar-round' }],
         skills: ['Python', 'NuxtJs', 'FastAPI', 'SQLAlchemy', 'Docker', 'Raspberry Pi'],
         tags: ['Data Science', 'Full-Stack', 'IoT'],
@@ -766,7 +766,7 @@ const projects = [
             Paired with a personal rating system, and you get a system that can recommend you songs or even specific parts of songs.
         `,
         summary: 'An AI music analysis and recommendation system',
-        image: '/img/projects/music-analyzer.jpg',
+        images: ['/img/projects/music-analyzer.jpg'],
         links: [{ icon: 'carbon:progress-bar-round' }],
         skills: ['Python', 'NuxtJs', 'FastAPI', 'SQLAlchemy', 'Chroma', 'Librosa'],
         tags: ['AI', 'Data Science', 'Full-Stack', 'Music'],
@@ -780,7 +780,7 @@ const projects = [
             and integrate these services together for improved productivity and automation.
         `,
         summary: 'My agentic personal assistant that integrates multiple services',
-        image: '/img/projects/myassistant.png',
+        images: ['/img/projects/myassistant.png'],
         links: [{ icon: 'mdi:github', link: 'https://github.com/ChrisRahme/MyAssistant' }],
         skills: ['Python', 'Agno', 'FastAPI', 'Chroma', 'NuxtJs'],
         tags: ['AI', 'Full-Stack', 'LLM'],
@@ -794,7 +794,7 @@ const projects = [
             change key mappings, and more. 
         `,
         summary: 'A web app to learn the piano with interactive lessons',
-        image: '/img/projects/piano-trainer.png',
+        images: ['/img/projects/piano-trainer.png'],
         links: [{ icon: 'carbon:progress-bar-round' }],
         skills: ['VueJs', 'Tone.js'],
         tags: ['Front-End', 'Music'],
@@ -813,7 +813,7 @@ const projects = [
             NoteBlocks started small, but I kept adding features until it turned into a full-fledged music editing and viewing tool, and the biggest project I've ever built for myself.
         `,
         summary: 'An music viewer & editor app to convert music into easy-to-read note blocks',
-        image: '/img/projects/noteblocks.png',
+        images: ['/img/projects/noteblocks.png'],
         links: [{ icon: 'carbon:progress-bar-round' }],
         skills: ['Python', 'FastAPI', 'VueJs', 'PyInstaller'],
         tags: ['Full-Stack', 'Music'],
@@ -828,7 +828,7 @@ const projects = [
             Features interactive playback, live stats, and image and video export.
         `,
         summary: 'An interactive visualizer for fairy-chess leaper spiral patterns on a chessboard',
-        image: '/img/projects/chessboard-patterns.png',
+        images: ['/img/projects/chessboard-patterns.png'],
         links: [
             { icon: 'mdi:web', link: 'https://chrisrahme.github.io/Chessboard_Patterns/' },
             { icon: 'mdi:github', link: 'https://github.com/ChrisRahme/Chessboard_Patterns' },

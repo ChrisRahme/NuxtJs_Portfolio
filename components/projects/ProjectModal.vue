@@ -12,8 +12,29 @@
                     </button>
 
                     <div class="modal-content" v-if="state['project']">
-                        <div class="modal-image" v-if="state['project']['image']">
-                            <img :src="state['project']['image']" :alt="state['project']['name']" />
+                        <div class="modal-image" v-if="images.length">
+                            <img :src="images[state['imageIndex']]" :alt="state['project']['name']" />
+
+                            <template v-if="images.length > 1">
+                                <button class="image-nav image-nav-left" @click.stop="previousImage" title="Previous image">
+                                    <Icon name="mdi:chevron-left" />
+                                </button>
+
+                                <button class="image-nav image-nav-right" @click.stop="nextImage" title="Next image">
+                                    <Icon name="mdi:chevron-right" />
+                                </button>
+
+                                <div class="image-dots">
+                                    <button
+                                        v-for="(image, index) in images"
+                                        :key="index"
+                                        class="image-dot"
+                                        :class="{ active: state['imageIndex'] === index }"
+                                        @click.stop="state['imageIndex'] = index"
+                                        :title="`Image ${index + 1}`"
+                                    ></button>
+                                </div>
+                            </template>
                         </div>
 
                         <div class="modal-body">
@@ -87,6 +108,12 @@ const emit = defineEmits(['close', 'next', 'previous'])
 const state = reactive({
     visible: false,
     project: null,
+    imageIndex: 0,
+})
+
+const images = computed(function () {
+    const list = state['project'] && state['project']['images']
+    return list && list.length ? list : []
 })
 
 // Methods
@@ -100,6 +127,16 @@ function next() {
 
 function previous() {
     emit('previous')
+}
+
+function nextImage() {
+    if (!images.value.length) return
+    state['imageIndex'] = (state['imageIndex'] + 1) % images.value.length
+}
+
+function previousImage() {
+    if (!images.value.length) return
+    state['imageIndex'] = (state['imageIndex'] - 1 + images.value.length) % images.value.length
 }
 
 function handleKeyup(event) {
@@ -117,6 +154,7 @@ function handleKeyup(event) {
 // Watchers
 watchEffect(function () {
     state['project'] = props['project']
+    state['imageIndex'] = 0
 })
 
 watchEffect(function () {
@@ -224,12 +262,80 @@ onBeforeUnmount(function () {
 .modal-image {
     width: 100%;
     overflow: hidden;
+    position: relative;
 
     img {
         width: 100%;
         height: auto;
         display: block;
         border-radius: 0.75rem 0.75rem 0 0;
+    }
+
+    .image-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.4);
+        border: none;
+        color: #ffffff;
+        font-size: 2rem;
+        cursor: pointer;
+        border-radius: 50%;
+        width: 2.5rem;
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background: rgba(0, 0, 0, 0.65);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        &:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        &.image-nav-left {
+            left: 0.75rem;
+        }
+
+        &.image-nav-right {
+            right: 0.75rem;
+        }
+    }
+
+    .image-dots {
+        position: absolute;
+        bottom: 0.75rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 0.5rem;
+        padding: 0.4rem 0.6rem;
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 1rem;
+
+        .image-dot {
+            width: 0.6rem;
+            height: 0.6rem;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            padding: 0;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.8);
+            }
+
+            &.active {
+                background: #ffffff;
+                transform: scale(1.2);
+            }
+        }
     }
 }
 
