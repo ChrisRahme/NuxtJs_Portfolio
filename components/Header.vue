@@ -55,6 +55,8 @@ onBeforeMount(function () {})
 @import '/assets/css/tailwind.css';
 
 header {
+    user-select: none;
+
     * {
         overflow: hidden;
     }
