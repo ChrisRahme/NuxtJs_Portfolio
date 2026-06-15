@@ -2,7 +2,8 @@
 
 import { execSync } from 'child_process'
 
-const DEBUG = true
+// NODE_ENV is "production" during `nuxt build`/`generate`.
+const DEBUG = process.env.NODE_ENV !== 'production'
 
 export default defineNuxtConfig({
     // Meta
@@ -31,15 +32,16 @@ export default defineNuxtConfig({
     },
 
     // Modules
-    modules: [
-        '@nuxt/icon',
-        '@nuxt/fonts',
-        '@nuxt/image',
-        '@nuxtjs/tailwindcss',
-        '@nuxtjs/robots',
-        '@nuxtjs/sitemap',
-        '@vueuse/nuxt',
-    ],
+    modules: ['@nuxt/icon', '@nuxt/fonts', '@nuxt/image', '@nuxtjs/tailwindcss', '@nuxtjs/robots', '@nuxtjs/sitemap', '@vueuse/nuxt'],
+
+    // Deployment
+    site: {
+        url: 'https://chrisrahme.dev',
+    },
+
+    robots: {
+        blockAiBots: true,
+    },
 
     tailwindcss: {
         cssPath: '~/assets/css/tailwind.css',
