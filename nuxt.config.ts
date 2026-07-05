@@ -11,6 +11,10 @@ export default defineNuxtConfig({
     compatibilityDate: '2025-05-18',
     ssr: true,
 
+    nitro: {
+        preset: 'static',
+    },
+
     // Debug & Development
     devtools: { enabled: DEBUG },
     debug: DEBUG,
