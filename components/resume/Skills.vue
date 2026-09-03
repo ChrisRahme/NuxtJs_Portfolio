@@ -42,36 +42,36 @@ const state = reactive({
 })
 
 // Functions
-function highlightSkill(skills, index) {
-    const t = 500
 
-    skills = skills || Array.from(document.getElementsByClassName('skill-item'))
-    const N = skills.length
+// Sweep the `colored` class across skill items: each stays lit HIGHLIGHT_MS,
+// the sweep steps every STEP_MS, and pauses LOOP_PAUSE_MS after the last item.
+function startSkillHighlightLoop() {
+    const HIGHLIGHT_MS = 500
+    const STEP_MS = HIGHLIGHT_MS / 3
+    const LOOP_PAUSE_MS = HIGHLIGHT_MS * 3
 
-    index = (index || 0) % N
+    const items = Array.from(document.getElementsByClassName('skill-item'))
+    if (!items.length) return
 
-    // Get random skill
-    const skill = skills[index]
+    let index = 0
 
-    // Add `hover` class if not already present
-    if (!skill.classList.contains('colored')) {
-        skill.classList.add('colored')
+    function step() {
+        if (state['unmount']) return
 
-        // Remove `hover` class after `duration` ms
-        setTimeout(function () {
-            skill.classList.remove('colored')
-        }, t)
+        const item = items[index]
+        if (!item.classList.contains('colored')) {
+            item.classList.add('colored')
+            setTimeout(function () {
+                item.classList.remove('colored')
+            }, HIGHLIGHT_MS)
+        }
+
+        const wrapped = index === items.length - 1
+        index = (index + 1) % items.length
+        setTimeout(step, wrapped ? LOOP_PAUSE_MS : STEP_MS)
     }
 
-    if (state['unmount']) return
-
-    // Call `randomHoverSkill` again after `nextTrigger` ms
-    setTimeout(
-        function () {
-            highlightSkill(skills, index + 1)
-        },
-        index == N - 1 ? t * 3 : t / 3
-    )
+    step()
 }
 
 // Lifecycle
@@ -86,7 +86,7 @@ onBeforeMount(function () {
 })
 
 onMounted(function () {
-    highlightSkill()
+    startSkillHighlightLoop()
 })
 
 onBeforeUnmount(function () {
@@ -95,7 +95,7 @@ onBeforeUnmount(function () {
 </script>
 
 <style lang="scss" scoped>
-@import '/assets/css/tailwind.css';
+@import '../../assets/css/tailwind.css';
 
 .skill-groups {
     /* skill-title variables */

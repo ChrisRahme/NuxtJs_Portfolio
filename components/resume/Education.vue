@@ -103,7 +103,7 @@ onMounted(function () {
 </script>
 
 <style lang="scss" scoped>
-@import '/assets/css/tailwind.css';
+@import '../../assets/css/tailwind.css';
 
 .education {
     .education-delimiter {

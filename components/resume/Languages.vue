@@ -44,7 +44,7 @@ onBeforeUnmount(function () {
 
 <style lang="scss" scoped>
 @use 'sass:color' as color;
-@import '/assets/css/tailwind.css';
+@import '../../assets/css/tailwind.css';
 
 .languages {
     display: flex;

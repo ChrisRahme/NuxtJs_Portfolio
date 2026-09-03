@@ -22,84 +22,9 @@
                     </button>
 
                     <div class="modal-content" v-if="props['project']">
-                        <div class="modal-image" v-if="images.length">
-                            <Transition name="image-fade" mode="out-in">
-                                <NuxtImg
-                                    :key="images[state['imageIndex']]"
-                                    :src="images[state['imageIndex']]"
-                                    :alt="props['project']['name']"
-                                    width="960"
-                                    height="540"
-                                    format="webp"
-                                />
-                            </Transition>
+                        <ModalImageCarousel ref="carouselRef" :images="images" :alt="props['project']['name']" v-if="images.length" />
 
-                            <template v-if="images.length > 1">
-                                <button class="image-nav image-nav-left" @click.stop="previousImage" title="Previous image" aria-label="Previous image">
-                                    <Icon name="mdi:chevron-left" />
-                                </button>
-
-                                <button class="image-nav image-nav-right" @click.stop="nextImage" title="Next image" aria-label="Next image">
-                                    <Icon name="mdi:chevron-right" />
-                                </button>
-
-                                <div class="image-dots">
-                                    <button
-                                        v-for="(image, index) in images"
-                                        :key="index"
-                                        class="image-dot"
-                                        :class="{ active: state['imageIndex'] === index }"
-                                        @click.stop="state['imageIndex'] = index"
-                                        :title="`Image ${index + 1} of ${images.length}`"
-                                        :aria-label="`Show image ${index + 1} of ${images.length}`"
-                                        :aria-current="state['imageIndex'] === index ? 'true' : undefined"
-                                    ></button>
-                                </div>
-                            </template>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="modal-header">
-                                <h2 :id="titleId" class="modal-title">{{ props['project']['name'] }}</h2>
-                                <span class="modal-year">{{ props['project']['year'] }}</span>
-                            </div>
-
-                            <div class="modal-description" v-if="props['project']['description']">
-                                <!-- hardcoded content from data/projects.js only — do not pipe user input here -->
-                                <p v-html="props['project']['description']"></p>
-                            </div>
-
-                            <div class="modal-skills" v-if="props['project']['skills'] && props['project']['skills'].length">
-                                <h4>Skills & Technologies</h4>
-
-                                <div class="tags-list mb-1">
-                                    <template v-for="skill in props['project']['tags']" :key="skill">
-                                        <div class="badge">{{ skill }}</div>
-                                    </template>
-                                </div>
-
-                                <div class="skills-list">
-                                    <template v-for="skill in props['project']['skills']" :key="skill">
-                                        <div class="badge">{{ skill }}</div>
-                                    </template>
-                                </div>
-                            </div>
-
-                            <div class="modal-links" v-if="props['project']['links'] && props['project']['links'].length">
-                                <h4>Links</h4>
-
-                                <div class="links-list">
-                                    <template v-for="link in props['project']['links']" :key="link['icon']">
-                                        <a v-if="link['link']" :href="link['link']" target="_blank" rel="noopener noreferrer" class="modal-link" :title="link['title'] || 'View project'">
-                                            <Icon :name="link['icon']" />
-                                        </a>
-                                        <span v-else class="modal-link disabled" :title="link['title'] || 'Not published'">
-                                            <Icon :name="link['icon']" />
-                                        </span>
-                                    </template>
-                                </div>
-                            </div>
-                        </div>
+                        <ModalBody :project="props['project']" :title-id="titleId" />
                     </div>
 
                     <div class="modal-fade" aria-hidden="true"></div>
@@ -114,6 +39,9 @@
 </template>
 
 <script setup>
+import ModalImageCarousel from './ModalImageCarousel.vue'
+import ModalBody from './ModalBody.vue'
+
 // Props
 const props = defineProps({
     project: {
@@ -130,13 +58,10 @@ const props = defineProps({
 const emit = defineEmits(['close', 'next', 'previous'])
 
 const overlayRef = ref(null)
+const carouselRef = ref(null)
 const titleId = useId()
 let triggerElement = null
 let touchStart = null
-
-const state = reactive({
-    imageIndex: 0,
-})
 
 const images = computed(function () {
     const list = props['project'] && props['project']['images']
@@ -154,16 +79,6 @@ function next() {
 
 function previous() {
     emit('previous')
-}
-
-function nextImage() {
-    if (!images.value.length) return
-    state['imageIndex'] = (state['imageIndex'] + 1) % images.value.length
-}
-
-function previousImage() {
-    if (!images.value.length) return
-    state['imageIndex'] = (state['imageIndex'] - 1 + images.value.length) % images.value.length
 }
 
 function handleTouchStart(event) {
@@ -194,45 +109,52 @@ function getFocusable() {
     ).filter((el) => el.offsetParent !== null || el === document.activeElement)
 }
 
-function handleKeydown(event) {
-    if (!props['visible']) return
+function handleEscapeKey(event) {
+    event.preventDefault()
+    close()
+}
 
-    if (event.key === 'Escape') {
-        event.preventDefault()
-        close()
-    } else if (event.key === 'ArrowRight' && event.shiftKey && !event.metaKey && !event.ctrlKey) {
-        if (images.value.length > 1) nextImage()
-    } else if (event.key === 'ArrowLeft' && event.shiftKey && !event.metaKey && !event.ctrlKey) {
-        if (images.value.length > 1) previousImage()
-    } else if (event.key === 'ArrowRight' && !event.metaKey && !event.ctrlKey) {
-        next()
-    } else if (event.key === 'ArrowLeft' && !event.metaKey && !event.ctrlKey) {
-        previous()
-    } else if (event.key === 'Tab') {
-        const focusables = getFocusable()
-        if (!focusables.length) return
+// Plain arrows navigate projects; Shift+arrows navigate the image carousel
+function handleArrowKey(event) {
+    if (event.metaKey || event.ctrlKey) return
 
-        const first = focusables[0]
-        const last = focusables[focusables.length - 1]
+    const forward = event.key === 'ArrowRight'
 
-        if (event.shiftKey && document.activeElement === first) {
-            event.preventDefault()
-            last.focus()
-        } else if (!event.shiftKey && document.activeElement === last) {
-            event.preventDefault()
-            first.focus()
-        }
+    if (event.shiftKey) {
+        const carousel = carouselRef.value
+        if (!carousel) return
+        forward ? carousel.nextImage() : carousel.previousImage()
+    } else {
+        forward ? next() : previous()
     }
 }
 
-// Watchers
-watch(
-    () => props['project'],
-    function () {
-        state['imageIndex'] = 0
-    }
-)
+// Focus trap: Tab / Shift+Tab wrap within the modal
+function handleTabKey(event) {
+    const focusables = getFocusable()
+    if (!focusables.length) return
 
+    const first = focusables[0]
+    const last = focusables[focusables.length - 1]
+
+    if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+    } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+    }
+}
+
+function handleKeydown(event) {
+    if (!props['visible']) return
+
+    if (event.key === 'Escape') handleEscapeKey(event)
+    else if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') handleArrowKey(event)
+    else if (event.key === 'Tab') handleTabKey(event)
+}
+
+// Watchers
 watch(
     () => props['visible'],
     function (visible) {
@@ -367,184 +289,6 @@ onBeforeUnmount(function () {
 .modal-content {
     display: flex;
     flex-direction: column;
-}
-
-.modal-image {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-
-    img {
-        width: 100%;
-        height: auto;
-        display: block;
-        border-radius: 0.75rem 0.75rem 0 0;
-    }
-
-    .image-fade-enter-active,
-    .image-fade-leave-active {
-        transition: opacity 0.18s ease-in-out;
-    }
-
-    .image-fade-enter-from,
-    .image-fade-leave-to {
-        opacity: 0;
-    }
-
-    .image-nav {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: rgba(0, 0, 0, 0.4);
-        border: none;
-        color: #ffffff;
-        font-size: 2rem;
-        cursor: pointer;
-        border-radius: 50%;
-        width: 2.5rem;
-        height: 2.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.2s ease;
-
-        &:hover {
-            background: rgba(0, 0, 0, 0.65);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        &:active {
-            transform: translateY(-50%) scale(0.95);
-        }
-
-        &.image-nav-left {
-            left: 0.75rem;
-        }
-
-        &.image-nav-right {
-            right: 0.75rem;
-        }
-    }
-
-    .image-dots {
-        position: absolute;
-        bottom: 0.75rem;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 0.5rem;
-        padding: 0.4rem 0.6rem;
-        background: rgba(0, 0, 0, 0.4);
-        border-radius: 1rem;
-
-        .image-dot {
-            width: 0.6rem;
-            height: 0.6rem;
-            border-radius: 50%;
-            border: none;
-            background: rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            padding: 0;
-            transition: all 0.2s ease;
-
-            &:hover {
-                background: rgba(255, 255, 255, 0.8);
-            }
-
-            &.active {
-                background: #ffffff;
-                transform: scale(1.2);
-            }
-        }
-    }
-}
-
-.modal-body {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-
-    h4 {
-        @apply font-medium m-0;
-        font-size: 0.875rem;
-        color: var(--color-background-dark);
-    }
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-}
-
-.modal-title {
-    @apply font-semibold m-0;
-    font-size: 1.5rem;
-    color: var(--color-background-dark);
-}
-
-.modal-year {
-    @apply font-medium;
-    font-size: 0.875rem;
-    color: var(--color-primary);
-    background: rgba(var(--color-primary-rgb), 0.1);
-    padding: 0.25rem 0.75rem;
-    border-radius: 1rem;
-}
-
-.modal-description {
-    p {
-        @apply text-justify leading-relaxed m-0;
-        font-size: 0.9rem;
-        color: var(--color-background-7);
-    }
-}
-
-.modal-skills {
-    @apply mt-1;
-
-    .tags-list,
-    .skills-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-
-    .tags-list .badge {
-        background-color: var(--color-primary);
-    }
-
-    .skills-list .badge {
-        background-color: var(--color-inverse);
-    }
-}
-
-.modal-links {
-    .links-list {
-        @apply p-0 m-0 -mt-1;
-
-        display: flex;
-        gap: 1rem;
-
-        .modal-link {
-            font-size: 2rem;
-            color: var(--color-background-7);
-            transition: all 0.2s ease;
-
-            &:hover:not(.disabled) {
-                color: var(--color-primary);
-                transform: translateY(-2px);
-            }
-
-            &.disabled {
-                opacity: 0.5;
-                cursor: not-allowed;
-            }
-        }
-    }
 }
 
 /* Transition animations */

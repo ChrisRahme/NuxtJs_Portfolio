@@ -2,7 +2,7 @@ export const abouts = [
     {
         title: 'Programmer',
         emoji: '👨‍💻',
-        image: '/img/pictures/nodered.jpg',
+        image: '/img/pictures/nodered.webp',
         label: 'Enjoying Node-RED on a big screen at work',
         text: `
         I\'m a full-stack developer and AI enthusiast.
@@ -26,7 +26,7 @@ export const abouts = [
     {
         title: 'Astronomer',
         emoji: '🔭',
-        image: '/img/pictures/astronomy.jpg',
+        image: '/img/pictures/astronomy.webp',
         label: 'Setting up my telescope for a stargazing session',
         text: `
         I\'ve always been captivated by the wonders of the universe.
@@ -67,7 +67,7 @@ export const abouts = [
     {
         title: 'Traveler',
         emoji: '✈️',
-        image: '/img/pictures/switzerland.jpg',
+        image: '/img/pictures/switzerland.webp',
         label: 'Winterthur, Switzerland, December 2023',
         text: `
         Traveling is my way of escaping the "high entropy" of my country.
@@ -87,7 +87,7 @@ export const abouts = [
     {
         title: 'Brother',
         emoji: '🐱',
-        image: '/img/pictures/kitcat.jpg',
+        image: '/img/pictures/kitcat.webp',
         label: "One of Kitcat's last photos",
         text: `
         Growing up, I had the privilege of sharing 16 wonderful years with Kitcat,

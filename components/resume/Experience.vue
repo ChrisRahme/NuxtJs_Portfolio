@@ -81,122 +81,7 @@
                 }"
             >
                 <template v-for="(item, index) in state['timeline']" :key="item.title">
-                    <div
-                        class="card px-4 py-4"
-                        :style="{
-                            '--theme': item.color || 'white',
-                            '--separator': item.color || '#e5e7eb',
-                            '--opacity': index === state['selectedIndex'] ? 1 : 0,
-                            '--max-height': index === state['selectedIndex'] ? '100%' : 0,
-                            'opacity': 'var(--opacity)',
-                            'max-height': 'var(--max-height)',
-                        }"
-                    >
-                        <div class="flex">
-                            <!-- Dates -->
-                            <div class="dates pr-4 border-r-2 transition-300 hidden md:block" style="flex-shrink: 0">
-                                <p class="text-[#60C060] font-mono">
-                                    <span>{{ item.start }}</span>
-                                    <span v-if="item.end">&nbsp;-&nbsp;</span>
-                                    <span v-if="item.end">{{ item.end }}</span>
-                                </p>
-                            </div>
-
-                            <div class="pl-4 w-full">
-                                <!-- Position -->
-                                <div class="position flex justify-between">
-                                    <div class="block">
-                                        <!-- Job title -->
-                                        <h4 class="m-0 -mb-2">
-                                            <span class="text-xla font-semibold text-[#60C060]">{{ item.title }}</span>
-                                        </h4>
-
-                                        <!-- Company -->
-                                        <h5 class="m-0">
-                                            <a :href="item.link" target="_blank" rel="noopener noreferrer" :title="index === state['selectedIndex'] ? 'Visit website' : null" v-if="item.link">
-                                                <span class="text-sm font-semibold text-[#A040A0]">{{ item.company }}</span>
-                                                <Icon
-                                                    name="solar:link-bold"
-                                                    class="fix text-sm inline-block ml-2 hover:scale-110 hover:text-[#4060E0] transition-300"
-                                                />
-                                            </a>
-
-                                            <span v-else>
-                                                <span class="text-sm font-semibold text-[#A040A0]">{{ item.company }}</span>
-                                            </span>
-
-                                            <span class="hidden sm:inline">
-                                                <span class="text-sm noselect" v-if="item.type"> &nbsp;&nbsp;I&nbsp;&nbsp; </span>
-
-                                                <span class="text-sm text-gray-500" v-if="item.type">
-                                                    {{ item.type }}
-                                                </span>
-                                            </span>
-                                        </h5>
-                                    </div>
-
-                                    <!-- Image -->
-                                    <div class="hidden md:block" v-if="item.image">
-                                        <component :is="item.link ? 'a' : 'span'" :href="item.link" target="_blank" rel="noopener noreferrer">
-                                            <NuxtImg
-                                                :src="item.image"
-                                                :alt="`${item.company} Logo`"
-                                                class="rounded-lg"
-                                                width="48"
-                                                height="48"
-                                                format="webp"
-                                                :style="{
-                                                    'max-height': 'calc(1.75rem + 1.75rem - 0.5rem)',
-                                                }"
-                                                v-if="item.image"
-                                            />
-                                        </component>
-                                    </div>
-                                </div>
-
-                                <!-- Dates (sm- screens )-->
-                                <p class="text-[#60C060] text-sm mb-4 inline-block sm:hidden">
-                                    <span>{{ item.start }}</span>
-                                    <span v-if="item.end">&nbsp;-&nbsp;</span>
-                                    <span v-if="item.end">{{ item.end }}</span>
-                                </p>
-
-                                <!-- Description -->
-                                <div class="description mt-2" v-if="item.description">
-                                    <!-- hardcoded content from data/experience.js only — do not pipe user input here -->
-                                    <p v-html="item.description"></p>
-                                </div>
-
-                                <!-- Task list -->
-                                <div class="tasks m-0" v-if="item.tasks">
-                                    <div class="mt-4" v-for="task in item.tasks" :key="task">
-                                        <h6 class="font-medium text-[#60C060] m-0" v-if="task.title">
-                                            {{ task.title }}
-                                        </h6>
-
-                                        <template v-for="subtask in task.text" :key="subtask">
-                                            <ul class="list-disc list-outside text-black">
-                                                <li :class="task.title && task.text.length < 2 ? 'text-transparent ml-4' : 'text-black ml-8'">
-                                                    <!-- hardcoded content from data/experience.js only — do not pipe user input here -->
-                                                    <span class="text-black" v-html="subtask"></span>
-                                                </li>
-                                            </ul>
-                                        </template>
-
-                                        <template v-if="task.skills">
-                                            <div class="ml-5">
-                                                <template v-for="skill in task.skills" :key="skill">
-                                                    <div class="badge mr-1">
-                                                        {{ skill }}
-                                                    </div>
-                                                </template>
-                                            </div>
-                                        </template>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <ExperienceCard :item="item" :active="index === state['selectedIndex']" />
                 </template>
             </div>
         </template>
@@ -204,6 +89,7 @@
 </template>
 
 <script setup>
+import ExperienceCard from './ExperienceCard.vue'
 import { experience } from '~/data/experience'
 
 // Props
@@ -271,7 +157,7 @@ onMounted(function () {
 </script>
 
 <style lang="scss" scoped>
-@import '/assets/css/tailwind.css';
+@import '../../assets/css/tailwind.css';
 
 .timeline {
     .dots {
@@ -352,22 +238,6 @@ onMounted(function () {
 
     .details {
         display: flex;
-
-        .card {
-            flex: 0 0 100%;
-            min-width: 100%;
-            min-height: 100%;
-
-            border: 2px solid white;
-
-            &:hover {
-                border: 2px solid var(--theme);
-
-                .dates {
-                    border-color: var(--separator);
-                }
-            }
-        }
     }
 }
 </style>

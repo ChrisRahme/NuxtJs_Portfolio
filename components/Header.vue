@@ -52,7 +52,7 @@ onBeforeMount(function () {})
 </script>
 
 <style scoped lang="scss">
-@import '/assets/css/tailwind.css';
+@import '../assets/css/tailwind.css';
 
 header {
     * {
