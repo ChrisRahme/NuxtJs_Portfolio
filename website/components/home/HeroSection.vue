@@ -102,20 +102,6 @@ const hero = computed(function () {
     gap: 0.75rem;
   }
 
-  .btn-ghost.on-sky {
-    border-color: rgb(244, 239, 230, 0.3);
-    color: var(--star);
-
-    &:hover {
-      border-color: var(--green-light);
-      color: var(--green-light);
-    }
-
-    &:focus-visible {
-      outline-color: var(--green-light);
-    }
-  }
-
   .hero-sky {
     width: min(100%, 32rem);
   }

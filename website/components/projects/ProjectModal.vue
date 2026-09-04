@@ -19,23 +19,7 @@
                 <ModalBody :key="props['project']['name']" :project="props['project']" :title-id="titleId" />
               </div>
 
-              <nav v-if="hasSiblings" class="modal-foot" aria-label="Older and newer projects">
-                <button type="button" class="foot-btn foot-older" :disabled="!older" @click="older && select(older)">
-                  <span class="eyebrow foot-dir">
-                    <Icon :name="olderWraps ? 'mdi:autorenew' : 'mdi:arrow-left'" aria-hidden="true" />
-                    <span>{{ olderWraps ? 'Newest' : 'Older' }}</span>
-                  </span>
-                  <span class="foot-name">{{ older ? older['name'] : '' }}</span>
-                </button>
-
-                <button type="button" class="foot-btn foot-newer" :disabled="!newer" @click="newer && select(newer)">
-                  <span class="eyebrow foot-dir">
-                    <span>{{ newerWraps ? 'Oldest' : 'Newer' }}</span>
-                    <Icon :name="newerWraps ? 'mdi:autorenew' : 'mdi:arrow-right'" aria-hidden="true" />
-                  </span>
-                  <span class="foot-name">{{ newer ? newer['name'] : '' }}</span>
-                </button>
-              </nav>
+              <ModalFootNav v-if="hasSiblings" :older="older" :newer="newer" :older-wraps="olderWraps" :newer-wraps="newerWraps" @select="select" />
             </div>
           </template>
         </div>
@@ -48,6 +32,7 @@
 import ModalImageCarousel from './ModalImageCarousel.vue'
 import ModalBody from './ModalBody.vue'
 import ModalYearRail from './ModalYearRail.vue'
+import ModalFootNav from './ModalFootNav.vue'
 
 // Props
 const props = defineProps({
@@ -401,85 +386,6 @@ onBeforeUnmount(function () {
   min-height: 0;
 }
 
-.modal-foot {
-  position: sticky;
-  bottom: 0;
-  z-index: 10;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  border-top: 1px solid var(--line);
-  background: var(--paper);
-}
-
-.foot-btn {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  min-width: 0;
-  margin: 0;
-  padding: 0.85rem 1.25rem 0.95rem;
-  border: 0;
-  background: none;
-  font: inherit;
-  color: var(--ink);
-  text-align: left;
-  cursor: pointer;
-  transition:
-    background-color 200ms ease,
-    color 200ms ease;
-
-  &.foot-newer {
-    align-items: flex-end;
-    text-align: right;
-    border-left: 1px solid var(--line);
-  }
-
-  .foot-dir {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    color: var(--ink-2);
-    transition: color 200ms ease;
-
-    .iconify {
-      font-size: 0.9rem;
-    }
-  }
-
-  .foot-name {
-    max-width: 100%;
-    overflow: hidden;
-    font-size: 0.9rem;
-    font-weight: 600;
-    line-height: 1.3;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  &:hover:not(:disabled) {
-    background: var(--paper-2);
-
-    .foot-dir,
-    .foot-name {
-      color: var(--green-ink);
-    }
-  }
-
-  &:disabled {
-    color: var(--ink-2);
-    opacity: 0.55;
-    cursor: default;
-
-    .foot-name {
-      font-weight: 500;
-    }
-  }
-
-  &:focus-visible {
-    outline-offset: -4px;
-  }
-}
-
 /* Desktop: a wide viewer, stage on the left and paper on the right */
 @media (width >= 64rem) {
   .modal-overlay {
@@ -538,11 +444,6 @@ onBeforeUnmount(function () {
       padding-right: 2.5rem;
     }
   }
-
-  .modal-foot {
-    position: static;
-    flex: none;
-  }
 }
 
 /* Transition animations */
@@ -580,9 +481,7 @@ onBeforeUnmount(function () {
   .modal-leave-active,
   .modal-enter-active .modal-panel,
   .modal-leave-active .modal-panel,
-  .modal-close,
-  .foot-btn,
-  .foot-btn .foot-dir {
+  .modal-close {
     transition: none;
   }
 

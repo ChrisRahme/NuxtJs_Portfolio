@@ -76,6 +76,8 @@
 </template>
 
 <script setup>
+import { mulberry32 } from '~/utils/random'
+
 const props = defineProps({
   error: {
     type: Object,
@@ -250,18 +252,6 @@ const DIGIT_HEIGHT = 6
 const DIGIT_GAP = 1.8
 const PADDING = 1
 const JITTER = 0.22
-
-// Deterministic PRNG so server and client render the same sky.
-function mulberry32(seed) {
-  let a = seed >>> 0
-  return function () {
-    a = (a + 0x6d2b79f5) >>> 0
-    let t = a
-    t = Math.imul(t ^ (t >>> 15), t | 1)
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
-  }
-}
 
 function round(value) {
   return Math.round(value * 100) / 100
@@ -442,20 +432,6 @@ const ambient = buildAmbient(36)
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
-  }
-
-  .btn-ghost.on-sky {
-    border-color: rgb(244, 239, 230, 0.3);
-    color: var(--star);
-
-    &:hover {
-      border-color: var(--green-light);
-      color: var(--green-light);
-    }
-
-    &:focus-visible {
-      outline-color: var(--green-light);
-    }
   }
 
   .btn:focus-visible {

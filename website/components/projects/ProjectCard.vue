@@ -4,14 +4,7 @@
       <ProjectCardImage v-if="previewImage" :image="previewImage" :alt="previewImage['alt'] || project['name'] || ''" />
 
       <div class="project-body">
-        <p class="eyebrow project-meta">
-          <b v-if="project['featured']" class="featured-mark" title="Featured project">
-            <Icon name="mdi:star-four-points" aria-hidden="true" />
-            <span class="sr-only">Featured</span>
-          </b>
-          <span>{{ project['year'] }}</span>
-          <span v-for="tag in project['tags']" :key="tag">{{ tag }}</span>
-        </p>
+        <ProjectMeta :project="project" />
 
         <h3 class="project-title">{{ project['name'] }}</h3>
 
@@ -28,6 +21,7 @@
 <script setup lang="ts">
 import type { PROJECTS_QUERY_RESULT } from '~~/sanity.types'
 import ProjectCardImage from './ProjectCardImage.vue'
+import ProjectMeta from './ProjectMeta.vue'
 
 // Props
 const props = withDefaults(
@@ -75,28 +69,6 @@ const hasSkills = computed(function () {
     flex: 1;
     gap: 0.5rem;
     padding: 1.125rem 1.25rem 1.25rem;
-  }
-
-  .project-meta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.25rem 0.75rem;
-    margin: 0;
-    color: var(--ink-2);
-
-    span + span::before {
-      content: '·';
-      margin-right: 0.75rem;
-      color: var(--green);
-    }
-
-    .featured-mark {
-      display: inline-flex;
-      color: var(--green-ink);
-      font-size: 0.9rem;
-      line-height: 1;
-    }
   }
 
   .project-title {

@@ -67,7 +67,15 @@ const friends = computed(function () {
 const img = useImage()
 
 function friendImage(image: (typeof friends.value)[number]['image']) {
-  return hasImage(image) ? `url(${img(image['asset']['_ref'], {}, { preset: 'friendLogo' })})` : 'none'
+  if (!hasImage(image)) {
+    return 'none'
+  }
+
+  // The provider must be passed here: @nuxt/image resolves it before merging the preset.
+  // @ts-expect-error -- @nuxt/image types $img() options with the default provider only
+  const url = img(image['asset']['_ref'], {}, { provider: 'sanity', preset: 'friendLogo' })
+
+  return `url(${url})`
 }
 </script>
 

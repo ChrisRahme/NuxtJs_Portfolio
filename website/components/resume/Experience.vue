@@ -77,23 +77,25 @@ function isTypingTarget(target: EventTarget | null) {
   return target instanceof Element && Boolean(target.closest('input, textarea, select, [contenteditable]:not([contenteditable="false"])'))
 }
 
+// A key press that another handler, a modifier shortcut, or a form field already owns
+function isClaimed(event: KeyboardEvent) {
+  return event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || isTypingTarget(event.target)
+}
+
+// Plain arrow keys step through the roles
+const ARROW_STEPS: Record<string, number> = {
+  ArrowLeft: -1,
+  ArrowRight: 1,
+}
+
 function onPageKeydown(event: KeyboardEvent) {
-  if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) {
+  const step = ARROW_STEPS[event.key]
+  if (!step || isClaimed(event)) {
     return
   }
 
-  if (isTypingTarget(event.target)) {
-    return
-  }
-
-  let next = null
-  if (event.key === 'ArrowRight') {
-    next = state['selectedIndex'] + 1
-  } else if (event.key === 'ArrowLeft') {
-    next = state['selectedIndex'] - 1
-  }
-
-  if (next === null || next < 0 || next > lastIndex) {
+  const next = state['selectedIndex'] + step
+  if (next < 0 || next > lastIndex) {
     return
   }
 

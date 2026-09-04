@@ -170,6 +170,21 @@ p {
     }
   }
 
+  /* Ghost button on a dark sky surface (hero, error page): pale border, star-coloured text */
+  .btn-ghost.on-sky {
+    border-color: rgb(244, 239, 230, 0.3);
+    color: var(--star);
+
+    &:hover:not(:disabled) {
+      border-color: var(--green-light);
+      color: var(--green-light);
+    }
+
+    &:focus-visible {
+      outline-color: var(--green-light);
+    }
+  }
+
   .btn-icon {
     width: 2.5rem;
     height: 2.5rem;

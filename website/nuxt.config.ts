@@ -19,6 +19,9 @@ export default defineNuxtConfig({
   // Every page is cached at the edge and refreshed in the background; Studio edits go live in a few minutes.
   routeRules: {
     '/**': { swr: 300 },
+    // ipx 4 streams its response and Nitro's cache handler cannot capture it (request hangs or 500).
+    // ipx sets its own Cache-Control, so skip the SWR cache for it.
+    '/_ipx/**': { cache: false },
   },
 
   // Debug & Development
@@ -75,8 +78,6 @@ export default defineNuxtConfig({
     presets: {
       // Footer friend logos, used as CSS masks (see Footer.vue)
       friendLogo: {
-        // @ts-expect-error -- @nuxt/image types preset providers as the default provider only
-        provider: 'sanity',
         modifiers: { width: 96, format: 'webp' },
       },
     },
@@ -92,6 +93,7 @@ export default defineNuxtConfig({
 
   // Deployment
   site: {
+    name: 'Chris Rahmé',
     url: 'https://chrisrahme.dev',
   },
 
