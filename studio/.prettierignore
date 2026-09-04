@@ -1,0 +1,6 @@
+node_modules
+dist
+.sanity
+schema.json
+package-lock.json
+scripts/legacy-data/
