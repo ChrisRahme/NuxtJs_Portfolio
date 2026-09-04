@@ -1,6 +1,7 @@
 // tailwind.config.js
 
-// module.exports = {
+import defaultTheme from 'tailwindcss/defaultTheme'
+
 export default {
     theme: {
         screens: {
@@ -13,6 +14,13 @@ export default {
             '2xl': '1536px', // default: 1536
             '3xl': '1920px',
             '4xl': '2560px',
+        },
+        extend: {
+            fontFamily: {
+                sans: ['Onest', ...defaultTheme.fontFamily.sans],
+                display: ['Unbounded', ...defaultTheme.fontFamily.sans],
+                mono: ['Martian Mono', ...defaultTheme.fontFamily.mono],
+            },
         },
     },
 }

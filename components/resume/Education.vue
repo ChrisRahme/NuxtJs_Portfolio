@@ -1,174 +1,106 @@
 <template>
-    <div class="education noselect md:flex justify-between items-center">
-        <div class="education-delimiter"></div>
+    <div class="education">
+        <article class="card edu-card" v-for="item in education" :key="item['title']" :style="{ '--theme': item['color'] || 'var(--green)' }">
+            <span class="edu-icon" aria-hidden="true">
+                <Icon :name="item['icon']" />
+            </span>
 
-        <template v-for="(item, index) in state['timeline']" :key="item.title">
-            <div class="education-item mb-8 md:mb-0">
-                <!-- Show interactive cards on md+ screens -->
-                <div
-                    class="card rounded-full hidden md:flex justify-center items-center"
-                    :class="{
-                        active: state['selectedIndex'] == index,
-                    }"
-                    :style="{
-                        '--theme': item.color || '#60C060',
-                    }"
-                    @click="selectDot(index)"
-                >
-                    <div class="icon">
-                        <Icon :name="item.icon" :class="item.class" />
-                    </div>
+            <div class="edu-text">
+                <p class="eyebrow edu-dates">{{ item['start'] }} — {{ item['end'] }}</p>
 
-                    <div class="info">
-                        <!-- Diploma -->
-                        <h4 class="m-0 -mt-2 -mb-2">
-                            <span class="font-semibold">{{ item.title }}</span>
-                        </h4>
+                <h3 class="edu-title">{{ item['title'] }}</h3>
 
-                        <!-- Institution -->
-                        <h5 class="m-0 mb-2">
-                            <a :href="item.link" target="_blank" rel="noopener noreferrer" title="Visit website" v-if="item.link">
-                                <span class="text-sm font-semibold text-[#A040A0]">{{ item.institution }}</span>
-                                <Icon name="solar:link-bold" class="fix text-sm inline-block ml-2 hover:scale-110 hover:text-[#4060E0] transition-300" />
-                            </a>
-
-                            <span class="text-sm font-semibold text-[#A040A0]" v-else> {{ item.institution }}</span>
-                        </h5>
-
-                        <!-- Dates -->
-                        <p class="font-mono">{{ item.start }}&nbsp;-&nbsp;{{ item.end }}</p>
-                    </div>
-                </div>
-
-                <!-- Show opened info cards on mobile -->
-                <div
-                    class="card flex md:hidden justify-items-start items-center opened"
-                    :style="{
-                        '--theme': item.color || '#60C060',
-                    }"
-                >
-                    <div class="icon hidden xs:block">
-                        <Icon :name="item.icon" :class="item.class" />
-                    </div>
-
-                    <div class="info">
-                        <h4 class="m-0 -mt-2 -mb-2">
-                            <span class="text-lg font-medium">{{ item.title }}</span>
-                        </h4>
-
-                        <h5 class="m-0 mb-2">
-                            <a :href="item.link" target="_blank" rel="noopener noreferrer" title="Visit website" v-if="item.link">
-                                <span class="text-sm font-medium text-[#A040A0]">{{ item.institution }}</span>
-                            </a>
-
-                            <span class="text-sm font-semibold text-[#A040A0]" v-else> {{ item.institution }}</span>
-                        </h5>
-
-                        <p class="font-mono">{{ item.start }}&nbsp;-&nbsp;{{ item.end }}</p>
-                    </div>
-                </div>
+                <p class="edu-institution">
+                    <a :href="item['link']" target="_blank" rel="noopener noreferrer" title="Visit website" v-if="item['link']">
+                        <span>{{ item['institution'] }}</span>
+                        <Icon name="solar:link-bold" />
+                    </a>
+                    <span v-else>{{ item['institution'] }}</span>
+                </p>
             </div>
-
-            <div class="education-delimiter"></div>
-        </template>
+        </article>
     </div>
 </template>
 
 <script setup>
 import { education } from '~/data/education'
-
-// Props
-const props = defineProps({})
-
-// State
-const state = reactive({
-    timeline: [],
-    selectedIndex: props['selectedIndex'],
-})
-
-// Methods
-function selectDot(index) {
-    const maxIndex = state['timeline'].length - 1
-    state['selectedIndex'] = Math.max(0, Math.min(index, maxIndex))
-}
-
-// Lifecycle
-onBeforeMount(function () {
-    state['timeline'] = education
-})
-
-onMounted(function () {
-    selectDot(props['selectedIndex'] || state['timeline'].length)
-})
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/css/tailwind.css';
-
 .education {
-    .education-delimiter {
-        width: 1px;
-        max-width: 1px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: 1.25rem;
+
+    .edu-card {
+        display: flex;
+        gap: 1rem;
+        padding: 1.5rem;
+        transition:
+            transform 200ms ease,
+            box-shadow 200ms ease,
+            border-color 200ms ease;
+
+        &:hover {
+            transform: translateY(-3px);
+            border-color: var(--theme);
+            box-shadow: var(--shadow-card-hover);
+        }
     }
 
-    .education-item > div {
-        --size: 5rem;
-        --space: calc(var(--size) / 4);
+    .edu-icon {
+        flex: none;
+        display: grid;
+        place-items: center;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 0.875rem;
+        background: color-mix(in srgb, var(--theme) 16%, white);
+        color: var(--theme);
+        font-size: 1.5rem;
+    }
 
-        line-height: 0;
+    .edu-text {
+        min-width: 0;
+    }
 
-        padding: var(--space);
+    .edu-dates {
+        margin: 0 0 0.4rem;
+        color: var(--ink-2);
+    }
+
+    .edu-title {
+        margin: 0 0 0.35rem;
+        font-family: var(--font-body);
+        font-size: 1.0625rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        line-height: 1.3;
+    }
+
+    .edu-institution {
         margin: 0;
+        font-size: 0.9375rem;
 
-        border: 2px solid white;
-        cursor: pointer;
-
-        &:hover,
-        &.active {
-            border-color: var(--theme);
-
-            .icon {
-                @apply scale-110;
-                color: var(--theme);
-            }
+        a,
+        span {
+            color: var(--purple);
+            font-weight: 600;
+            text-decoration: none;
         }
 
-        &.active,
-        &.opened {
-            font-weight: bold;
+        a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
 
-            .icon {
-                color: var(--theme);
+            .iconify {
+                font-size: 0.8em;
+                opacity: 0.7;
             }
 
-            .info {
-                margin: 0 var(--space);
-            }
-        }
-
-        &:not(.active):not(.opened) {
-            .info {
-                margin: 0;
-                padding: 0;
-                max-width: 0px;
-                max-height: 0px;
-                overflow: hidden;
-                opacity: 0;
-                line-height: 0;
-                color: transparent;
-            }
-        }
-
-        .icon {
-            @apply transition-300;
-            font-size: var(--size);
-        }
-
-        .info {
-            @apply transition-300;
-
-            h4 {
-                color: var(--theme);
+            &:hover .iconify {
+                opacity: 1;
             }
         }
     }

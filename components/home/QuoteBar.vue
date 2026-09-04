@@ -1,27 +1,9 @@
 <template>
-    <div id="quote" class="hidden md:block" v-if="state['quote']">
-        <div class="pt-8 bg-9"></div>
-
-        <div class="bg-8" @click="changeQuote">
-            <div class="container mx-auto py-8 flex justify-center content-center items-center text-white cursor-pointer">
-                <Icon name="mdi:format-quote-open" class="text-8xl text-[#60C060]" />
-
-                <p class="text-2xl text-center w-full italic" style="max-width: 45vw">
-                    <span>
-                        {{ state['quote'] }}
-                    </span>
-                    <span
-                        id="squiggle"
-                        :title="`[/src/pages/index.vue] SyntaxError: Unexpected end of quote; expected '”' at position ${state.quote.length}. (This is on purpose)`"
-                    >
-                        &nbsp;&nbsp;
-                    </span>
-                </p>
-            </div>
-        </div>
-
-        <div class="pb-0 bg-0"></div>
-    </div>
+    <p id="quote" class="wrap" v-if="state['quote']">
+        <button type="button" class="quote-button" @click="changeQuote" title="Another one">
+            <span class="text">{{ state['quote'] }}</span>
+        </button>
+    </p>
 </template>
 
 <script setup>
@@ -52,54 +34,36 @@ onMounted(function () {
 </script>
 
 <style scoped lang="scss">
-@import '../../assets/css/tailwind.css';
-
 #quote {
-    @apply transition-300;
+    margin-block: 0;
+    padding: 0.5rem 0 1.25rem;
 
-    position: relative;
-    z-index: 1;
+    .quote-button {
+        appearance: none;
+        margin: 0;
+        padding: 0.25rem 0;
+        border: 0;
+        background: none;
+        font: inherit;
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        line-height: 1.5;
+        text-align: left;
+        color: var(--star-dim);
+        cursor: pointer;
+        transition: color 300ms ease;
 
-    &:hover {
-        .iconify {
-            transform: scale(1.1) rotateZ(-1.5deg);
+        @media (width >= 640px) {
+            font-size: 0.75rem;
         }
-    }
 
-    #squiggle {
-        --fs: 1rem;
-
-        border-bottom: 2px dotted red;
-        display: inline-block;
-        position: relative;
-
-        &:after {
-            content: '';
-            display: block;
-            position: absolute;
-            top: calc(50% + var(--fs) - 1px);
-            left: -2px;
-            width: 100%;
-            height: 4px;
-            font-size: var(--fs);
-            border-bottom: 2px dotted red;
+        &:hover {
+            color: var(--star);
         }
-    }
 
-    .iconify {
-        @apply transition-300;
-    }
-
-    .bg-0 {
-        background-color: var(--color-background-0);
-    }
-
-    .bg-8 {
-        background-color: var(--color-background-8);
-    }
-
-    .bg-9 {
-        background-color: var(--color-background-9);
+        &:focus-visible {
+            outline-color: var(--green-light);
+        }
     }
 }
 </style>

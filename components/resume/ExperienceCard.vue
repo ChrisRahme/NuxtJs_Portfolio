@@ -1,77 +1,32 @@
 <template>
-    <div class="card px-4 py-4" :style="cardStyle">
-        <div class="flex">
-            <!-- Dates -->
-            <div class="dates pr-4 border-r-2 transition-300 hidden md:block" style="flex-shrink: 0">
-                <p class="text-[#60C060] font-mono">
-                    <ExperienceDates :item="item" />
-                </p>
-            </div>
-
-            <div class="pl-4 w-full">
-                <!-- Position -->
-                <div class="position flex justify-between">
-                    <div class="block">
-                        <!-- Job title -->
-                        <h4 class="m-0 -mb-2">
-                            <span class="text-xla font-semibold text-[#60C060]">{{ item.title }}</span>
-                        </h4>
-
-                        <!-- Company -->
-                        <h5 class="m-0">
-                            <component :is="companyLink.tag" v-bind="companyLink.attrs">
-                                <span class="text-sm font-semibold text-[#A040A0]">{{ item.company }}</span>
-                                <Icon
-                                    name="solar:link-bold"
-                                    class="fix text-sm inline-block ml-2 hover:scale-110 hover:text-[#4060E0] transition-300"
-                                    v-if="companyLink.isLink"
-                                />
-                            </component>
-
-                            <span class="hidden sm:inline" v-if="item.type">
-                                <span class="text-sm noselect"> &nbsp;&nbsp;I&nbsp;&nbsp; </span>
-
-                                <span class="text-sm text-gray-500">
-                                    {{ item.type }}
-                                </span>
-                            </span>
-                        </h5>
-                    </div>
-
-                    <!-- Image -->
-                    <div class="hidden md:block" v-if="item.image">
-                        <component :is="companyLink.tag" v-bind="companyLink.attrs">
-                            <NuxtImg
-                                :src="item.image"
-                                :alt="`${item.company} Logo`"
-                                class="rounded-lg"
-                                width="48"
-                                height="48"
-                                format="webp"
-                                :style="{
-                                    'max-height': 'calc(1.75rem + 1.75rem - 0.5rem)',
-                                }"
-                            />
-                        </component>
-                    </div>
-                </div>
-
-                <!-- Dates (sm- screens) -->
-                <p class="text-[#60C060] text-sm mb-4 inline-block sm:hidden">
+    <article class="card exp-card" :style="{ '--theme': item['color'] || 'var(--green)' }">
+        <header class="exp-head">
+            <div class="exp-main">
+                <p class="eyebrow exp-dates">
                     <ExperienceDates :item="item" />
                 </p>
 
-                <!-- Description -->
-                <div class="description mt-2" v-if="item.description">
-                    <!-- hardcoded content from data/experience.js only — do not pipe user input here -->
-                    <p v-html="item.description"></p>
-                </div>
+                <h3 class="exp-title">{{ item['title'] }}</h3>
 
-                <!-- Task list -->
-                <ExperienceTaskList :tasks="item.tasks" v-if="item.tasks" />
+                <p class="exp-company">
+                    <component :is="companyLink.tag" v-bind="companyLink.attrs" class="company-name">
+                        <span>{{ item['company'] }}</span>
+                        <Icon name="solar:link-bold" v-if="companyLink.isLink" />
+                    </component>
+
+                    <span class="exp-type" v-if="item['type']">{{ item['type'] }}</span>
+                </p>
             </div>
-        </div>
-    </div>
+
+            <component :is="companyLink.tag" v-bind="companyLink.attrs" class="exp-logo" v-if="item['image']">
+                <NuxtImg :src="item['image']" :alt="`${item['company']} logo`" width="56" height="56" format="webp" />
+            </component>
+        </header>
+
+        <p class="exp-desc" v-html="item['description']" v-if="item['description']"></p>
+
+        <ExperienceTaskList :tasks="item['tasks']" v-if="item['tasks']" />
+    </article>
 </template>
 
 <script setup>
@@ -83,41 +38,20 @@ const props = defineProps({
         type: Object,
         required: true,
     },
-    active: {
-        type: Boolean,
-        default: false,
-    },
 })
 
-const cardStyle = computed(function () {
-    const theme = props['item'].color || 'white'
-    const separator = props['item'].color || '#e5e7eb'
-    const shown = props['active'] ? 1 : 0
-
-    return {
-        '--theme': theme,
-        '--separator': separator,
-        '--opacity': shown,
-        '--max-height': shown ? '100%' : 0,
-        'opacity': 'var(--opacity)',
-        'max-height': 'var(--max-height)',
-    }
-})
-
-// Resolve the company link's tag and anchor attributes ahead of time so the
-// template renders it branch-free (used for both the name and the logo)
 const companyLink = computed(function () {
-    const isLink = Boolean(props['item'].link)
+    const isLink = Boolean(props['item']['link'])
 
     return {
         isLink,
         tag: isLink ? 'a' : 'span',
         attrs: isLink
             ? {
-                  href: props['item'].link,
+                  href: props['item']['link'],
                   target: '_blank',
                   rel: 'noopener noreferrer',
-                  title: props['active'] ? 'Visit website' : null,
+                  title: 'Visit website',
               }
             : {},
     }
@@ -125,19 +59,90 @@ const companyLink = computed(function () {
 </script>
 
 <style lang="scss" scoped>
-.card {
-    flex: 0 0 100%;
-    min-width: 100%;
-    min-height: 100%;
+.exp-card {
+    padding: clamp(1.25rem, 3vw, 2rem);
+    box-shadow:
+        inset 4px 0 0 var(--theme),
+        var(--shadow-card);
 
-    border: 2px solid white;
+    .exp-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
 
-    &:hover {
-        border: 2px solid var(--theme);
+    .exp-main {
+        min-width: 0;
+    }
 
-        .dates {
-            border-color: var(--separator);
+    .exp-dates {
+        margin: 0 0 0.5rem;
+        color: var(--green-ink);
+    }
+
+    .exp-title {
+        margin: 0 0 0.25rem;
+        font-family: var(--font-body);
+        font-size: 1.25rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        line-height: 1.25;
+    }
+
+    .exp-company {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.35rem 0.75rem;
+        margin: 0;
+        font-size: 0.9375rem;
+
+        .company-name {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            color: var(--purple);
+            font-weight: 600;
+            text-decoration: none;
+
+            .iconify {
+                font-size: 0.8em;
+                opacity: 0.7;
+                transition: opacity 200ms ease;
+            }
+
+            &:hover .iconify {
+                opacity: 1;
+            }
         }
+
+        .exp-type {
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            letter-spacing: 0.06em;
+            color: var(--ink-2);
+        }
+    }
+
+    .exp-logo {
+        flex: none;
+        display: block;
+        border-radius: 0.75rem;
+        line-height: 0;
+
+        img {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 0.75rem;
+            object-fit: contain;
+        }
+    }
+
+    .exp-desc {
+        margin: 0;
+        color: var(--ink);
     }
 }
 </style>

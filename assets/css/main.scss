@@ -1,20 +1,71 @@
 :root {
-    --header-height: max(7.5vh, 3rem);
-    --scrollbar-width: 0.675rem;
+    /* Layout */
+    --header-height: 3.5rem;
+    --scrollbar-width: 0.625rem;
+    --container: 72rem;
+    --container-narrow: 46rem;
+    --gutter: clamp(1rem, 4vw, 2.5rem);
+    --space-section: clamp(3rem, 6vw, 6rem);
 
-    --content-px: 2rem;
+    /* Legacy spacing names still used by a few components */
+    --content-px: var(--gutter);
     --content-py: 1rem;
 
-    --color-primary: #60c060;
-    --color-inverse: #a040a0;
+    /* Type */
+    --font-display: 'Unbounded', 'Onest', sans-serif;
+    --font-body: 'Onest', 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'Martian Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
 
-    /* --color-primary-light: hsl(from var(--color-primary) h s calc(l + 30));
-    --color-primary-dark: hsl(from var(--color-primary) h s calc(l - 30)); */
-    --color-primary-light: #90f090;
-    --color-primary-dark: #309030;
+    --fs-hero: clamp(2.75rem, 1.6rem + 4.6vw, 5.5rem);
+    --fs-h1: clamp(2rem, 1.4rem + 2.2vw, 3.25rem);
+    --fs-h2: clamp(1.5rem, 1.15rem + 1.2vw, 2.125rem);
+    --fs-h3: 1.25rem;
+    --fs-lead: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
 
-    --color-background-light: #fbf6f6;
-    --color-background-0: #fbf6f6;
+    /* Radii */
+    --r-card: 1.25rem;
+    --r-img: 0.875rem;
+    --r-pill: 999px;
+
+    /* Brand green */
+    --green: #60c060;
+    --green-light: #90f090;
+    --green-dark: #309030;
+    --green-ink: #257a25; /* green as text on paper, AA contrast */
+    --green-soft: #e3f3e3; /* green tint for surfaces on paper */
+
+    /* Brand purple */
+    --purple: #a040a0;
+    --purple-soft: #f3e6f3;
+
+    /* Paper */
+    --paper: #fbf6f6;
+    --paper-2: #f3ecec;
+    --card: #ffffff;
+    --line: #e7dfe0;
+    --ink: #1a1e24;
+    --ink-2: #5c5b66;
+
+    /* Twilight sky */
+    --sky-zenith: #0a0e2a;
+    --sky-mid: #141a4b;
+    --sky-dusk: #2e2757;
+    --sky-ground: #4b3659;
+    --sky-horizon: #c9705c;
+    --star: #f4efe6;
+    --star-dim: #8e93b4;
+    --sky-line: rgba(244, 239, 230, 0.12);
+
+    --shadow-card: 0 1px 2px rgba(26, 30, 36, 0.05), 0 12px 32px -16px rgba(26, 30, 36, 0.18);
+    --shadow-card-hover: 0 2px 4px rgba(26, 30, 36, 0.06), 0 20px 40px -18px rgba(26, 30, 36, 0.24);
+
+    /* Other colors */
+    --color-primary: var(--green);
+    --color-primary-light: var(--green-light);
+    --color-primary-dark: var(--green-dark);
+    --color-inverse: var(--purple);
+    --color-background-light: var(--paper);
+    --color-background-0: var(--paper);
     --color-background-1: #dcd6d7;
     --color-background-2: #beb8bb;
     --color-background-3: #a19b9f;
@@ -22,52 +73,70 @@
     --color-background-5: #68656c;
     --color-background-6: #4c4c53;
     --color-background-7: #32343b;
-    --color-background-8: #1a1e24;
-    --color-background-9: #050a0f;
-    --color-background-dark: #050a0f;
+    --color-background-8: var(--ink);
+    --color-background-9: var(--sky-zenith);
+    --color-background-dark: var(--sky-zenith);
+}
+
+@media (width >= 768px) {
+    :root {
+        --header-height: 4rem;
+    }
 }
 
 html,
 body {
     margin: 0;
     padding: 0;
-    overflow-x: hidden !important;
-    scrollbar-color: auto !important;
-    scrollbar-width: var(--scrollbar-width) !important;
+    overflow-x: clip;
 
     * {
         box-sizing: border-box;
     }
 }
 
-
+html {
+    scroll-padding-top: calc(var(--header-height) + 1rem);
+}
 
 // SCROLLBAR
 
-
 ::-webkit-scrollbar {
     width: var(--scrollbar-width);
+    height: var(--scrollbar-width);
     background: transparent;
 }
 
-::-webkit-scrollbar-track {
-    background: var(--color-background-1);
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--color-primary);
-    border-radius: calc(var(--scrollbar-width) / 4);
-    
-    &:hover,
-    &:focus {
-        background: var(--color-primary-light);
+    border: 0.1875rem solid transparent;
+    border-radius: var(--r-pill);
+    background: rgba(142, 147, 180, 0.55);
+    background-clip: padding-box;
+
+    &:hover {
+        border-width: 0.125rem;
+        background-color: rgba(142, 147, 180, 0.85);
+    }
+
+    &:active {
+        background-color: var(--green);
     }
 }
 
-
+@supports not selector(::-webkit-scrollbar) {
+    html {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(142, 147, 180, 0.6) transparent;
+    }
+}
 
 // DEFINITIONS
 
 .text-primary {
-    color: var(--color-primary);
+    color: var(--green-ink);
 }

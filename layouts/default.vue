@@ -2,29 +2,26 @@
     <div id="default-layout">
         <Header />
 
-        <main class="container mx-auto py-4">
-            <div id="main">
-                <slot></slot>
-            </div>
+        <main id="main">
+            <slot></slot>
         </main>
 
         <Footer />
     </div>
 </template>
 
-<script setup>
-// import Navbar from '~/components/Navbar.vue'
-</script>
+<script setup></script>
 
 <style scoped lang="scss">
 #default-layout {
-    background-color: var(--color-background-light);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100svh;
+    background-color: var(--paper);
 
     & > main {
-        @media (width < theme('screens.lg')) {
-            padding-right: 1rem;
-            padding-left: 1rem;
-        }
+        flex: 1;
     }
 }
 </style>

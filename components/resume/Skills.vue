@@ -1,25 +1,18 @@
 <template>
-    <div class="skill-groups noselect">
-        <template v-for="group in state['skills']" :key="group.title">
-            <div class="skill-section" :style="`--theme: ${group.color};`">
-                <div class="skill-title transition-500">
-                    {{ group.title }}
-                </div>
+    <div class="skill-groups">
+        <section class="card skill-group" v-for="group in groups" :key="group['title']" :style="{ '--theme': group['color'] }">
+            <h3 class="eyebrow skill-group-title">{{ group['title'] }}</h3>
 
-                <div class="skill-row card flex flex-wrap justify-around items-center content-center px-4 pt-2 pb-1 hover:shadow-md">
-                    <template v-for="(item, i) in group.icons" :key="item.name || i">
-                        <div class="skill-item flex flex-col justify-center content-center items-center" :style="`--color: ${item.color};`">
-                            <div class="skill-icon transition-500" :title="item.name">
-                                <span v-if="!item.icon && item.img" class="skill-img" v-html="skillIcons[item.img]"></span>
-                                <Icon v-else :name="item.icon" :class="item.class" />
-                            </div>
-
-                            <small class="skill-name text-sm text-center transition-500" v-if="props['showSkillNames']"> {{ item.name }} </small>
-                        </div>
-                    </template>
-                </div>
-            </div>
-        </template>
+            <ul class="skill-list">
+                <li class="skill-item" v-for="item in group['icons']" :key="item['name']" :style="{ '--color': item['color'] }">
+                    <span class="skill-icon" aria-hidden="true">
+                        <span v-if="!item['icon'] && item['img']" class="skill-img" v-html="skillIcons[item['img']]"></span>
+                        <Icon v-else :name="item['icon']" />
+                    </span>
+                    <span class="skill-name">{{ item['name'] }}</span>
+                </li>
+            </ul>
+        </section>
     </div>
 </template>
 
@@ -27,24 +20,20 @@
 import { skillIcons } from '~/composables/skillIcons'
 import { skills } from '~/data/skills'
 
-// Props
-const props = defineProps({
-    showSkillNames: {
-        type: Boolean,
-        default: false,
-    },
+const groups = skills.map(function (group) {
+    return {
+        ...group,
+        icons: group['icons'].filter(function (icon) {
+            return icon['showSkills']
+        }),
+    }
 })
 
 // State
 const state = reactive({
     unmount: false,
-    skills: [],
 })
 
-// Functions
-
-// Sweep the `colored` class across skill items: each stays lit HIGHLIGHT_MS,
-// the sweep steps every STEP_MS, and pauses LOOP_PAUSE_MS after the last item.
 function startSkillHighlightLoop() {
     const HIGHLIGHT_MS = 500
     const STEP_MS = HIGHLIGHT_MS / 3
@@ -75,17 +64,8 @@ function startSkillHighlightLoop() {
 }
 
 // Lifecycle
-onBeforeMount(function () {
-    state['skills'] = skills.map(function (group) {
-        group['icons'] = group['icons'].filter(function (icon) {
-            return icon['showSkills']
-        })
-
-        return group
-    })
-})
-
 onMounted(function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     startSkillHighlightLoop()
 })
 
@@ -95,101 +75,90 @@ onBeforeUnmount(function () {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/css/tailwind.css';
-
 .skill-groups {
-    /* skill-title variables */
-    --fs: 1.125rem;
-    --hfs: calc(var(--fs) / 2);
-    --tfs: calc(var(--fs) * 2 / 3);
+    display: grid;
+    gap: 1.25rem;
 
-    .skill-section {
-        transform: translateY(calc(0rem - var(--tfs)));
+    .skill-group {
+        padding: 1.25rem clamp(1rem, 3vw, 1.5rem) 1rem;
+        transition: border-color 200ms ease;
 
         &:hover {
-            .skill-title {
-                color: var(--theme);
-                transform: translate(1rem, var(--tfs));
-            }
+            border-color: var(--theme);
+        }
+    }
 
-            .skill-row {
-                border: 2px solid var(--theme);
-            }
+    .skill-group-title {
+        margin: 0 0 1rem;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        color: var(--theme);
+    }
+
+    .skill-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+        gap: 0.5rem 0.25rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .skill-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.6rem 0.25rem;
+        border-radius: 0.75rem;
+        color: var(--ink-2);
+        text-align: center;
+        transition:
+            color 300ms ease,
+            background-color 300ms ease;
+
+        &:hover,
+        &.colored {
+            color: var(--color);
         }
 
-        .skill-title {
-            display: inline-block;
+        &:hover {
+            background: var(--paper-2);
 
-            background: linear-gradient(to bottom, var(--color-background-light) calc(50% + 2px), white calc(50% - 2px));
-
-            margin: 0 var(--hfs);
-            padding: 0 var(--hfs);
-
-            font-size: var(--fs);
-            line-height: var(--fs);
-            font-weight: 500;
-
-            transform: translateY(var(--tfs));
-
-            &:not(:first-of-type) {
-                margin-top: var(--hfs);
+            .skill-icon {
+                transform: translateY(-2px) scale(1.08);
             }
         }
+    }
 
-        .skill-row {
-            background-color: white;
-            border: 2px solid white;
-            // border: 2px solid #030712;
+    .skill-icon {
+        display: grid;
+        place-items: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        font-size: 2rem;
+        line-height: 0;
+        transition: transform 300ms ease;
 
-            .skill-item {
-                width: 5rem;
-                height: 5rem;
+        .skill-img {
+            display: block;
+            width: 2rem;
+            height: 2rem;
 
-                &:hover,
-                &.colored {
-                    color: var(--color);
-                }
-
-                &:hover {
-                    .skill-icon {
-                        transform: scale(1.05);
-                    }
-
-                    .skill-name {
-                        font-weight: 500;
-                    }
-                }
-
-                .skill-icon {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    font-size: 2.5rem;
-                    margin: auto;
-
-                    .skill-img {
-                        display: flex;
-                        width: 2.5rem;
-                        height: 2.5rem;
-
-                        svg {
-                            width: 100%;
-                            height: 100%;
-                        }
-                    }
-                }
-
-                &:hover,
-                &.colored {
-                    color: var(--color);
-                }
-
-                .skill-name {
-                    font-size: min(2.5vh, 0.875rem);
-                    margin: -0.75rem 0 0.5rem 0;
-                }
+            :deep(svg) {
+                display: block;
+                width: 100%;
+                height: 100%;
             }
         }
+    }
+
+    .skill-name {
+        font-size: 0.75rem;
+        line-height: 1.2;
+        color: var(--ink);
     }
 }
 </style>

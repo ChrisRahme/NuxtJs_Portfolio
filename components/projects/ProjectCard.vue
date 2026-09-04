@@ -1,34 +1,32 @@
 <template>
-    <div class="project-card card">
-        <ProjectCardImage class="mb-4" :src="previewImage" :alt="project['name']" v-if="showImageTop" />
+    <article class="project-card card" :class="{ mirror }">
+        <div class="project-inner">
+            <ProjectCardImage :src="previewImage" :alt="project['name']" v-if="previewImage" />
 
-        <div class="project-title mb-1" v-if="project['name']">
-            <h4 class="font-medium">
-                {{ project['name'] }}
-            </h4>
-        </div>
+            <div class="project-body">
+                <p class="eyebrow project-meta">
+                    <b class="featured-mark" v-if="project['featured']" title="Featured project">
+                        <Icon name="mdi:star-four-points" aria-hidden="true" />
+                        <span class="sr-only">Featured</span>
+                    </b>
+                    <span>{{ project['year'] }}</span>
+                    <span v-for="tag in project['tags']" :key="tag">{{ tag }}</span>
+                </p>
 
-        <div class="project-description" v-if="project['description']">
-            <p v-html="formattedDescription"></p>
-        </div>
+                <h3 class="project-title">{{ project['name'] }}</h3>
 
-        <ProjectCardImage class="my-4" :src="previewImage" :alt="project['name']" v-if="showImageBottom" />
+                <p class="project-summary" v-if="project['summary']">{{ project['summary'] }}</p>
 
-        <div class="project-skills mb-2" v-if="hasSkills">
-            <template v-for="skill in project['skills']" :key="skill">
-                <div class="badge mr-1">
-                    {{ skill }}
+                <div class="project-skills" v-if="hasSkills">
+                    <span class="badge" v-for="skill in project['skills']" :key="skill">{{ skill }}</span>
                 </div>
-            </template>
+            </div>
         </div>
-
-        <ProjectCardFooter :year="project['year']" :links="project['links']" v-if="hasLinks" />
-    </div>
+    </article>
 </template>
 
 <script setup>
 import ProjectCardImage from './ProjectCardImage.vue'
-import ProjectCardFooter from './ProjectCardFooter.vue'
 
 // Props
 const props = defineProps({
@@ -36,7 +34,7 @@ const props = defineProps({
         type: Object,
         required: true,
     },
-    long: {
+    mirror: {
         type: Boolean,
         default: false,
     },
@@ -47,57 +45,137 @@ const previewImage = computed(function () {
     return images && images.length ? images[0] : null
 })
 
-const showImageTop = computed(function () {
-    return Boolean(previewImage.value && props['long'])
-})
-
-const showImageBottom = computed(function () {
-    return Boolean(previewImage.value && !props['long'])
-})
-
 const hasSkills = computed(function () {
     const skills = props['project'] && props['project']['skills']
     return Boolean(skills && skills.length)
 })
-
-const hasLinks = computed(function () {
-    const links = props['project'] && props['project']['links']
-    return Boolean(links && links.length)
-})
-
-const formattedDescription = computed(function () {
-    const project = props['project']
-    if (!project || !project['description']) return ''
-
-    const text = props['long'] ? project['description'] : project['summary']
-
-    return text
-        .split('<br>')
-        .map(function (line) {
-            return `<span class='block mb-2'>${line}</span>`
-        })
-        .join('')
-})
 </script>
 
 <style scoped lang="scss">
-@import '../../assets/css/tailwind.css';
-
 .project-card {
-    @apply transition-300 hover:shadow-lg;
+    container-type: inline-size;
+    height: 100%;
+    overflow: hidden;
+    transition:
+        transform 200ms ease,
+        box-shadow 200ms ease,
+        border-color 200ms ease;
 
-    .project-title {
-        h4 {
-            font-size: 1rem;
+    // A parent can also set --card-direction (it inherits) to mirror a card it lays out full width
+    &.mirror {
+        --card-direction: row-reverse;
+    }
+
+    .project-inner {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .project-body {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        gap: 0.5rem;
+        padding: 1.125rem 1.25rem 1.25rem;
+    }
+
+    .project-meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.25rem 0.75rem;
+        margin: 0;
+        color: var(--ink-2);
+
+        span + span::before {
+            content: '·';
+            margin-right: 0.75rem;
+            color: var(--green);
+        }
+
+        .featured-mark {
+            display: inline-flex;
+            color: var(--green-ink);
+            font-size: 0.9rem;
+            line-height: 1;
         }
     }
 
-    .project-description {
-        p {
-            @apply text-justify;
-            font-size: 0.75rem;
-            color: var(--color-background-7);
+    .project-title {
+        margin: 0;
+        font-family: var(--font-body);
+        font-size: 1.0625rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        line-height: 1.3;
+    }
+
+    .project-summary {
+        margin: 0;
+        font-size: 0.9rem;
+        line-height: 1.55;
+        color: var(--ink-2);
+    }
+
+    .project-skills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+        margin-top: auto;
+        padding-top: 0.5rem;
+    }
+
+    :deep(.project-image img) {
+        transition: transform 500ms ease;
+    }
+
+    &:hover {
+        transform: translateY(-3px);
+        border-color: var(--green);
+        box-shadow: var(--shadow-card-hover);
+
+        :deep(.project-image img) {
+            transform: scale(1.03);
         }
+    }
+
+    /* Wide card: image beside the text once the card has the room */
+    @container (min-width: 40rem) {
+        .project-inner {
+            flex-direction: var(--card-direction, row);
+        }
+
+        :deep(.project-image) {
+            flex: 0 0 56%;
+            aspect-ratio: 16 / 10;
+        }
+
+        .project-body {
+            justify-content: center;
+            gap: 0.75rem;
+            padding: clamp(1.5rem, 4cqw, 2.5rem);
+        }
+
+        .project-title {
+            font-size: clamp(1.25rem, 1rem + 1cqw, 1.625rem);
+        }
+
+        .project-summary {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .project-skills {
+            margin-top: 0.25rem;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .project-card,
+    .project-card :deep(.project-image img) {
+        transition: none;
     }
 }
 </style>

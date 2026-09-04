@@ -1,171 +1,161 @@
 <template>
-    <footer id="footer" class="noselect shadow-sm">
-        <nav class="container mx-auto px-8 py-4">
-            <div class="hidden md:block text-start">
-                <a href="/" class="m-0 p-0 hover:text-[#60C060]">Chris Rahmé</a>
-                <p class="m-0 p-0 text-xs hover:text-[#C060C0]" v-if="state['lastUpdated']">Last update: {{ state['lastUpdated'] }}</p>
+    <footer id="footer">
+        <div class="wrap footer-inner">
+            <div class="footer-brand">
+                <NuxtLink to="/" class="footer-name">Chris Rahmé</NuxtLink>
+                <p class="footer-meta" v-if="lastUpdated">Last update {{ lastUpdated }}</p>
             </div>
 
-            <div id="links">
-                <div id="socials">
-                    <small>Find Me</small>
-                    <ul>
-                        <template v-for="social in state['socials']" :key="social['name']">
-                            <li
-                                :title="social['name']"
-                                :style="{
-                                    '--color': social['color'],
-                                }"
-                            >
-                                <a :href="social['link']" target="_blank" rel="noopener noreferrer">
-                                    <Icon :name="social['icon']" />
-                                </a>
-                            </li>
-                        </template>
-                    </ul>
-                </div>
-
-                <div id="friends">
-                    <small>My Friends</small>
-                    <ul>
-                        <template v-for="friend in state['friends']" :key="friend['name']">
-                            <li
-                                :title="friend['name']"
-                                :style="{
-                                    '--color': friend['color'],
-                                    '--image': `url(/img/friends/${friend['icon']})`,
-                                }"
-                            >
-                                <a :href="friend['link']" target="_blank" rel="noopener noreferrer">
-                                    <!-- <img class="iconify" :src="`/img/friends/${friend['icon']}`" /> -->
-                                    <div class="mask"></div>
-                                </a>
-                            </li>
-                        </template>
-                    </ul>
-                </div>
+            <div class="footer-group">
+                <p class="eyebrow">Find me</p>
+                <ul>
+                    <li v-for="social in socialsShown" :key="social['name']" :style="{ '--color': social['color'] }">
+                        <a :href="social['link']" target="_blank" rel="noopener noreferrer" :title="social['name']" :aria-label="social['name']">
+                            <Icon :name="social['icon']" />
+                        </a>
+                    </li>
+                </ul>
             </div>
 
-            <div class="block md:hidden text-end">
-                <a href="/" class="m-0 p-0 hover:text-[#60C060]">Chris Rahmé</a>
-                <p class="m-0 p-0 text-xs hover:text-[#C060C0]" v-if="state['lastUpdated']">Last update: {{ state['lastUpdated'] }}</p>
+            <div class="footer-group">
+                <p class="eyebrow">My friends</p>
+                <ul>
+                    <li
+                        v-for="friend in friends"
+                        :key="friend['name']"
+                        :style="{ '--color': friend['color'], '--image': `url(/img/friends/${friend['icon']})` }"
+                    >
+                        <a :href="friend['link']" target="_blank" rel="noopener noreferrer" :title="friend['name']" :aria-label="friend['name']">
+                            <span class="mask"></span>
+                        </a>
+                    </li>
+                </ul>
             </div>
-        </nav>
+        </div>
     </footer>
 </template>
 
 <script setup>
 import { socials } from '~/data/socials'
 
-// State
-const state = reactive({
-    lastUpdated: '',
-    socials: [],
-    friends: [],
+// Resolved during setup so the server and the client render the same footer.
+const config = useRuntimeConfig()
+const lastUpdated = config['public']['lastCommit']
+
+const socialsShown = socials.filter(function (social) {
+    return social['show']
 })
 
-// Lifecycle
-onBeforeMount(function () {
-    const config = useRuntimeConfig()
-
-    state['lastUpdated'] = config['public']['lastCommit']
-
-    state['socials'] = socials.filter(function (social) {
-        return social['show']
-    })
-
-    state['friends'] = [
-        { name: 'Threads of Joy', link: 'https://joy-of.dev', icon: 'joy-of-dev.webp', color: '#C3F9E0' }, // #2DC9A5
-        { name: "Introverts' Crate", link: 'https://introvertscrate.com', icon: 'introverts-crate.webp', color: '#0087DC' },
-    ]
-})
+const friends = [
+    { name: 'Threads of Joy', link: 'https://joy-of.dev', icon: 'joy-of-dev.webp', color: '#C3F9E0' },
+    { name: "Introverts' Crate", link: 'https://introvertscrate.com', icon: 'introverts-crate.webp', color: '#0087DC' },
+]
 </script>
 
 <style scoped lang="scss">
-@import '../assets/css/tailwind.css';
+#footer {
+    background: var(--sky-zenith);
+    border-top: 1px solid var(--sky-line);
+    color: var(--star);
+    padding-block: 2.5rem;
 
-footer {
-    background-color: var(--color-background-dark);
-    color: white;
+    .footer-inner {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        align-items: end;
 
-    & > nav {
-        @apply md:flex justify-between items-end;
+        @media (width >= 640px) {
+            grid-template-columns: 1fr auto auto;
+            gap: 3rem;
+        }
+    }
 
-        & > div {
-            &:not(:last-child) {
-                @apply mb-4;
-            }
+    .footer-name {
+        font-family: var(--font-display);
+        font-size: 0.9375rem;
+        font-weight: 500;
+        color: var(--star);
+        text-decoration: none;
 
-            &#links {
-                @apply sm:flex gap-16 justify-between items-center;
+        &:hover {
+            color: var(--green-light);
+        }
 
-                #socials,
-                #friends {
-                    ul {
-                        @apply flex items-center gap-4;
+        &:focus-visible {
+            outline-color: var(--green-light);
+        }
+    }
 
-                        li,
-                        a,
-                        .iconify {
-                            @apply m-0 p-0;
-                        }
+    .footer-meta {
+        margin: 0.35rem 0 0;
+        font-family: var(--font-mono);
+        font-size: 0.6875rem;
+        color: var(--star-dim);
+    }
 
-                        li {
-                            --size: 2rem;
-                            font-size: var(--size);
-                            max-height: var(--size);
+    .footer-group {
+        .eyebrow {
+            margin: 0 0 0.75rem;
+            color: var(--star-dim);
+        }
 
-                            &:hover {
-                                .iconify {
-                                    color: var(--color) !important;
-                                    transform: scale(1.05);
-                                }
+        ul {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
 
-                                .mask {
-                                    background-color: var(--color);
-                                    transform: scale(1.05);
-                                }
-                            }
+        li {
+            --size: 1.75rem;
+            line-height: 0;
+        }
 
-                            .iconify {
-                                @apply transition-300;
-                                font-size: var(--size);
-                            }
+        a {
+            display: inline-block;
+            color: var(--star);
+            border-radius: 0.25rem;
+            transition: transform 200ms ease;
 
-                            .mask {
-                                @apply transition-300;
-                                width: var(--size);
-                                height: var(--size);
-                                background-color: white;
-                                mask-image: var(--image);
-                                mask-size: contain;
-                                mask-position: center;
-                                mask-repeat: no-repeat;
-                                -webkit-mask-image: var(--image);
-                                -webkit-mask-size: contain;
-                                -webkit-mask-position: center;
-                                -webkit-mask-repeat: no-repeat;
-                            }
-                        }
-                    }
+            &:hover {
+                transform: translateY(-2px);
+
+                .iconify {
+                    color: var(--color);
                 }
 
-                #socials {
-                    @apply mb-4 sm:mb-0 sm:text-start lg:text-end;
-
-                    ul {
-                        @apply sm:justify-start lg:justify-end;
-                    }
-                }
-
-                #friends {
-                    @apply sm:text-end lg:text-start;
-
-                    ul {
-                        @apply sm:justify-end lg:justify-start;
-                    }
+                .mask {
+                    background-color: var(--color);
                 }
             }
+
+            &:focus-visible {
+                outline-color: var(--green-light);
+            }
+        }
+
+        .iconify {
+            font-size: var(--size);
+            transition: color 200ms ease;
+        }
+
+        .mask {
+            display: block;
+            width: var(--size);
+            height: var(--size);
+            background-color: var(--star);
+            mask-image: var(--image);
+            mask-size: contain;
+            mask-position: center;
+            mask-repeat: no-repeat;
+            -webkit-mask-image: var(--image);
+            -webkit-mask-size: contain;
+            -webkit-mask-position: center;
+            -webkit-mask-repeat: no-repeat;
+            transition: background-color 200ms ease;
         }
     }
 }

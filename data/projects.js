@@ -16,6 +16,7 @@ export const projects = [
         skills: ['Unity', 'C#'],
         tags: ['Gaming'],
         year: 2020,
+        featured: false,
     },
     {
         name: 'Smart WiFi Locks',
@@ -32,6 +33,7 @@ export const projects = [
         skills: ['Python', 'PHP', 'MySQL', 'HTML', 'CSS', 'JavaScript', 'MQTT', 'Arduino', 'Raspberry Pi'],
         tags: ['Full-Stack', 'IoT'],
         year: 2021,
+        featured: false,
     },
     {
         name: 'NLP AI Chatbot',
@@ -48,6 +50,7 @@ export const projects = [
         skills: ['Python', 'Rasa', 'MySQL', 'Kotlin', 'HTML', 'CSS', 'JavaScript', 'Docker', 'Kubernetes', 'Helm'],
         tags: ['AI', 'Full-Stack'],
         year: 2022,
+        featured: false,
     },
     {
         name: 'VueJS Personal Website',
@@ -64,6 +67,7 @@ export const projects = [
         skills: ['VueJs', 'Netlify'],
         tags: ['Front-End'],
         year: 2022,
+        featured: false,
     },
     {
         name: 'AI Speech Emotion Recognition',
@@ -80,6 +84,7 @@ export const projects = [
         skills: ['Python', 'Flask', 'Keras', 'Scikit-Learn', 'Librosa'],
         tags: ['AI', 'Full-Stack'],
         year: 2023,
+        featured: true,
     },
     {
         name: 'Solar Smart Home',
@@ -91,10 +96,11 @@ export const projects = [
         `,
         summary: 'A smart home management system integrating solar inverters and IoT devices',
         images: ['/img/projects/solar-iot.webp'],
-        links: [{ icon: 'carbon:progress-bar-round' }],
+        links: [],
         skills: ['Python', 'NodeJs', 'Flask', 'SQLAlchemy', 'Express', 'VueJs', 'MySQL', 'MongoDB', 'RabbitMQ', 'MySQL', 'Docker'],
         tags: ['IoT', 'Full-Stack', 'Smart Home', 'Energy'],
         year: 2023,
+        featured: true,
     },
     {
         name: 'AI Forge',
@@ -106,10 +112,11 @@ export const projects = [
         `,
         summary: 'A web platform to facilitate data science, analytics, and machine learning workflows',
         images: ['/img/projects/ai-forge.webp'],
-        links: [{ icon: 'carbon:progress-bar-round' }],
+        links: [],
         skills: ['VueJs', 'Python', 'Flask', 'SQLAlchemy', 'Scikit-Learn', 'Pandas', 'MySQL'],
         tags: ['AI', 'Data Science', 'Full-Stack'],
         year: 2024,
+        featured: true,
     },
     {
         name: 'NewsFinder',
@@ -123,6 +130,7 @@ export const projects = [
         skills: ['VueJs', 'Python', 'Flask', 'LangChain', 'Chroma'],
         tags: ['AI', 'Full-Stack', 'LLM'],
         year: 2024,
+        featured: false,
     },
     {
         name: 'NuxtJS Personal Website',
@@ -141,6 +149,7 @@ export const projects = [
         skills: ['NuxtJs', 'Netlify'],
         tags: ['Front-End'],
         year: 2025,
+        featured: true,
     },
     {
         name: 'GPT-Me',
@@ -151,10 +160,11 @@ export const projects = [
         `,
         summary: 'An LLM fine-tuned on your WhatsApp data to emulate how you talk and respond to different people',
         images: ['/img/projects/gpt-me.webp'],
-        links: [{ icon: 'carbon:progress-bar-round' }],
+        links: [],
         skills: ['Python', 'PyTorch', 'Hugging Face'],
         tags: ['AI', 'LLM'],
         year: 2025,
+        featured: false,
     },
     {
         name: 'Live Car Stats',
@@ -166,10 +176,11 @@ export const projects = [
         `,
         summary: 'A real-time OBD-II dashboard with live charts and historical analysis',
         images: ['/img/projects/live-obd.webp'],
-        links: [{ icon: 'carbon:progress-bar-round' }],
+        links: [],
         skills: ['Python', 'NuxtJs', 'FastAPI', 'SQLAlchemy', 'Docker', 'Raspberry Pi'],
         tags: ['Data Science', 'Full-Stack', 'IoT'],
         year: 2025,
+        featured: false,
     },
     {
         name: 'Music Analyzer',
@@ -180,10 +191,11 @@ export const projects = [
         `,
         summary: 'An AI music analysis and recommendation system',
         images: ['/img/projects/music-analyzer.webp'],
-        links: [{ icon: 'carbon:progress-bar-round' }],
+        links: [],
         skills: ['Python', 'NuxtJs', 'FastAPI', 'SQLAlchemy', 'Chroma', 'Librosa'],
         tags: ['AI', 'Data Science', 'Full-Stack', 'Music'],
         year: 2025,
+        featured: false,
     },
     {
         name: 'MyAssistant',
@@ -198,6 +210,7 @@ export const projects = [
         skills: ['Python', 'Agno', 'FastAPI', 'Chroma', 'NuxtJs'],
         tags: ['AI', 'Full-Stack', 'LLM'],
         year: 2025,
+        featured: false,
     },
     {
         name: 'Piano Trainer',
@@ -208,10 +221,11 @@ export const projects = [
         `,
         summary: 'A web app to learn the piano with interactive lessons',
         images: ['/img/projects/piano-trainer.webp'],
-        links: [{ icon: 'carbon:progress-bar-round' }],
+        links: [],
         skills: ['VueJs', 'Tone.js'],
         tags: ['Front-End', 'Music'],
         year: 2026,
+        featured: false,
     },
     {
         name: 'NoteBlocks',
@@ -227,10 +241,11 @@ export const projects = [
         `,
         summary: 'An music viewer & editor app to convert music into easy-to-read note blocks',
         images: ['/img/projects/noteblocks.webp'],
-        links: [{ icon: 'carbon:progress-bar-round' }],
+        links: [],
         skills: ['Python', 'FastAPI', 'VueJs', 'PyInstaller'],
         tags: ['Full-Stack', 'Music'],
         year: 2026,
+        featured: true,
     },
     {
         name: 'Amazing Chessboard Patterns',
@@ -249,5 +264,6 @@ export const projects = [
         skills: ['VueJs', 'TypeScript', 'Vite'],
         tags: ['Front-End', 'Maths'],
         year: 2026,
+        featured: false,
     },
 ]

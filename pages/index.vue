@@ -11,19 +11,17 @@
 
     <div id="home">
         <HeroSection />
-        <QuoteBar />
+        <WorkSection />
+        <CareerSection />
         <AboutSection />
     </div>
 </template>
 
 <script setup>
 import HeroSection from '~/components/home/HeroSection.vue'
-import QuoteBar from '~/components/home/QuoteBar.vue'
+import WorkSection from '~/components/home/WorkSection.vue'
+import CareerSection from '~/components/home/CareerSection.vue'
 import AboutSection from '~/components/home/AboutSection.vue'
-
-definePageMeta({
-    layout: 'home', // No need to mention if default
-})
 
 // Lifecycle
 onMounted(function () {

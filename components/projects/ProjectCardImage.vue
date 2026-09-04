@@ -1,6 +1,6 @@
 <template>
     <div class="project-image">
-        <NuxtImg :src="src" :alt="alt" class="rounded shadow-sm" width="500" height="280" loading="lazy" format="webp" />
+        <NuxtImg :src="src" :alt="alt" width="640" height="360" loading="lazy" format="webp" />
     </div>
 </template>
 
@@ -18,14 +18,15 @@ defineProps({
 </script>
 
 <style scoped lang="scss">
-@import '../../assets/css/tailwind.css';
-
 .project-image {
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    background: var(--paper-2);
+
     img {
-        @apply transition-100 hover:shadow-md;
+        display: block;
         width: 100%;
-        min-height: 200px;
-        max-height: 200px;
+        height: 100%;
         object-fit: cover;
     }
 }

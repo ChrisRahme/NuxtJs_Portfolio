@@ -1,101 +1,116 @@
 <template>
     <div id="resume">
-        <div id="title" class="md:flex justify-between items-center mb-10">
-            <div class="sm:flex items-center gap-4">
-                <div id="avatar" class="hover:scale-110 hidden sm:block transition-300">
-                    <NuxtImg class="avatar" src="/img/avatar.svg" alt="Avatar" style="max-height: 12rem; max-width: 12rem; transform: translateY(-7px)" />
+        <PageBand eyebrow="Full-stack & AI engineer" title="Chris Rahmé">
+            <template #media>
+                <NuxtImg class="avatar" src="/img/avatar.svg" alt="" width="96" height="96" />
+            </template>
+
+            <ul class="contacts">
+                <li>
+                    <a href="tel:+96171283701">
+                        <Icon name="material-symbols:call" />
+                        <span>+961 71 283 701</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="mailto:christopher.rahme@gmail.com">
+                        <Icon name="material-symbols:mail" />
+                        <span>christopher.rahme@gmail.com</span>
+                    </a>
+                </li>
+            </ul>
+
+            <template #aside>
+                <a class="btn" href="/docs/Chris%20Rahm%C3%A9%20CV.pdf" target="_blank" rel="noopener noreferrer">
+                    <Icon name="material-symbols:download-rounded" />
+                    <span>Download CV</span>
+                </a>
+            </template>
+        </PageBand>
+
+        <div class="wrap page-body">
+            <section class="intro reveal">
+                <div class="summary">
+                    <p>
+                        I am a <em>full-stack software engineer</em> with a passion for <em>AI and machine learning</em>. Over the years, I've developed
+                        expertise in full-stack, containerized solutions, mainly utilizing technologies such as <em>VueJs</em>, <em>Python</em>, and
+                        <em>Docker</em>, and various AI & machine learning frameworks such as <em>Keras</em> and <em>Scikit-Learn</em>.
+                    </p>
+                    <p>
+                        I am driven by a focus on code <strong>quality</strong>, <strong>readability</strong>, <strong>efficiency</strong>, and
+                        <strong>scalability</strong>, and always strive to learn and stay up-to-date with new technologies.
+                    </p>
                 </div>
 
-                <div id="info">
-                    <div class="sm:text-right">
-                        <h1 class="m-0 hover:scale-110 transition-300">Chris Rahmé</h1>
-                        <p class="text-sm text-[#A040A0] font-semibold m-0 mb-4 hover:scale-110 transition-300">Full-Stack & AI Engineer</p>
+                <!-- Every value below is derived from the data files, so it never goes stale -->
+                <dl class="facts">
+                    <div class="fact">
+                        <dt>Now</dt>
+                        <dd>
+                            <span>{{ currentRole['title'] }}</span>
+                            <small>{{ currentRole['company'] }} · since {{ formatMonth(currentRole['start']) }}</small>
+                        </dd>
                     </div>
+                    <div class="fact">
+                        <dt>Experience</dt>
+                        <dd>
+                            <span>{{ careerRoles.length }} roles in {{ experienceLabel }}</span>
+                        </dd>
+                    </div>
+                    <div class="fact">
+                        <dt>Education</dt>
+                        <dd>
+                            <span>{{ latestDegree['title'] }}</span>
+                            <small>{{ latestDegree['institution'] }} · {{ latestDegree['end'] }}</small>
+                        </dd>
+                    </div>
+                    <div class="fact">
+                        <dt>Languages</dt>
+                        <dd>
+                            <span>{{ spokenLanguages }}</span>
+                        </dd>
+                    </div>
+                </dl>
+            </section>
 
-                    <div class="text-sm">
-                        <p>
-                            <a href="tel:+961 71 283 701" class="hover:text-[#4040A0] hover:scale-110 transition-300">
-                                <Icon name="material-symbols:call" class="fix15 mr-1" />
-                                +961 71 283 701
-                            </a>
-                        </p>
-                        <p>
-                            <a href="mailto:christopher.rahme@gmail.com" class="hover:text-[#4040A0] hover:scale-110 transition-300">
-                                <Icon name="material-symbols:mail" class="fix15 mr-1" />
-                                christopher.rahme@gmail.com
-                            </a>
-                        </p>
-                    </div>
+            <section id="experience" class="section reveal">
+                <div class="section-head">
+                    <h2>Experience</h2>
+                    <p class="eyebrow">{{ experienceLabel }} full-time</p>
                 </div>
-            </div>
 
-            <div id="download" class="flex justify-end mt-5 md:mt-0">
-                <button class="btn text-lg h-full flex justify-center" @click="downloadCV">
-                    <Icon name="material-symbols:download-rounded" class="fix text-2xl mr-1 text-white" />
-                    <div class="inline-block">Download CV</div>
-                </button>
-            </div>
+                <Experience />
+            </section>
+
+            <section id="education" class="section reveal">
+                <div class="section-head">
+                    <h2>Education</h2>
+                    <p class="eyebrow">{{ educationSpan }}</p>
+                </div>
+
+                <Education />
+            </section>
+
+            <section id="skills" class="section reveal">
+                <div class="section-head">
+                    <h2>Skills</h2>
+                </div>
+
+                <Skills />
+            </section>
         </div>
-
-        <div id="about">
-            <p class="text-justify mb-1">
-                I am a <em>full-stack software engineer</em> with a passion for <em>AI and machine learning</em>. Over the years, I've developed expertise in
-                full-stack, containerized solutions, mainly utilizing technologies such as <em>VueJs</em>, <em>Python</em>, and <em>Docker</em>, and various AI
-                & machine learning frameworks such as <em>Keras</em> and <em>Scikit-Learn</em>.
-            </p>
-            <p class="hidden text-justify mb-1">
-                I have gained a strong background in <em>VoIP data integration</em> and enjoy collaborating with cross-functional teams to architect and
-                implement innovative and impactful solutions.
-            </p>
-            <p class="text-justify">
-                I am driven by a focus on code <strong>quality</strong>, <strong>readability</strong>, <strong>efficiency</strong>, and
-                <strong>scalability</strong>, and always strive to learn and stay up-to-date with new technologies.
-            </p>
-        </div>
-
-        <div id="experience">
-            <div class="flex gap-4 items-center">
-                <h2>Experience</h2>
-            </div>
-
-            <Experience />
-        </div>
-
-        <div id="education">
-            <div class="flex gap-4 items-center">
-                <h2>Education</h2>
-            </div>
-
-            <Education />
-        </div>
-
-        <div id="skills">
-            <div class="flex gap-4 items-center">
-                <h2>Skills</h2>
-                <button class="text-lg mb-2 hover:scale-110 transition" @click="state['showSkillNames'] = !state['showSkillNames']">
-                    <Icon name="ph:eye-slash" class="text-[#C06060]" title="Hide Skill Names" v-if="state['showSkillNames']" />
-                    <Icon name="ph:eye" class="text-[#6060C0]" title="Show Skill Names" v-else />
-                </button>
-            </div>
-
-            <Skills :showSkillNames="state['showSkillNames']" />
-        </div>
-
-        <!-- <div id="languages">
-            <div class="flex gap-4 items-center">
-                <h2>Languages</h2>
-            </div>
-
-            <Languages />
-        </div> -->
     </div>
 </template>
 
 <script setup>
-import Experience from '../components/resume/Experience.vue'
-import Education from '../components/resume/Education.vue'
-import Skills from '../components/resume/Skills.vue'
-import Languages from '../components/resume/Languages.vue'
+import PageBand from '~/components/PageBand.vue'
+import Experience from '~/components/resume/Experience.vue'
+import Education from '~/components/resume/Education.vue'
+import Skills from '~/components/resume/Skills.vue'
+import { experience } from '~/data/experience'
+import { education } from '~/data/education'
+import { languages } from '~/data/languages'
+import { formatMonth, formatYears, yearsBetween } from '~/utils/dates'
 
 useHead({
     title: 'Resume | Chris Rahmé',
@@ -109,51 +124,172 @@ useHead({
     ],
 })
 
-// State
-const state = reactive({
-    mounted: false,
-    showSkillNames: false,
+const today = useTodayMonth()
+const latestDegree = education[education.length - 1]
+
+const careerRoles = experience.filter(function (item) {
+    return item['career']
+})
+const currentRole = careerRoles[careerRoles.length - 1]
+
+const experienceLabel = computed(function () {
+    return formatYears(yearsBetween(careerRoles[0]['start'], today.value))
 })
 
-// Functions
-function downloadCV() {
-    window.open('/docs/Chris Rahmé CV.pdf', '_blank')
-}
+const spokenLanguages = languages
+    .filter(function (language) {
+        return /professional/i.test(language['proficiency'])
+    })
+    .map(function (language) {
+        return language['language']
+    })
+    .join(' · ')
+
+const educationSpan = `${education[0]['start']} — ${latestDegree['end']}`
 
 // Lifecycle
+const route = useRoute()
+
 onMounted(function () {
+    // A hash (from the home page links) must keep its scroll target
+    if (route.hash) {
+        return
+    }
+
     window.scrollTo({ top: 0, behavior: 'smooth' })
-    state['mounted'] = true
 })
 </script>
 
 <style lang="scss" scoped>
 #resume {
-    padding-top: 1rem;
+    .avatar {
+        display: block;
+        width: clamp(4.5rem, 10vw, 6rem);
+        height: clamp(4.5rem, 10vw, 6rem);
+        padding-top: 0.35rem;
+        border-radius: 50%;
+        background-color: var(--green-dark);
+        box-shadow:
+            0 0 0 4px rgba(244, 239, 230, 0.08),
+            0 0 40px rgba(96, 192, 96, 0.25);
+    }
 
-    & > div:not(:first-of-type) {
-        & > div:first-child {
-            margin: 4rem 0 1rem 0;
+    .contacts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem 1.5rem;
+        margin: 1rem 0 0;
+        padding: 0;
+        list-style: none;
 
-            h2 {
-                color: #40a040;
-                font-weight: 500;
+        a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            overflow-wrap: anywhere;
+            color: var(--star-dim);
+            text-decoration: none;
+            transition: color 200ms ease;
+
+            &:hover {
+                color: var(--star);
+            }
+
+            &:focus-visible {
+                outline-color: var(--green-light);
+            }
+
+            .iconify {
+                font-size: 1rem;
+                color: var(--green-light);
             }
         }
     }
 
-    #about p {
+    .page-body {
+        padding-block: clamp(2.5rem, 5vw, 4rem) var(--space-section);
+    }
+
+    .intro {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 2.5rem 4rem;
+        align-items: start;
+
+        @media (width >= 56rem) {
+            grid-template-columns: minmax(0, 38rem) minmax(20rem, 1fr);
+        }
+    }
+
+    .summary {
+        max-width: 38rem;
+        font-size: clamp(1.0625rem, 1rem + 0.2vw, 1.125rem);
+        line-height: 1.7;
+
+        p {
+            margin: 0 0 1rem;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
         em {
-            color: #a040a0;
-            font-weight: 400;
+            color: var(--purple);
             font-style: italic;
         }
 
         strong {
-            color: #40a040;
-            font-weight: 400;
-            font-style: italic;
+            color: var(--green-ink);
+            font-weight: 600;
         }
+    }
+
+    .facts {
+        margin: 0;
+        border-top: 1px solid var(--line);
+
+        .fact {
+            display: grid;
+            grid-template-columns: 7rem minmax(0, 1fr);
+            gap: 0.25rem 1rem;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        dt {
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            line-height: 1.6;
+            color: var(--ink-2);
+        }
+
+        dd {
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+            margin: 0;
+            font-size: 0.9375rem;
+            line-height: 1.45;
+            color: var(--ink);
+
+            span {
+                font-weight: 500;
+            }
+
+            small {
+                font-size: 0.8125rem;
+                color: var(--ink-2);
+            }
+        }
+    }
+
+    .section {
+        margin-top: var(--space-section);
     }
 }
 </style>

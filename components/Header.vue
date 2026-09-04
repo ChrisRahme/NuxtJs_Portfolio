@@ -1,147 +1,127 @@
 <template>
-    <!-- <div class="bg-[#E0C040] lg:hidden block">
-        <div class="container mx-auto px-8 py-2">
-            <p class="m-0 p-0 text-white">⚠️ Mobile website is still under construction.</p>
-        </div>
-    </div> -->
-
-    <header id="header" class="bg-white shadow-sm noselect">
-        <nav class="container mx-auto px-8 py-2">
-            <NuxtLink id="nav-icon" to="/">
-                <!-- <Avatar /> -->
-                <NuxtImg src="/img/icon.min.svg" alt="Home" />
+    <header id="header">
+        <nav class="wrap" aria-label="Main">
+            <NuxtLink to="/" class="brand">
+                <NuxtImg src="/img/icon.min.svg" alt="" width="34" height="34" />
+                <span class="wordmark">Chris Rahmé</span>
             </NuxtLink>
 
-            <ul class="flex gap-8">
-                <template v-for="link in state['links']" :key="link['text']">
-                    <li>
-                        <template v-if="link['link']">
-                            <NuxtLink :to="link['link']" class="hover:text-[#60C060]">
-                                <Icon :name="link['icon']" v-if="link['icon']" />
-                                <span :class="link['icon'] ? 'ml-2' : ''">
-                                    {{ link['text'] }}
-                                </span>
-                            </NuxtLink>
-                        </template>
-                        <template v-else>
-                            <span>
-                                {{ link['text'] }}
-                            </span>
-                        </template>
-                    </li>
-                </template>
+            <ul class="links">
+                <li v-for="link in links" :key="link['to']">
+                    <NuxtLink :to="link['to']">{{ link['text'] }}</NuxtLink>
+                </li>
             </ul>
         </nav>
     </header>
 </template>
 
 <script setup>
-const state = reactive({
-    links: [
-        { text: 'Home', link: '/', icon: 'ph:house-line' },
-        { text: 'Resume', link: '/resume', icon: 'ph:user-list' },
-        { text: 'Projects', link: '/projects', icon: 'ph:chalkboard-simple' },
-        // { text: '|' },
-        // { text: 'Contact', link: '/contact', icon: 'ph:envelope' },
-        // { name: 'Blog', link: '/blog' },
-        // { name: 'Experiments', link: '/experiments' },
-    ],
-})
-
-onBeforeMount(function () {})
+const links = [
+    { text: 'Home', to: '/' },
+    { text: 'Resume', to: '/resume' },
+    { text: 'Projects', to: '/projects' },
+]
 </script>
 
 <style scoped lang="scss">
-@import '../assets/css/tailwind.css';
+#header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: var(--header-height);
+    background: rgba(10, 14, 42, 0.86);
+    border-bottom: 1px solid var(--sky-line);
+    color: var(--star);
 
-header {
-    * {
-        overflow: hidden;
+    @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+        background: rgba(10, 14, 42, 0.68);
+        -webkit-backdrop-filter: blur(16px) saturate(140%);
+        backdrop-filter: blur(16px) saturate(140%);
     }
 
     nav {
-        @apply flex items-center justify-between;
-        height: var(--header-height);
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+    }
 
-        #nav-icon {
-            @apply transition-300 hover:scale-105 opacity-80 hover:opacity-100 p-0 m-0;
-            height: calc(var(--header-height) / 1.5);
-            width: calc(var(--header-height) / 1.5);
+    .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        border-radius: var(--r-pill);
+        color: inherit;
+        text-decoration: none;
+
+        img {
+            display: block;
+            width: 2.125rem;
+            height: 2.125rem;
+            transition: transform 300ms ease;
         }
 
-        ul {
-            height: 100%;
+        .wordmark {
+            font-family: var(--font-display);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+        }
 
-            li {
-                display: flex;
-                align-items: center;
-                height: 100%;
+        &:hover img {
+            transform: rotate(-8deg) scale(1.05);
+        }
 
-                a {
-                    text-decoration: none;
+        &:focus-visible {
+            outline-color: var(--green-light);
+        }
+    }
 
-                    &.router-link-active {
-                        color: #60c060;
-                    }
+    .links {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
 
-                    @media (width < theme('screens.md')) {
-                        .iconify {
-                            font-size: calc(var(--header-height) / 2.5);
-                            transform: translateY(10%);
-                        }
-                    }
+        a {
+            display: inline-block;
+            padding: 0.45rem 0.8rem;
+            border-radius: var(--r-pill);
+            color: var(--star-dim);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition:
+                color 200ms ease,
+                background-color 200ms ease;
 
-                    @media (width >= theme('screens.md')) {
-                        &:not(.router-link-active) {
-                            transform: translateY(0); // Removing this will break the position of the underline
-
-                            &::before,
-                            &::after {
-                                content: '';
-                                display: block;
-                                width: 100%;
-                                height: 2px;
-                                position: absolute;
-                                bottom: 0;
-                                border-radius: 1px;
-                            }
-                        }
-
-                        &:not(:hover) {
-                            &::before {
-                                background-color: transparent;
-                                transform: translateX(-100%);
-                            }
-
-                            &::after {
-                                @apply transition-transform duration-200 ease-linear;
-                                background-color: #60c060;
-                                transform: translateX(100%);
-                            }
-                        }
-
-                        &:hover {
-                            &::before {
-                                @apply transition-transform duration-200 ease-linear;
-                                background-color: #60c060;
-                            }
-
-                            &::after {
-                                background-color: transparent;
-                            }
-                        }
-
-                        .iconify {
-                            font-size: 1rem;
-                            transform: translateY(-20%);
-                        }
-                    }
-                }
-
-                span {
-                    @apply hidden md:inline-block;
-                }
+            &:hover {
+                color: var(--star);
             }
+
+            &.router-link-exact-active {
+                color: var(--green-light);
+                background: rgba(96, 192, 96, 0.12);
+            }
+
+            &:focus-visible {
+                outline-color: var(--green-light);
+            }
+        }
+    }
+
+    @media (width < 400px) {
+        .brand .wordmark {
+            display: none;
+        }
+
+        .links a {
+            padding: 0.4rem 0.55rem;
+            font-size: 0.85rem;
         }
     }
 }
