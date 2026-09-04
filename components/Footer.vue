@@ -1,38 +1,34 @@
 <template>
-    <footer id="footer">
-        <div class="wrap footer-inner">
-            <div class="footer-brand">
-                <NuxtLink to="/" class="footer-name">Chris Rahmé</NuxtLink>
-                <p class="footer-meta" v-if="lastUpdated">Last update {{ lastUpdated }}</p>
-            </div>
+  <footer id="footer">
+    <div class="wrap footer-inner">
+      <div class="footer-brand">
+        <NuxtLink to="/" class="footer-name">Chris Rahmé</NuxtLink>
+        <p v-if="lastUpdated" class="footer-meta">Last update {{ lastUpdated }}</p>
+      </div>
 
-            <div class="footer-group">
-                <p class="eyebrow">Find me</p>
-                <ul>
-                    <li v-for="social in socialsShown" :key="social['name']" :style="{ '--color': social['color'] }">
-                        <a :href="social['link']" target="_blank" rel="noopener noreferrer" :title="social['name']" :aria-label="social['name']">
-                            <Icon :name="social['icon']" />
-                        </a>
-                    </li>
-                </ul>
-            </div>
+      <div class="footer-group">
+        <p class="eyebrow">Find me</p>
+        <ul>
+          <li v-for="social in socialsShown" :key="social['name']" :style="{ '--color': social['color'] }">
+            <a :href="social['link']" target="_blank" rel="noopener noreferrer" :title="social['name']" :aria-label="social['name']">
+              <Icon :name="social['icon']" />
+            </a>
+          </li>
+        </ul>
+      </div>
 
-            <div class="footer-group">
-                <p class="eyebrow">My friends</p>
-                <ul>
-                    <li
-                        v-for="friend in friends"
-                        :key="friend['name']"
-                        :style="{ '--color': friend['color'], '--image': `url(/img/friends/${friend['icon']})` }"
-                    >
-                        <a :href="friend['link']" target="_blank" rel="noopener noreferrer" :title="friend['name']" :aria-label="friend['name']">
-                            <span class="mask"></span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </footer>
+      <div class="footer-group">
+        <p class="eyebrow">My friends</p>
+        <ul>
+          <li v-for="friend in friends" :key="friend['name']" :style="{ '--color': friend['color'], '--image': `url(/img/friends/${friend['icon']})` }">
+            <a :href="friend['link']" target="_blank" rel="noopener noreferrer" :title="friend['name']" :aria-label="friend['name']">
+              <span class="mask"></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
 </template>
 
 <script setup>
@@ -43,120 +39,121 @@ const config = useRuntimeConfig()
 const lastUpdated = config['public']['lastCommit']
 
 const socialsShown = socials.filter(function (social) {
-    return social['show']
+  return social['show']
 })
 
 const friends = [
-    { name: 'Threads of Joy', link: 'https://joy-of.dev', icon: 'joy-of-dev.webp', color: '#C3F9E0' },
-    { name: "Introverts' Crate", link: 'https://introvertscrate.com', icon: 'introverts-crate.webp', color: '#0087DC' },
+  { name: 'Threads of Joy', link: 'https://joy-of.dev', icon: 'joy-of-dev.webp', color: '#C3F9E0' },
+  { name: "Introverts' Crate", link: 'https://introvertscrate.com', icon: 'introverts-crate.webp', color: '#0087DC' },
 ]
 </script>
 
 <style scoped lang="scss">
 #footer {
-    background: var(--sky-zenith);
-    border-top: 1px solid var(--sky-line);
+  background: var(--sky-zenith);
+  border-top: 1px solid var(--sky-line);
+  color: var(--star);
+  padding-block: 2.5rem;
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: end;
+
+    @media (width >= 640px) {
+      grid-template-columns: 1fr auto auto;
+      gap: 3rem;
+    }
+  }
+
+  .footer-name {
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 500;
     color: var(--star);
-    padding-block: 2.5rem;
+    text-decoration: none;
 
-    .footer-inner {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        align-items: end;
-
-        @media (width >= 640px) {
-            grid-template-columns: 1fr auto auto;
-            gap: 3rem;
-        }
+    &:hover {
+      color: var(--green-light);
     }
 
-    .footer-name {
-        font-family: var(--font-display);
-        font-size: 0.9375rem;
-        font-weight: 500;
-        color: var(--star);
-        text-decoration: none;
+    &:focus-visible {
+      outline-color: var(--green-light);
+    }
+  }
 
-        &:hover {
-            color: var(--green-light);
-        }
+  .footer-meta {
+    margin: 0.35rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--star-dim);
+  }
 
-        &:focus-visible {
-            outline-color: var(--green-light);
-        }
+  .footer-group {
+    .eyebrow {
+      margin: 0 0 0.75rem;
+      color: var(--star-dim);
     }
 
-    .footer-meta {
-        margin: 0.35rem 0 0;
-        font-family: var(--font-mono);
-        font-size: 0.6875rem;
-        color: var(--star-dim);
+    ul {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
     }
 
-    .footer-group {
-        .eyebrow {
-            margin: 0 0 0.75rem;
-            color: var(--star-dim);
-        }
+    li {
+      --size: 1.75rem;
 
-        ul {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
+      line-height: 0;
+    }
 
-        li {
-            --size: 1.75rem;
-            line-height: 0;
-        }
+    a {
+      display: inline-block;
+      color: var(--star);
+      border-radius: 0.25rem;
+      transition: transform 200ms ease;
 
-        a {
-            display: inline-block;
-            color: var(--star);
-            border-radius: 0.25rem;
-            transition: transform 200ms ease;
-
-            &:hover {
-                transform: translateY(-2px);
-
-                .iconify {
-                    color: var(--color);
-                }
-
-                .mask {
-                    background-color: var(--color);
-                }
-            }
-
-            &:focus-visible {
-                outline-color: var(--green-light);
-            }
-        }
+      &:hover {
+        transform: translateY(-2px);
 
         .iconify {
-            font-size: var(--size);
-            transition: color 200ms ease;
+          color: var(--color);
         }
 
         .mask {
-            display: block;
-            width: var(--size);
-            height: var(--size);
-            background-color: var(--star);
-            mask-image: var(--image);
-            mask-size: contain;
-            mask-position: center;
-            mask-repeat: no-repeat;
-            -webkit-mask-image: var(--image);
-            -webkit-mask-size: contain;
-            -webkit-mask-position: center;
-            -webkit-mask-repeat: no-repeat;
-            transition: background-color 200ms ease;
+          background-color: var(--color);
         }
+      }
+
+      &:focus-visible {
+        outline-color: var(--green-light);
+      }
     }
+
+    .iconify {
+      font-size: var(--size);
+      transition: color 200ms ease;
+    }
+
+    .mask {
+      display: block;
+      width: var(--size);
+      height: var(--size);
+      background-color: var(--star);
+      mask-image: var(--image);
+      mask-size: contain;
+      mask-position: center;
+      mask-repeat: no-repeat;
+      -webkit-mask-image: var(--image);
+      -webkit-mask-size: contain;
+      -webkit-mask-position: center;
+      -webkit-mask-repeat: no-repeat;
+      transition: background-color 200ms ease;
+    }
+  }
 }
 </style>

@@ -10,7 +10,12 @@
     "ssr": "nuxt build && nuxt preview",
     "ssg": "nuxt generate && nuxt preview",
     "expose": "ngrok http 3000",
-    "convert-images": "node scripts/convert-images-to-webp.js"
+    "convert-images": "node scripts/convert-images-to-webp.js",
+    "lint:es": "eslint . --fix",
+    "lint:style": "stylelint \"**/*.{css,scss,vue}\" --fix",
+    "format": "prettier --write .",
+    "lint:all": "npm run lint:es && npm run lint:style && npm run format",
+    "prepare": "husky"
   },
   "dependencies": {
     "@nuxt/fonts": "^0.13.0",
@@ -21,14 +26,25 @@
   "devDependencies": {
     "@iconify-json/simple-icons": "^1.2.69",
     "@nuxt/devtools": "^3.1.1",
+    "@nuxt/eslint": "^1.17.0",
     "@nuxt/icon": "^2.2.1",
     "@nuxt/image": "^2.0.0",
     "@nuxtjs/robots": "^5.7.0",
     "@nuxtjs/sitemap": "^7.6.0",
     "@nuxtjs/tailwindcss": "^6.14.0",
     "@vueuse/nuxt": "^14.2.0",
+    "eslint": "^10.10.0",
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.4.1",
+    "postcss-html": "^2.0.0",
+    "prettier": "^3.9.6",
+    "prettier-plugin-tailwindcss": "^0.8.1",
     "sass-embedded": "^1.97.3",
     "sharp": "^0.34.5",
+    "stylelint": "^17.15.0",
+    "stylelint-config-recommended-vue": "^2.0.0",
+    "stylelint-config-standard-scss": "^17.0.0",
     "tailwindcss": "^3.4.19"
   }
 }

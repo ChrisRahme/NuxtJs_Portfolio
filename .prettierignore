@@ -1,0 +1,12 @@
+# Build output and dependencies
+node_modules
+.nuxt
+.output
+.data
+dist
+.netlify
+
+# Generated / vendored
+public
+**/*.min.*
+package-lock.json
