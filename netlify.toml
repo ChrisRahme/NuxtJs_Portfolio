@@ -1,9 +1,10 @@
 # The website lives in website/; Netlify only rebuilds when files under `base` change.
 # Nitro detects Netlify and builds a server-rendered app: static assets in dist/, the server as a function.
+# `publish` is resolved relative to `base`, so it must not repeat the folder name.
 [build]
 base = "website"
 command = "npm install && npm run build"
-publish = "website/dist"
+publish = "dist"
 
 [build.environment]
 NODE_VERSION = "22"
