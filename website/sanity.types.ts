@@ -481,7 +481,7 @@ export type SKILL_CATEGORIES_QUERY_RESULT = Array<{
 
 // Source: ../website/sanity/queries.ts
 // Variable: EXPERIENCE_QUERY
-// Query: *[_type == "experience" && show != false] | order(start asc){    _id,    title,    company,    type,    career,    start,    end,    "logo": logo{ asset, alt, hotspot, crop },    link,    color,    description,    tasks[]{      _key,      title,      lines,      "skills": skills[@->show != false]->{ _id, name }    }  }
+// Query: *[_type == "experience" && show != false] | order(start asc){    _id,    title,    company,    type,    career,    start,    end,    "logo": logo{ asset, alt, hotspot, crop },    link,    color,    description,    tasks[]{      _key,      title,      lines,      "skills": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList }    }  }
 export type EXPERIENCE_QUERY_RESULT = Array<{
   _id: string;
   title: string | null;
@@ -506,6 +506,11 @@ export type EXPERIENCE_QUERY_RESULT = Array<{
     skills: Array<{
       _id: string;
       name: string | null;
+      icon: string | null;
+      svg: string | null;
+      color: string | null;
+      inConstellation: boolean | null;
+      inSkillsList: boolean | null;
     }> | null;
   }> | null;
 }>;
@@ -546,7 +551,7 @@ export type LANGUAGES_QUERY_RESULT = Array<{
 
 // Source: ../website/sanity/queries.ts
 // Variable: PROJECTS_QUERY
-// Query: *[_type == "project" && show != false] | order(year desc, orderRank asc){    _id,    name,    slug,    summary,    description,    "images": images[]{ _key, asset, alt, hotspot, crop },    links[]{ _key, icon, url, label },    "skills": skills[@->show != false]->{ _id, name },    tags,    year,    featured  }
+// Query: *[_type == "project" && show != false] | order(year desc, orderRank asc){    _id,    name,    slug,    summary,    description,    "images": images[]{ _key, asset, alt, hotspot, crop },    links[]{ _key, icon, url, label },    "skills": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList },    tags,    year,    featured  }
 export type PROJECTS_QUERY_RESULT = Array<{
   _id: string;
   name: string | null;
@@ -569,6 +574,11 @@ export type PROJECTS_QUERY_RESULT = Array<{
   skills: Array<{
     _id: string;
     name: string | null;
+    icon: string | null;
+    svg: string | null;
+    color: string | null;
+    inConstellation: boolean | null;
+    inSkillsList: boolean | null;
   }> | null;
   tags: Array<string> | null;
   year: number | null;
@@ -600,10 +610,10 @@ declare global {
     "\n  *[_type == \"siteSettings\"][0]{\n    site{ title, description },\n    home{ description, heroEyebrow, heroTitle, heroLead, aboutGreeting },\n    resume{ description, eyebrow, title, summary, phone, email, \"cv\": cv.asset->url },\n    projects{ description, lead },\n    footer{ friends[]{ _key, name, url, color, \"image\": image{ asset, alt, hotspot, crop } } }\n  }\n": SITE_SETTINGS_QUERY_RESULT;
     "\n  *[_type == \"about\" && show != false] | order(orderRank asc){\n    _id,\n    title,\n    emoji,\n    \"image\": image{ asset, alt, hotspot, crop },\n    caption,\n    text,\n    button{ text, link }\n  }\n": ABOUTS_QUERY_RESULT;
     "\n  *[_type == \"skillCategory\" && show != false] | order(orderRank asc){\n    _id,\n    title,\n    color,\n    \"skills\": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList }\n  }\n": SKILL_CATEGORIES_QUERY_RESULT;
-    "\n  *[_type == \"experience\" && show != false] | order(start asc){\n    _id,\n    title,\n    company,\n    type,\n    career,\n    start,\n    end,\n    \"logo\": logo{ asset, alt, hotspot, crop },\n    link,\n    color,\n    description,\n    tasks[]{\n      _key,\n      title,\n      lines,\n      \"skills\": skills[@->show != false]->{ _id, name }\n    }\n  }\n": EXPERIENCE_QUERY_RESULT;
+    "\n  *[_type == \"experience\" && show != false] | order(start asc){\n    _id,\n    title,\n    company,\n    type,\n    career,\n    start,\n    end,\n    \"logo\": logo{ asset, alt, hotspot, crop },\n    link,\n    color,\n    description,\n    tasks[]{\n      _key,\n      title,\n      lines,\n      \"skills\": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList }\n    }\n  }\n": EXPERIENCE_QUERY_RESULT;
     "\n  *[_type == \"education\" && show != false] | order(start asc){\n    _id,\n    title,\n    institution,\n    start,\n    end,\n    \"logo\": logo{ asset, alt, hotspot, crop },\n    link,\n    color,\n    icon\n  }\n": EDUCATION_QUERY_RESULT;
     "\n  *[_type == \"language\" && show != false] | order(orderRank asc){\n    _id,\n    name,\n    flag,\n    reading,\n    speaking,\n    writing,\n    listening,\n    proficiency\n  }\n": LANGUAGES_QUERY_RESULT;
-    "\n  *[_type == \"project\" && show != false] | order(year desc, orderRank asc){\n    _id,\n    name,\n    slug,\n    summary,\n    description,\n    \"images\": images[]{ _key, asset, alt, hotspot, crop },\n    links[]{ _key, icon, url, label },\n    \"skills\": skills[@->show != false]->{ _id, name },\n    tags,\n    year,\n    featured\n  }\n": PROJECTS_QUERY_RESULT;
+    "\n  *[_type == \"project\" && show != false] | order(year desc, orderRank asc){\n    _id,\n    name,\n    slug,\n    summary,\n    description,\n    \"images\": images[]{ _key, asset, alt, hotspot, crop },\n    links[]{ _key, icon, url, label },\n    \"skills\": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList },\n    tags,\n    year,\n    featured\n  }\n": PROJECTS_QUERY_RESULT;
     "\n  *[_type == \"quote\" && show != false]{ _id, text }\n": QUOTES_QUERY_RESULT;
     "\n  *[_type == \"social\" && show != false] | order(orderRank asc){\n    _id,\n    name,\n    icon,\n    color,\n    url\n  }\n": SOCIALS_QUERY_RESULT;
   }

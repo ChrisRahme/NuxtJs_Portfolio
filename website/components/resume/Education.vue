@@ -34,6 +34,12 @@ const { data: education } = await useSanityQuery<EDUCATION_QUERY_RESULT>(EDUCATI
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
   gap: 1.25rem;
 
+  // Phones: single column. Reverse to newest first (on top); keep desktop order.
+  @media (width < 34rem) {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
   .edu-card {
     display: flex;
     gap: 1rem;

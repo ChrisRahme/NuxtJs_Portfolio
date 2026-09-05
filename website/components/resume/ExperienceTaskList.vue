@@ -9,9 +9,20 @@
         <li v-for="line in lines(task)" :key="line['_key']"><RichText :value="[line]" inline /></li>
       </ul>
 
-      <div v-if="task['skills']?.length" class="task-skills">
-        <span v-for="skill in task['skills']" :key="skill['_id']" class="badge">{{ skill['name'] }}</span>
-      </div>
+      <ul v-if="task['skills']?.length" class="task-skills">
+        <li
+          v-for="skill in task['skills']"
+          :key="skill['_id']"
+          class="skill"
+          :class="{ 'skill-badge': !hasGlyph(skill) }"
+          :style="{ '--brand': skill['color'] || undefined }"
+          :title="skill['name'] || undefined"
+        >
+          <Icon v-if="skill['icon']" :name="skill['icon']" aria-hidden="true" />
+          <span v-else-if="skill['svg']" class="skill-svg" aria-hidden="true" v-html="skill['svg']"></span>
+          <span :class="hasGlyph(skill) ? 'sr-only' : 'badge'">{{ skill['name'] }}</span>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -20,6 +31,7 @@
 import type { EXPERIENCE_QUERY_RESULT } from '~~/sanity.types'
 
 type Task = NonNullable<EXPERIENCE_QUERY_RESULT[number]['tasks']>[number]
+type Skill = NonNullable<Task['skills']>[number]
 
 defineProps<{
   tasks: Task[]
@@ -28,6 +40,11 @@ defineProps<{
 // One rich-text block per bullet point
 function lines(task: Task) {
   return task['lines'] || []
+}
+
+// Skills without an icon or SVG fall back to a name badge
+function hasGlyph(skill: Skill) {
+  return Boolean(skill['icon'] || skill['svg'])
 }
 </script>
 
@@ -67,8 +84,40 @@ function lines(task: Task) {
   .task-skills {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.35rem;
-    margin-top: 0.75rem;
+    align-items: center;
+    gap: 0.4rem 0.65rem;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .skill {
+    display: grid;
+    place-items: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    color: var(--brand, var(--ink-2));
+    font-size: 1.45rem;
+    line-height: 0;
+
+    .skill-svg {
+      display: block;
+      width: 1.35rem;
+      height: 1.35rem;
+
+      :deep(svg) {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &.skill-badge {
+      width: auto;
+      height: auto;
+      font-size: inherit;
+      line-height: inherit;
+    }
   }
 }
 </style>

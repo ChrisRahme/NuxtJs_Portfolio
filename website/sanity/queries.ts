@@ -56,7 +56,7 @@ export const EXPERIENCE_QUERY = defineQuery(`
       _key,
       title,
       lines,
-      "skills": skills[@->show != false]->{ _id, name }
+      "skills": skills[@->show != false]->{ ${SKILL_FIELDS} }
     }
   }
 `)
@@ -97,7 +97,7 @@ export const PROJECTS_QUERY = defineQuery(`
     description,
     "images": images[]{ _key, ${IMAGE_FIELDS} },
     links[]{ _key, icon, url, label },
-    "skills": skills[@->show != false]->{ _id, name },
+    "skills": skills[@->show != false]->{ ${SKILL_FIELDS} },
     tags,
     year,
     featured

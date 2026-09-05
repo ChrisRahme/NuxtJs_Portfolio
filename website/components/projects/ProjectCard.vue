@@ -10,9 +10,20 @@
 
         <p v-if="project['summary']" class="project-summary">{{ project['summary'] }}</p>
 
-        <div v-if="hasSkills" class="project-skills">
-          <span v-for="skill in project['skills']" :key="skill['_id']" class="badge">{{ skill['name'] }}</span>
-        </div>
+        <ul v-if="hasSkills" class="project-skills">
+          <li
+            v-for="skill in project['skills']"
+            :key="skill['_id']"
+            class="skill"
+            :class="{ 'skill-badge': !hasGlyph(skill) }"
+            :style="{ '--brand': skill['color'] || undefined }"
+            :title="skill['name'] || undefined"
+          >
+            <Icon v-if="skill['icon']" :name="skill['icon']" aria-hidden="true" />
+            <span v-else-if="skill['svg']" class="skill-svg" aria-hidden="true" v-html="skill['svg']"></span>
+            <span :class="hasGlyph(skill) ? 'sr-only' : 'badge'">{{ skill['name'] }}</span>
+          </li>
+        </ul>
       </div>
     </div>
   </article>
@@ -36,10 +47,17 @@ const previewImage = computed(function () {
   return (props['project']['images'] || []).find(hasImage) || null
 })
 
+type Skill = NonNullable<PROJECTS_QUERY_RESULT[number]['skills']>[number]
+
 const hasSkills = computed(function () {
   const skills = props['project']['skills']
   return Boolean(skills && skills.length)
 })
+
+// Skills without an icon or SVG fall back to a name badge
+function hasGlyph(skill: Skill) {
+  return Boolean(skill['icon'] || skill['svg'])
+}
 </script>
 
 <style scoped lang="scss">
@@ -90,9 +108,40 @@ const hasSkills = computed(function () {
   .project-skills {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.3rem;
-    margin-top: auto;
-    padding-top: 0.5rem;
+    align-items: center;
+    gap: 0.4rem 0.6rem;
+    margin: auto 0 0;
+    padding: 0.5rem 0 0;
+    list-style: none;
+  }
+
+  .skill {
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--brand, var(--ink-2));
+    font-size: 1.4rem;
+    line-height: 0;
+
+    .skill-svg {
+      display: block;
+      width: 1.3rem;
+      height: 1.3rem;
+
+      :deep(svg) {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &.skill-badge {
+      width: auto;
+      height: auto;
+      font-size: inherit;
+      line-height: inherit;
+    }
   }
 
   :deep(.project-image img) {

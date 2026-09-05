@@ -114,11 +114,13 @@ const links = [
     }
   }
 
-  @media (width < 400px) {
+  @media (width < 480px) {
     .brand .wordmark {
       display: none;
     }
+  }
 
+  @media (width < 400px) {
     .links a {
       padding: 0.4rem 0.55rem;
       font-size: 0.85rem;

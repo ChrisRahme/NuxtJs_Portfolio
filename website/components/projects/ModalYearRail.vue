@@ -132,13 +132,15 @@ onMounted(revealCurrent)
   color: var(--star);
 }
 
+/* The scroll box clips at its padding edge, so the padding is wide enough for the lit star's glow and the negative
+   margins cancel it out: the stars stay where a plain list would put them */
 .rail-years {
   display: flex;
   align-items: flex-end;
   gap: 0.75rem;
   max-width: 100%;
-  margin: -0.5rem 0 -0.25rem;
-  padding: 0.75rem 0.75rem 0.25rem;
+  margin: -1.25rem -0.5rem -0.25rem;
+  padding: 1.5rem 1.25rem 0.25rem;
   list-style: none;
   overflow-x: auto;
   scrollbar-width: none;
@@ -219,6 +221,13 @@ onMounted(revealCurrent)
 
 .rail-year.current .rail-label {
   color: var(--star);
+}
+
+/* No hover on phones and tablets, so the caption row would only add space */
+@media (width < 64rem) {
+  .rail-caption {
+    display: none;
+  }
 }
 
 @media (width < 40rem) {

@@ -222,16 +222,18 @@ function handleKeydown(event) {
   }
 }
 
+// The lock goes on <html>: its stylesheet overflow-x is clip, so the viewport does not take the body's overflow.
+// The body keeps the width it had with a scrollbar, so nothing shifts while the modal is open.
 function lockScroll() {
   const gap = window.innerWidth - document.documentElement.clientWidth
-  document.body.style.overflow = 'hidden'
+  document.documentElement.style.overflow = 'hidden'
   if (gap > 0) {
     document.body.style.paddingRight = `${gap}px`
   }
 }
 
 function unlockScroll() {
-  document.body.style.overflow = ''
+  document.documentElement.style.overflow = ''
   document.body.style.paddingRight = ''
 }
 
@@ -313,33 +315,32 @@ onBeforeUnmount(function () {
   backdrop-filter: blur(8px);
 }
 
+/* Phones and tablets: a full-screen viewer; the stage hugs the image, the footer stays put, only the paper scrolls */
 .modal-panel {
   position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-height: calc(100vh - 1rem);
-  max-height: calc(100dvh - 1rem);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  border-radius: var(--r-card) var(--r-card) 0 0;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  border-radius: 0;
   background: var(--paper);
   color: var(--ink);
-  box-shadow: 0 -20px 60px -20px rgb(0, 0, 0, 0.6);
   outline: none;
 }
 
 .modal-close {
-  position: sticky;
+  position: absolute;
   top: 0.75rem;
+  right: 0.75rem;
   z-index: 20;
-  align-self: flex-end;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 2.5rem;
   height: 2.5rem;
-  margin: 0.75rem 0.75rem -3.25rem 0;
+  margin: 0;
   border: 1px solid var(--sky-line);
   border-radius: 50%;
   background: rgb(10, 14, 42, 0.6);
@@ -367,8 +368,6 @@ onBeforeUnmount(function () {
   display: flex;
   flex: none;
   flex-direction: column;
-  height: clamp(16rem, 48vh, 28rem);
-  height: clamp(16rem, 48dvh, 28rem);
   min-height: 0;
   color: var(--star);
   background:
@@ -378,12 +377,16 @@ onBeforeUnmount(function () {
 
 .modal-paper {
   display: flex;
+  flex: 1;
   flex-direction: column;
   min-height: 0;
 }
 
 .modal-scroll {
+  flex: 1;
   min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 /* Desktop: a wide viewer, stage on the left and paper on the right */
@@ -398,17 +401,13 @@ onBeforeUnmount(function () {
     grid-template-columns: minmax(0, 1fr) clamp(20rem, 36%, 26rem);
     width: min(78rem, 100%);
     height: min(46rem, 100%);
-    max-height: none;
-    overflow: hidden;
     border-radius: var(--r-card);
     box-shadow: 0 40px 80px -30px rgb(0, 0, 0, 0.65);
   }
 
   .modal-close {
-    position: absolute;
     top: 1rem;
     right: 1rem;
-    margin: 0;
     border-color: var(--line);
     background: var(--paper);
     color: var(--ink-2);
@@ -425,24 +424,13 @@ onBeforeUnmount(function () {
     }
   }
 
-  .modal-stage {
-    height: auto;
-    min-height: 0;
-  }
-
   .modal-paper {
-    min-height: 0;
     border-left: 1px solid var(--line);
   }
 
-  .modal-scroll {
-    flex: 1;
-    overflow-y: auto;
-
-    /* Keep the eyebrow and title clear of the close button */
-    :deep(.modal-header) {
-      padding-right: 2.5rem;
-    }
+  /* Keep the eyebrow and title clear of the close button */
+  .modal-scroll :deep(.modal-header) {
+    padding-right: 2.5rem;
   }
 }
 

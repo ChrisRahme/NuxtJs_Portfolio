@@ -1,16 +1,19 @@
 <template>
   <div class="stage-media">
-    <NuxtImg
-      v-if="current"
-      :key="current['_key']"
-      provider="sanity"
-      :src="imageRef(current)"
-      :alt="current['alt'] || alt"
-      class="stage-img"
-      :class="{ 'is-loaded': state['loaded'] }"
-      decoding="async"
-      @load="state['loaded'] = true"
-    />
+    <div class="stage-frame" :style="frameStyle">
+      <NuxtImg
+        v-if="current"
+        :key="current['_key']"
+        provider="sanity"
+        :src="imageRef(current)"
+        :alt="current['alt'] || alt"
+        densities="x1"
+        class="stage-img"
+        :class="{ 'is-loaded': state['loaded'] }"
+        decoding="async"
+        @load="state['loaded'] = true"
+      />
+    </div>
 
     <template v-if="images.length > 1">
       <button type="button" class="image-nav image-nav-left" title="Previous image" aria-label="Previous image" @click.stop="previousImage">
@@ -61,6 +64,13 @@ const current = computed(function () {
   return props['images'][state['imageIndex']] || null
 })
 
+// Sanity asset refs carry the pixel size (image-<id>-<width>x<height>-<format>), so the frame has its shape before the file
+// loads and never grows past the image itself
+const frameStyle = computed(function () {
+  const match = /-(\d+)x(\d+)-/.exec(current.value ? imageRef(current.value) : '')
+  return match ? { aspectRatio: `${match[1]} / ${match[2]}`, maxWidth: `${match[1]}px` } : undefined
+})
+
 // Methods
 function nextImage() {
   if (!props['images'].length) {
@@ -102,10 +112,34 @@ defineExpose({ nextImage, previousImage })
   position: relative;
   display: flex;
   flex: 1;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.6rem;
   min-height: 0;
-  padding: clamp(1rem, 3vw, 2rem) clamp(1rem, 3vw, 2rem) 0.5rem;
+  padding: clamp(1rem, 3vw, 2rem) clamp(1rem, 3vw, 2rem) 0.75rem;
+}
+
+/* The frame gives up height to the dots below it, so they sit right under the image */
+.stage-frame {
+  display: flex;
+  flex: 0 1 auto;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 0;
+}
+
+/* Phones and tablets: the frame takes the image's own height, capped so the text keeps room */
+@media (width < 64rem) {
+  .stage-media {
+    flex: none;
+  }
+
+  .stage-frame {
+    max-height: calc(50vh - 6rem);
+    max-height: calc(50dvh - 6rem);
+  }
 }
 
 .stage-img {
@@ -174,15 +208,12 @@ defineExpose({ nextImage, previousImage })
 }
 
 .image-dots {
-  position: absolute;
-  bottom: 1rem;
-  left: 50%;
   display: flex;
+  flex: none;
   gap: 0.5rem;
   padding: 0.4rem 0.6rem;
   border-radius: var(--r-pill);
   background: rgb(10, 14, 42, 0.6);
-  transform: translateX(-50%);
 }
 
 .image-dot {

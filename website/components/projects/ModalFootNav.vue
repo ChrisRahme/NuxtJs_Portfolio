@@ -55,10 +55,8 @@ function pick(project: Project | null) {
 
 <style scoped lang="scss">
 .modal-foot {
-  position: sticky;
-  bottom: 0;
-  z-index: 10;
   display: grid;
+  flex: none;
   grid-template-columns: 1fr 1fr;
   border-top: 1px solid var(--line);
   background: var(--paper);
@@ -130,14 +128,6 @@ function pick(project: Project | null) {
 
   &:focus-visible {
     outline-offset: -4px;
-  }
-}
-
-/* Desktop: the footer sits below the scrolling paper column instead of sticking to the sheet bottom */
-@media (width >= 64rem) {
-  .modal-foot {
-    position: static;
-    flex: none;
   }
 }
 
