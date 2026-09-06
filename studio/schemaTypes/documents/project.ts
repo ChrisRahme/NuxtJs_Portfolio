@@ -62,7 +62,7 @@ export const project = defineType({
     defineField({
       name: 'description',
       title: 'Description',
-      description: 'First paragraph is the story; the paragraphs after it are shown as smaller notes.',
+      description: 'Shown as paragraphs under the project title.',
       group: 'content',
       type: 'internationalizedArrayRichText',
     }),

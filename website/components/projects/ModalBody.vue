@@ -6,9 +6,8 @@
       <h2 :id="titleId" class="modal-title">{{ project['name'] }}</h2>
     </header>
 
-    <div v-if="story" class="modal-story">
-      <p><RichText :value="[story]" inline /></p>
-      <p v-for="note in notes" :key="note['_key']" class="modal-note"><RichText :value="[note]" inline /></p>
+    <div v-if="paragraphs.length" class="modal-story">
+      <p v-for="block in paragraphs" :key="block['_key']"><RichText :value="[block]" inline /></p>
     </div>
 
     <section v-if="hasSkills" class="modal-section">
@@ -61,13 +60,9 @@ const props = defineProps<{
 
 const { t } = useTranslation()
 
-// First paragraph is the story; the paragraphs after it are smaller notes
-const story = computed(function () {
-  return (props['project']['description'] || [])[0] || null
-})
-
-const notes = computed(function () {
-  return (props['project']['description'] || []).slice(1)
+// Every description block renders as a normal paragraph
+const paragraphs = computed(function () {
+  return props['project']['description'] || []
 })
 
 type Skill = NonNullable<PROJECTS_QUERY_RESULT[number]['skills']>[number]
@@ -151,13 +146,6 @@ const published = computed(function () {
     margin: 0;
     line-height: 1.65;
     color: var(--ink);
-  }
-
-  .modal-note {
-    padding-left: 0.9rem;
-    border-left: 2px solid var(--green);
-    font-size: 0.9375rem;
-    color: var(--ink-2);
   }
 }
 
