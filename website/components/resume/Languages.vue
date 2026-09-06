@@ -1,9 +1,14 @@
 <template>
   <div class="languages noselect">
     <template v-for="language in state['languages']" :key="language['_id']">
-      <div class="wheel" :title="`${language['name']}: ${language['proficiency']} proficiency`">
+      <div class="wheel" :title="t('language.proficiency', { name: language['name'] || '', level: language['proficiency'] || '' })">
         <template v-for="skill in SKILLS" :key="skill">
-          <div class="progress-circle" :class="skill" :style="{ '--value': level(language, skill) }" :title="`${skill}: ${language[skill] || 0}%`"></div>
+          <div
+            class="progress-circle"
+            :class="skill"
+            :style="{ '--value': level(language, skill) }"
+            :title="t('language.skillPercent', { skill: t(`language.${skill}`), value: language[skill] || 0 })"
+          ></div>
         </template>
 
         <div class="flag">
@@ -21,7 +26,9 @@ type Language = LANGUAGES_QUERY_RESULT[number]
 
 const SKILLS = ['reading', 'speaking', 'writing', 'listening'] as const
 
-const { data: languages } = await useSanityQuery<LANGUAGES_QUERY_RESULT>(LANGUAGES_QUERY)
+const { t } = useTranslation()
+
+const { data: languages } = await useContentQuery<LANGUAGES_QUERY_RESULT>(LANGUAGES_QUERY)
 
 // State
 const state = reactive<{ mounted: boolean; unmount: boolean; languages: Language[] }>({

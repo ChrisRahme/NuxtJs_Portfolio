@@ -7,7 +7,7 @@
         type="button"
         class="btn-ghost btn-icon"
         :disabled="state['selectedIndex'] <= 0"
-        aria-label="Previous role"
+        :aria-label="t('resume.previousRole')"
         @click="selectItem(state['selectedIndex'] - 1)"
       >
         <Icon name="ph:caret-left" />
@@ -22,7 +22,7 @@
         type="button"
         class="btn-ghost btn-icon"
         :disabled="state['selectedIndex'] >= state['timeline'].length - 1"
-        aria-label="Next role"
+        :aria-label="t('resume.nextRole')"
         @click="selectItem(state['selectedIndex'] + 1)"
       >
         <Icon name="ph:caret-right" />
@@ -42,10 +42,12 @@ import ExperienceDates from './ExperienceDates.vue'
 import ExperienceTrack from './ExperienceTrack.vue'
 import { slugify } from '~/utils/text'
 
+const { t } = useTranslation()
+
 type Role = EXPERIENCE_QUERY_RESULT[number]
 
 // Oldest first, as ordered by the query
-const { data } = await useSanityQuery<EXPERIENCE_QUERY_RESULT>(EXPERIENCE_QUERY)
+const { data } = await useContentQuery<EXPERIENCE_QUERY_RESULT>(EXPERIENCE_QUERY)
 const experience: Role[] = data.value || []
 
 const today = useTodayMonth()

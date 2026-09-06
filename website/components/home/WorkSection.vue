@@ -2,7 +2,7 @@
   <section v-if="rows.length" id="work">
     <div class="wrap">
       <div class="section-head reveal">
-        <h2>Featured projects</h2>
+        <h2>{{ t('home.workTitle') }}</h2>
       </div>
 
       <div class="work-rows">
@@ -11,7 +11,7 @@
             <NuxtLink
               :to="{ path: '/projects', query: { project: project['slug']?.['current'] || '' } }"
               class="project-link"
-              :aria-label="`${project['name']}: open on the projects page`"
+              :aria-label="t('home.openOnProjects', { name: project['name'] })"
             >
               <ProjectCard :project="project" :mirror="row['mirror']" />
             </NuxtLink>
@@ -21,7 +21,7 @@
 
       <div class="grid-foot reveal">
         <NuxtLink to="/projects" class="btn-ghost">
-          <span>All {{ allProjects.length }} projects</span>
+          <span>{{ t('home.allProjects', { count: allProjects.length }) }}</span>
           <Icon name="mdi:arrow-right" aria-hidden="true" />
         </NuxtLink>
       </div>
@@ -33,12 +33,14 @@
 import type { PROJECTS_QUERY_RESULT } from '~~/sanity.types'
 import ProjectCard from '~/components/projects/ProjectCard.vue'
 
+const { t } = useTranslation()
+
 type Project = PROJECTS_QUERY_RESULT[number]
 
 const FEATURED_COUNT = 4
 
 // The query returns the projects newest first
-const { data: projects } = await useSanityQuery<PROJECTS_QUERY_RESULT>(PROJECTS_QUERY)
+const { data: projects } = await useContentQuery<PROJECTS_QUERY_RESULT>(PROJECTS_QUERY)
 const allProjects = projects.value || []
 
 const featured = allProjects

@@ -1,5 +1,5 @@
 <template>
-  <nav class="rail" aria-label="Projects by year">
+  <nav class="rail" :aria-label="t('projects.byYear')">
     <p class="rail-caption" aria-hidden="true">{{ caption }}</p>
 
     <ol ref="yearsRef" class="rail-years">
@@ -42,6 +42,8 @@ const props = defineProps({
 
 // Emits
 const emit = defineEmits(['select'])
+
+const { t } = useTranslation()
 
 const yearsRef = ref(null)
 

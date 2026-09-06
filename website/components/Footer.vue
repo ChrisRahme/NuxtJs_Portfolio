@@ -3,11 +3,11 @@
     <div class="wrap footer-inner">
       <div class="footer-brand">
         <NuxtLink to="/" class="footer-name">Chris Rahmé</NuxtLink>
-        <p v-if="lastUpdated" class="footer-meta">Last update {{ lastUpdated }}</p>
+        <p v-if="lastUpdated" class="footer-meta">{{ t('footer.lastUpdate', { date: lastUpdated }) }}</p>
       </div>
 
       <div class="footer-group">
-        <p class="eyebrow">Find me</p>
+        <p class="eyebrow">{{ t('footer.findMe') }}</p>
         <ul>
           <li v-for="social in socialsShown" :key="social['_id']" :style="{ '--color': social['color'] || undefined }">
             <a
@@ -24,7 +24,7 @@
       </div>
 
       <div class="footer-group">
-        <p class="eyebrow">My friends</p>
+        <p class="eyebrow">{{ t('footer.myFriends') }}</p>
         <ul>
           <li v-for="friend in friends" :key="friend['_key']" :style="{ '--color': friend['color'] || undefined, '--image': friendImage(friend['image']) }">
             <a
@@ -47,10 +47,12 @@
 import type { SOCIALS_QUERY_RESULT } from '~~/sanity.types'
 
 // Resolved during setup so the server and the client render the same footer.
+const { t } = useTranslation()
+
 const config = useRuntimeConfig()
 const lastUpdated = config['public']['lastCommit']
 
-const { data: socials } = await useSanityQuery<SOCIALS_QUERY_RESULT>(SOCIALS_QUERY)
+const { data: socials } = await useContentQuery<SOCIALS_QUERY_RESULT>(SOCIALS_QUERY)
 const { settings, query } = useSiteSettings()
 await query
 

@@ -35,9 +35,13 @@ export type Quote = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  text?: string;
+  text?: InternationalizedArrayString;
   show?: boolean;
 };
+
+export type InternationalizedArrayString = Array<{
+  _key: string;
+} & InternationalizedArrayStringValue>;
 
 export type SkillReference = {
   _ref: string;
@@ -53,10 +57,10 @@ export type Project = {
   _updatedAt: string;
   _rev: string;
   orderRank?: string;
-  name?: string;
+  name?: InternationalizedArrayString;
   slug?: Slug;
-  summary?: string;
-  description?: RichText;
+  summary?: InternationalizedArrayString;
+  description?: InternationalizedArrayRichText;
   images?: Array<{
     _key: string;
   } & Figure>;
@@ -76,24 +80,9 @@ export type Project = {
   show?: boolean;
 };
 
-export type RichText = Array<{
-  children?: Array<{
-    marks?: Array<string>;
-    text?: string;
-    _type: "span";
-    _key: string;
-  }>;
-  style?: "normal";
-  listItem?: never;
-  markDefs?: Array<{
-    href?: string;
-    _type: "link";
-    _key: string;
-  }>;
-  level?: number;
-  _type: "block";
+export type InternationalizedArrayRichText = Array<{
   _key: string;
-}>;
+} & InternationalizedArrayRichTextValue>;
 
 export type Slug = {
   _type: "slug";
@@ -123,7 +112,7 @@ export type SkillCategory = {
   _updatedAt: string;
   _rev: string;
   orderRank?: string;
-  title?: string;
+  title?: InternationalizedArrayString;
   color?: string;
   skills?: Array<{
     _key: string;
@@ -138,7 +127,7 @@ export type Language = {
   _updatedAt: string;
   _rev: string;
   orderRank?: string;
-  name?: string;
+  name?: InternationalizedArrayString;
   flag?: string;
   proficiency?: "Native" | "Full professional" | "Professional working" | "Limited working" | "Elementary";
   reading?: number;
@@ -154,7 +143,7 @@ export type Education = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
+  title?: InternationalizedArrayString;
   institution?: string;
   start?: number;
   end?: number;
@@ -187,7 +176,7 @@ export type Experience = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
+  title?: InternationalizedArrayString;
   company?: string;
   type?: "Full-time" | "Part-time" | "Internship" | "Freelance" | "Contract";
   career?: boolean;
@@ -196,10 +185,10 @@ export type Experience = {
   logo?: Figure;
   link?: string;
   color?: string;
-  description?: string;
+  description?: InternationalizedArrayText;
   tasks?: Array<{
-    title?: string;
-    lines?: RichText;
+    title?: InternationalizedArrayString;
+    lines?: InternationalizedArrayRichText;
     skills?: Array<{
       _key: string;
     } & SkillReference>;
@@ -209,6 +198,10 @@ export type Experience = {
   show?: boolean;
 };
 
+export type InternationalizedArrayText = Array<{
+  _key: string;
+} & InternationalizedArrayTextValue>;
+
 export type About = {
   _id: string;
   _type: "about";
@@ -216,13 +209,13 @@ export type About = {
   _updatedAt: string;
   _rev: string;
   orderRank?: string;
-  title?: string;
+  title?: InternationalizedArrayString;
   emoji?: string;
-  text?: RichText;
+  text?: InternationalizedArrayRichText;
   image?: Figure;
-  caption?: string;
+  caption?: InternationalizedArrayString;
   button?: {
-    text?: string;
+    text?: InternationalizedArrayString;
     link?: string;
   };
   show?: boolean;
@@ -243,20 +236,20 @@ export type SiteSettings = {
   _rev: string;
   site?: {
     title?: string;
-    description?: string;
+    description?: InternationalizedArrayText;
   };
   home?: {
-    description?: string;
-    heroEyebrow?: string;
+    description?: InternationalizedArrayText;
+    heroEyebrow?: InternationalizedArrayString;
     heroTitle?: string;
-    heroLead?: string;
-    aboutGreeting?: string;
+    heroLead?: InternationalizedArrayString;
+    aboutGreeting?: InternationalizedArrayString;
   };
   resume?: {
-    description?: string;
-    eyebrow?: string;
+    description?: InternationalizedArrayText;
+    eyebrow?: InternationalizedArrayString;
     title?: string;
-    summary?: RichText;
+    summary?: InternationalizedArrayRichText;
     phone?: string;
     email?: string;
     cv?: {
@@ -266,8 +259,8 @@ export type SiteSettings = {
     };
   };
   projects?: {
-    description?: string;
-    lead?: string;
+    description?: InternationalizedArrayText;
+    lead?: InternationalizedArrayString;
   };
   footer?: {
     friends?: Array<{
@@ -280,6 +273,25 @@ export type SiteSettings = {
     }>;
   };
 };
+
+export type RichText = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  }>;
+  style?: "normal";
+  listItem?: never;
+  markDefs?: Array<{
+    href?: string;
+    _type: "link";
+    _key: string;
+  }>;
+  level?: number;
+  _type: "block";
+  _key: string;
+}>;
 
 export type SanityImageCrop = {
   _type: "sanity.imageCrop";
@@ -295,6 +307,24 @@ export type SanityImageHotspot = {
   y?: number;
   height?: number;
   width?: number;
+};
+
+export type InternationalizedArrayRichTextValue = {
+  _type: "internationalizedArrayRichTextValue";
+  value?: RichText;
+  language?: string;
+};
+
+export type InternationalizedArrayTextValue = {
+  _type: "internationalizedArrayTextValue";
+  value?: string;
+  language?: string;
+};
+
+export type InternationalizedArrayStringValue = {
+  _type: "internationalizedArrayStringValue";
+  value?: string;
+  language?: string;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -394,11 +424,11 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = Social | Quote | SkillReference | Project | RichText | Slug | Skill | SkillCategory | Language | Education | SanityImageAssetReference | Figure | Experience | About | SanityFileAssetReference | SiteSettings | SanityImageCrop | SanityImageHotspot | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = Social | Quote | InternationalizedArrayString | SkillReference | Project | InternationalizedArrayRichText | Slug | Skill | SkillCategory | Language | Education | SanityImageAssetReference | Figure | Experience | InternationalizedArrayText | About | SanityFileAssetReference | SiteSettings | RichText | SanityImageCrop | SanityImageHotspot | InternationalizedArrayRichTextValue | InternationalizedArrayTextValue | InternationalizedArrayStringValue | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 
 // Source: ../website/sanity/queries.ts
 // Variable: SITE_SETTINGS_QUERY
-// Query: *[_type == "siteSettings"][0]{    site{ title, description },    home{ description, heroEyebrow, heroTitle, heroLead, aboutGreeting },    resume{ description, eyebrow, title, summary, phone, email, "cv": cv.asset->url },    projects{ description, lead },    footer{ friends[]{ _key, name, url, color, "image": image{ asset, alt, hotspot, crop } } }  }
+// Query: *[_type == "siteSettings"][0]{    site{      title,      "description": coalesce(description[language == $lang][0].value, description[language == "en"][0].value)    },    home{      "description": coalesce(description[language == $lang][0].value, description[language == "en"][0].value),      "heroEyebrow": coalesce(heroEyebrow[language == $lang][0].value, heroEyebrow[language == "en"][0].value),      heroTitle,      "heroLead": coalesce(heroLead[language == $lang][0].value, heroLead[language == "en"][0].value),      "aboutGreeting": coalesce(aboutGreeting[language == $lang][0].value, aboutGreeting[language == "en"][0].value)    },    resume{      "description": coalesce(description[language == $lang][0].value, description[language == "en"][0].value),      "eyebrow": coalesce(eyebrow[language == $lang][0].value, eyebrow[language == "en"][0].value),      title,      "summary": coalesce(summary[language == $lang][0].value, summary[language == "en"][0].value),      phone,      email,      "cv": cv.asset->url    },    projects{      "description": coalesce(description[language == $lang][0].value, description[language == "en"][0].value),      "lead": coalesce(lead[language == $lang][0].value, lead[language == "en"][0].value)    },    footer{ friends[]{ _key, name, url, color, "image": image{ asset, alt, hotspot, crop } } }  }
 export type SITE_SETTINGS_QUERY_RESULT = {
   site: {
     title: string | null;
@@ -442,7 +472,7 @@ export type SITE_SETTINGS_QUERY_RESULT = {
 
 // Source: ../website/sanity/queries.ts
 // Variable: ABOUTS_QUERY
-// Query: *[_type == "about" && show != false] | order(orderRank asc){    _id,    title,    emoji,    "image": image{ asset, alt, hotspot, crop },    caption,    text,    button{ text, link }  }
+// Query: *[_type == "about" && show != false] | order(orderRank asc){    _id,    "title": coalesce(title[language == $lang][0].value, title[language == "en"][0].value),    emoji,    "image": image{ asset, alt, hotspot, crop },    "caption": coalesce(caption[language == $lang][0].value, caption[language == "en"][0].value),    "text": coalesce(text[language == $lang][0].value, text[language == "en"][0].value),    button{      "text": coalesce(text[language == $lang][0].value, text[language == "en"][0].value),      link    }  }
 export type ABOUTS_QUERY_RESULT = Array<{
   _id: string;
   title: string | null;
@@ -463,7 +493,7 @@ export type ABOUTS_QUERY_RESULT = Array<{
 
 // Source: ../website/sanity/queries.ts
 // Variable: SKILL_CATEGORIES_QUERY
-// Query: *[_type == "skillCategory" && show != false] | order(orderRank asc){    _id,    title,    color,    "skills": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList }  }
+// Query: *[_type == "skillCategory" && show != false] | order(orderRank asc){    _id,    "title": coalesce(title[language == $lang][0].value, title[language == "en"][0].value),    color,    "skills": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList }  }
 export type SKILL_CATEGORIES_QUERY_RESULT = Array<{
   _id: string;
   title: string | null;
@@ -481,7 +511,7 @@ export type SKILL_CATEGORIES_QUERY_RESULT = Array<{
 
 // Source: ../website/sanity/queries.ts
 // Variable: EXPERIENCE_QUERY
-// Query: *[_type == "experience" && show != false] | order(start asc){    _id,    title,    company,    type,    career,    start,    end,    "logo": logo{ asset, alt, hotspot, crop },    link,    color,    description,    tasks[]{      _key,      title,      lines,      "skills": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList }    }  }
+// Query: *[_type == "experience" && show != false] | order(start asc){    _id,    "title": coalesce(title[language == $lang][0].value, title[language == "en"][0].value),    company,    type,    career,    start,    end,    "logo": logo{ asset, alt, hotspot, crop },    link,    color,    "description": coalesce(description[language == $lang][0].value, description[language == "en"][0].value),    tasks[]{      _key,      "title": coalesce(title[language == $lang][0].value, title[language == "en"][0].value),      "lines": coalesce(lines[language == $lang][0].value, lines[language == "en"][0].value),      "skills": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList }    }  }
 export type EXPERIENCE_QUERY_RESULT = Array<{
   _id: string;
   title: string | null;
@@ -517,7 +547,7 @@ export type EXPERIENCE_QUERY_RESULT = Array<{
 
 // Source: ../website/sanity/queries.ts
 // Variable: EDUCATION_QUERY
-// Query: *[_type == "education" && show != false] | order(start asc){    _id,    title,    institution,    start,    end,    "logo": logo{ asset, alt, hotspot, crop },    link,    color,    icon  }
+// Query: *[_type == "education" && show != false] | order(start asc){    _id,    "title": coalesce(title[language == $lang][0].value, title[language == "en"][0].value),    institution,    start,    end,    "logo": logo{ asset, alt, hotspot, crop },    link,    color,    icon  }
 export type EDUCATION_QUERY_RESULT = Array<{
   _id: string;
   title: string | null;
@@ -537,7 +567,7 @@ export type EDUCATION_QUERY_RESULT = Array<{
 
 // Source: ../website/sanity/queries.ts
 // Variable: LANGUAGES_QUERY
-// Query: *[_type == "language" && show != false] | order(orderRank asc){    _id,    name,    flag,    reading,    speaking,    writing,    listening,    proficiency  }
+// Query: *[_type == "language" && show != false] | order(orderRank asc){    _id,    "name": coalesce(name[language == $lang][0].value, name[language == "en"][0].value),    flag,    reading,    speaking,    writing,    listening,    proficiency  }
 export type LANGUAGES_QUERY_RESULT = Array<{
   _id: string;
   name: string | null;
@@ -551,7 +581,7 @@ export type LANGUAGES_QUERY_RESULT = Array<{
 
 // Source: ../website/sanity/queries.ts
 // Variable: PROJECTS_QUERY
-// Query: *[_type == "project" && show != false] | order(year desc, orderRank asc){    _id,    name,    slug,    summary,    description,    "images": images[]{ _key, asset, alt, hotspot, crop },    links[]{ _key, icon, url, label },    "skills": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList },    tags,    year,    featured  }
+// Query: *[_type == "project" && show != false] | order(year desc, orderRank asc){    _id,    "name": coalesce(name[language == $lang][0].value, name[language == "en"][0].value),    slug,    "summary": coalesce(summary[language == $lang][0].value, summary[language == "en"][0].value),    "description": coalesce(description[language == $lang][0].value, description[language == "en"][0].value),    "images": images[]{ _key, asset, alt, hotspot, crop },    links[]{ _key, icon, url, label },    "skills": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList },    tags,    year,    featured  }
 export type PROJECTS_QUERY_RESULT = Array<{
   _id: string;
   name: string | null;
@@ -587,7 +617,7 @@ export type PROJECTS_QUERY_RESULT = Array<{
 
 // Source: ../website/sanity/queries.ts
 // Variable: QUOTES_QUERY
-// Query: *[_type == "quote" && show != false]{ _id, text }
+// Query: *[_type == "quote" && show != false]{    _id,    "text": coalesce(text[language == $lang][0].value, text[language == "en"][0].value)  }
 export type QUOTES_QUERY_RESULT = Array<{
   _id: string;
   text: string | null;
@@ -607,14 +637,14 @@ export type SOCIALS_QUERY_RESULT = Array<{
 // Query TypeMap
 declare global {
   interface SanityQueries {
-    "\n  *[_type == \"siteSettings\"][0]{\n    site{ title, description },\n    home{ description, heroEyebrow, heroTitle, heroLead, aboutGreeting },\n    resume{ description, eyebrow, title, summary, phone, email, \"cv\": cv.asset->url },\n    projects{ description, lead },\n    footer{ friends[]{ _key, name, url, color, \"image\": image{ asset, alt, hotspot, crop } } }\n  }\n": SITE_SETTINGS_QUERY_RESULT;
-    "\n  *[_type == \"about\" && show != false] | order(orderRank asc){\n    _id,\n    title,\n    emoji,\n    \"image\": image{ asset, alt, hotspot, crop },\n    caption,\n    text,\n    button{ text, link }\n  }\n": ABOUTS_QUERY_RESULT;
-    "\n  *[_type == \"skillCategory\" && show != false] | order(orderRank asc){\n    _id,\n    title,\n    color,\n    \"skills\": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList }\n  }\n": SKILL_CATEGORIES_QUERY_RESULT;
-    "\n  *[_type == \"experience\" && show != false] | order(start asc){\n    _id,\n    title,\n    company,\n    type,\n    career,\n    start,\n    end,\n    \"logo\": logo{ asset, alt, hotspot, crop },\n    link,\n    color,\n    description,\n    tasks[]{\n      _key,\n      title,\n      lines,\n      \"skills\": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList }\n    }\n  }\n": EXPERIENCE_QUERY_RESULT;
-    "\n  *[_type == \"education\" && show != false] | order(start asc){\n    _id,\n    title,\n    institution,\n    start,\n    end,\n    \"logo\": logo{ asset, alt, hotspot, crop },\n    link,\n    color,\n    icon\n  }\n": EDUCATION_QUERY_RESULT;
-    "\n  *[_type == \"language\" && show != false] | order(orderRank asc){\n    _id,\n    name,\n    flag,\n    reading,\n    speaking,\n    writing,\n    listening,\n    proficiency\n  }\n": LANGUAGES_QUERY_RESULT;
-    "\n  *[_type == \"project\" && show != false] | order(year desc, orderRank asc){\n    _id,\n    name,\n    slug,\n    summary,\n    description,\n    \"images\": images[]{ _key, asset, alt, hotspot, crop },\n    links[]{ _key, icon, url, label },\n    \"skills\": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList },\n    tags,\n    year,\n    featured\n  }\n": PROJECTS_QUERY_RESULT;
-    "\n  *[_type == \"quote\" && show != false]{ _id, text }\n": QUOTES_QUERY_RESULT;
+    "\n  *[_type == \"siteSettings\"][0]{\n    site{\n      title,\n      \"description\": coalesce(description[language == $lang][0].value, description[language == \"en\"][0].value)\n    },\n    home{\n      \"description\": coalesce(description[language == $lang][0].value, description[language == \"en\"][0].value),\n      \"heroEyebrow\": coalesce(heroEyebrow[language == $lang][0].value, heroEyebrow[language == \"en\"][0].value),\n      heroTitle,\n      \"heroLead\": coalesce(heroLead[language == $lang][0].value, heroLead[language == \"en\"][0].value),\n      \"aboutGreeting\": coalesce(aboutGreeting[language == $lang][0].value, aboutGreeting[language == \"en\"][0].value)\n    },\n    resume{\n      \"description\": coalesce(description[language == $lang][0].value, description[language == \"en\"][0].value),\n      \"eyebrow\": coalesce(eyebrow[language == $lang][0].value, eyebrow[language == \"en\"][0].value),\n      title,\n      \"summary\": coalesce(summary[language == $lang][0].value, summary[language == \"en\"][0].value),\n      phone,\n      email,\n      \"cv\": cv.asset->url\n    },\n    projects{\n      \"description\": coalesce(description[language == $lang][0].value, description[language == \"en\"][0].value),\n      \"lead\": coalesce(lead[language == $lang][0].value, lead[language == \"en\"][0].value)\n    },\n    footer{ friends[]{ _key, name, url, color, \"image\": image{ asset, alt, hotspot, crop } } }\n  }\n": SITE_SETTINGS_QUERY_RESULT;
+    "\n  *[_type == \"about\" && show != false] | order(orderRank asc){\n    _id,\n    \"title\": coalesce(title[language == $lang][0].value, title[language == \"en\"][0].value),\n    emoji,\n    \"image\": image{ asset, alt, hotspot, crop },\n    \"caption\": coalesce(caption[language == $lang][0].value, caption[language == \"en\"][0].value),\n    \"text\": coalesce(text[language == $lang][0].value, text[language == \"en\"][0].value),\n    button{\n      \"text\": coalesce(text[language == $lang][0].value, text[language == \"en\"][0].value),\n      link\n    }\n  }\n": ABOUTS_QUERY_RESULT;
+    "\n  *[_type == \"skillCategory\" && show != false] | order(orderRank asc){\n    _id,\n    \"title\": coalesce(title[language == $lang][0].value, title[language == \"en\"][0].value),\n    color,\n    \"skills\": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList }\n  }\n": SKILL_CATEGORIES_QUERY_RESULT;
+    "\n  *[_type == \"experience\" && show != false] | order(start asc){\n    _id,\n    \"title\": coalesce(title[language == $lang][0].value, title[language == \"en\"][0].value),\n    company,\n    type,\n    career,\n    start,\n    end,\n    \"logo\": logo{ asset, alt, hotspot, crop },\n    link,\n    color,\n    \"description\": coalesce(description[language == $lang][0].value, description[language == \"en\"][0].value),\n    tasks[]{\n      _key,\n      \"title\": coalesce(title[language == $lang][0].value, title[language == \"en\"][0].value),\n      \"lines\": coalesce(lines[language == $lang][0].value, lines[language == \"en\"][0].value),\n      \"skills\": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList }\n    }\n  }\n": EXPERIENCE_QUERY_RESULT;
+    "\n  *[_type == \"education\" && show != false] | order(start asc){\n    _id,\n    \"title\": coalesce(title[language == $lang][0].value, title[language == \"en\"][0].value),\n    institution,\n    start,\n    end,\n    \"logo\": logo{ asset, alt, hotspot, crop },\n    link,\n    color,\n    icon\n  }\n": EDUCATION_QUERY_RESULT;
+    "\n  *[_type == \"language\" && show != false] | order(orderRank asc){\n    _id,\n    \"name\": coalesce(name[language == $lang][0].value, name[language == \"en\"][0].value),\n    flag,\n    reading,\n    speaking,\n    writing,\n    listening,\n    proficiency\n  }\n": LANGUAGES_QUERY_RESULT;
+    "\n  *[_type == \"project\" && show != false] | order(year desc, orderRank asc){\n    _id,\n    \"name\": coalesce(name[language == $lang][0].value, name[language == \"en\"][0].value),\n    slug,\n    \"summary\": coalesce(summary[language == $lang][0].value, summary[language == \"en\"][0].value),\n    \"description\": coalesce(description[language == $lang][0].value, description[language == \"en\"][0].value),\n    \"images\": images[]{ _key, asset, alt, hotspot, crop },\n    links[]{ _key, icon, url, label },\n    \"skills\": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList },\n    tags,\n    year,\n    featured\n  }\n": PROJECTS_QUERY_RESULT;
+    "\n  *[_type == \"quote\" && show != false]{\n    _id,\n    \"text\": coalesce(text[language == $lang][0].value, text[language == \"en\"][0].value)\n  }\n": QUOTES_QUERY_RESULT;
     "\n  *[_type == \"social\" && show != false] | order(orderRank asc){\n    _id,\n    name,\n    icon,\n    color,\n    url\n  }\n": SOCIALS_QUERY_RESULT;
   }
 }

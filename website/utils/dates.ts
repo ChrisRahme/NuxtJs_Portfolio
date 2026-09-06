@@ -1,6 +1,20 @@
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+import { DEFAULT_LOCALE, type Locale } from '~/i18n/config'
 
-// Sanity dates are 'YYYY-MM-DD'; only the year and month matter here. 'YYYY-MM' is accepted too.
+const MONTHS: Record<Locale, string[]> = {
+  en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  fr: ['Janv.', 'Févr.', 'Mars', 'Avr.', 'Mai', 'Juin', 'Juill.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+}
+
+const YEAR_WORD: Record<Locale, { one: string; many: string }> = {
+  en: { one: 'year', many: 'years' },
+  fr: { one: 'an', many: 'ans' },
+}
+
+const PRESENT: Record<Locale, string> = {
+  en: 'Present',
+  fr: 'Présent',
+}
+
 type MonthValue = string | null | undefined
 
 function parts(value: string) {
@@ -29,13 +43,13 @@ export function yearOf(value: MonthValue): number | null {
 }
 
 // 'Jun 2019'; an empty value gives the label for an ongoing role
-export function formatMonth(value: MonthValue, presentLabel = 'Present') {
+export function formatMonth(value: MonthValue, locale: Locale = DEFAULT_LOCALE, presentLabel?: string) {
   if (!value) {
-    return presentLabel
+    return presentLabel ?? PRESENT[locale]
   }
 
   const { year, month } = parts(String(value))
-  return `${MONTHS[month - 1]} ${year}`
+  return `${MONTHS[locale][month - 1]} ${year}`
 }
 
 // Whole years elapsed between two months; an empty `end` means the current month
@@ -44,7 +58,8 @@ export function yearsBetween(start: MonthValue, end: MonthValue = null) {
   return Math.max(0, Math.floor(months / 12))
 }
 
-// '7 years', '1 year'
-export function formatYears(count: number) {
-  return `${count} ${count === 1 ? 'year' : 'years'}`
+// '7 years' / '7 ans', '1 year' / '1 an'
+export function formatYears(count: number, locale: Locale = DEFAULT_LOCALE) {
+  const word = YEAR_WORD[locale]
+  return `${count} ${count === 1 ? word.one : word.many}`
 }

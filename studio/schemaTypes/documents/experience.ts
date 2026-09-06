@@ -1,6 +1,6 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
 import { CaseIcon } from '@sanity/icons/Case'
-import { COLOR_DESCRIPTION, EXPERIENCE_TYPES, HEX_COLOR, plural, showField } from '../constants'
+import { COLOR_DESCRIPTION, EXPERIENCE_TYPES, HEX_COLOR, localizedPreview, plural, showField } from '../constants'
 
 // A role at a company. Sorted by start date on the site; the day of the month is ignored.
 export const experience = defineType({
@@ -19,7 +19,7 @@ export const experience = defineType({
     defineField({
       name: 'title',
       title: 'Job title',
-      type: 'string',
+      type: 'internationalizedArrayString',
       validation: function (rule) {
         return rule.required()
       },
@@ -80,8 +80,7 @@ export const experience = defineType({
       name: 'description',
       title: 'Description',
       description: 'One or two sentences about the role.',
-      type: 'text',
-      rows: 3,
+      type: 'internationalizedArrayText',
     }),
     defineField({
       name: 'tasks',
@@ -96,13 +95,13 @@ export const experience = defineType({
               name: 'title',
               title: 'Title',
               description: 'Project or topic name. Optional.',
-              type: 'string',
+              type: 'internationalizedArrayString',
             }),
             defineField({
               name: 'lines',
               title: 'Lines',
               description: 'One paragraph per bullet point.',
-              type: 'richText',
+              type: 'internationalizedArrayRichText',
               validation: function (rule) {
                 return rule.required()
               },
@@ -117,13 +116,9 @@ export const experience = defineType({
           preview: {
             select: { title: 'title', lines: 'lines', skills: 'skills' },
             prepare: function ({ title, lines, skills }) {
-              const first = Array.isArray(lines) ? lines[0] : null
-              const text = first?.children?.map(function (child: { text?: string }) {
-                return child.text || ''
-              })
               const count = Array.isArray(skills) ? skills.length : 0
               return {
-                title: title || (text ? text.join('') : 'Task'),
+                title: localizedPreview(title) || localizedPreview(lines) || 'Task',
                 subtitle: count ? plural(count, 'skill') : undefined,
               }
             },
@@ -138,7 +133,7 @@ export const experience = defineType({
     prepare: function ({ title, company, start, end, media, show }) {
       const from = start ? String(start).slice(0, 7) : '?'
       const to = end ? String(end).slice(0, 7) : 'present'
-      return { title, subtitle: [show === false ? 'Hidden' : null, `${company} · ${from} – ${to}`].filter(Boolean).join(' · '), media }
+      return { title: localizedPreview(title), subtitle: [show === false ? 'Hidden' : null, `${company} · ${from} – ${to}`].filter(Boolean).join(' · '), media }
     },
   },
 })

@@ -2,20 +2,20 @@
   <section v-if="current" id="career">
     <div class="wrap">
       <div class="section-head reveal">
-        <h2>Career</h2>
+        <h2>{{ t('home.careerTitle') }}</h2>
         <p class="eyebrow">{{ experienceLabel }}</p>
       </div>
 
       <div class="now reveal">
         <p class="now-line">
-          <span class="eyebrow now-label">Now</span>
+          <span class="eyebrow now-label">{{ t('home.now') }}</span>
           <span class="now-title">{{ current['title'] }}</span>
-          <span class="now-company">at {{ current['company'] }}</span>
-          <span class="now-since">since {{ formatMonth(current['start']) }}</span>
+          <span class="now-company">{{ t('home.at', { company: current['company'] }) }}</span>
+          <span class="now-since">{{ t('home.since', { date: formatMonth(current['start']) }) }}</span>
         </p>
 
         <NuxtLink to="/resume" class="btn-ghost">
-          <span>Full resume</span>
+          <span>{{ t('home.fullResume') }}</span>
           <Icon name="mdi:arrow-right" aria-hidden="true" />
         </NuxtLink>
       </div>
@@ -28,9 +28,12 @@
 <script setup lang="ts">
 import type { EXPERIENCE_QUERY_RESULT } from '~~/sanity.types'
 import ExperienceTrack from '~/components/resume/ExperienceTrack.vue'
-import { formatMonth, formatYears, yearsBetween } from '~/utils/dates'
+import { yearsBetween } from '~/utils/dates'
 
-const { data: experience } = await useSanityQuery<EXPERIENCE_QUERY_RESULT>(EXPERIENCE_QUERY)
+const { t } = useTranslation()
+const { formatMonth, formatYears } = useDates()
+
+const { data: experience } = await useContentQuery<EXPERIENCE_QUERY_RESULT>(EXPERIENCE_QUERY)
 
 const today = useTodayMonth()
 
@@ -46,7 +49,7 @@ const current = computed(function () {
 
 const experienceLabel = computed(function () {
   const first = careerRoles.value[0]
-  return first ? `${formatYears(yearsBetween(first['start'], today.value))} of experience` : ''
+  return first ? t('home.experienceSummary', { years: formatYears(yearsBetween(first['start'], today.value)) }) : ''
 })
 </script>
 

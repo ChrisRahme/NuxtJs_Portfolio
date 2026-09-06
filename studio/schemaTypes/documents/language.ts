@@ -1,7 +1,7 @@
 import { defineField, defineType } from 'sanity'
 import { TranslateIcon } from '@sanity/icons/Translate'
 import { orderRankField, orderRankOrdering } from '../objects/orderRank'
-import { ICON_DESCRIPTION, LANGUAGE_PROFICIENCIES, showField } from '../constants'
+import { ICON_DESCRIPTION, LANGUAGE_PROFICIENCIES, localizedPreview, showField } from '../constants'
 
 function percent(name: string, title: string) {
   return defineField({
@@ -26,7 +26,7 @@ export const language = defineType({
     defineField({
       name: 'name',
       title: 'Language',
-      type: 'string',
+      type: 'internationalizedArrayString',
       validation: function (rule) {
         return rule.required()
       },
@@ -55,7 +55,7 @@ export const language = defineType({
   preview: {
     select: { title: 'name', proficiency: 'proficiency', show: 'show' },
     prepare: function ({ title, proficiency, show }) {
-      return { title, subtitle: [show === false ? 'Hidden' : null, proficiency].filter(Boolean).join(' · ') }
+      return { title: localizedPreview(title), subtitle: [show === false ? 'Hidden' : null, proficiency].filter(Boolean).join(' · ') }
     },
   },
 })

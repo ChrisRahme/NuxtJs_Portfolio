@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import type { SKILL_CATEGORIES_QUERY_RESULT } from '~~/sanity.types'
 
-const { data: categories } = await useSanityQuery<SKILL_CATEGORIES_QUERY_RESULT>(SKILL_CATEGORIES_QUERY)
+const { data: categories } = await useContentQuery<SKILL_CATEGORIES_QUERY_RESULT>(SKILL_CATEGORIES_QUERY)
 
 const groups = (categories.value || []).map(function (group) {
   return {

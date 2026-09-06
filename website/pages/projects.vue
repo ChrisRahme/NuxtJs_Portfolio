@@ -1,8 +1,8 @@
 <template>
   <div id="projects">
-    <PageBand :eyebrow="`${state['projects'].length} projects · ${yearSpan}`" title="Projects" :lead="lead">
+    <PageBand :eyebrow="t('projects.eyebrow', { count: state['projects'].length, span: yearSpan })" :title="t('projects.title')" :lead="lead">
       <template #aside>
-        <div class="view-switch" role="radiogroup" aria-label="Projects to show">
+        <div class="view-switch" role="radiogroup" :aria-label="t('projects.toShow')">
           <button
             v-for="option in VIEWS"
             :key="option['id']"
@@ -14,7 +14,7 @@
             @click="setView(option['id'])"
           >
             <Icon v-if="option['icon']" :name="option['icon']" aria-hidden="true" />
-            <span>{{ option['label'] }}</span>
+            <span>{{ t(option['labelKey']) }}</span>
             <span class="count">{{ option['id'] === 'featured' ? featuredProjects.length : state['projects'].length }}</span>
           </button>
         </div>
@@ -24,7 +24,7 @@
     <div class="wrap page-body">
       <ul class="project-grid" :class="`view-${state['view']}`">
         <li v-for="(project, index) in visibleProjects" :key="project['_id']" class="reveal" :class="{ lead: isLead(index) }">
-          <button type="button" class="project-button" :aria-label="`Open details for ${project['name']}`" @click="openModal(project)">
+          <button type="button" class="project-button" :aria-label="t('projects.openDetails', { name: project['name'] })" @click="openModal(project)">
             <ProjectCard :project="project" />
           </button>
         </li>
@@ -32,11 +32,11 @@
 
       <div class="grid-foot">
         <button v-if="state['view'] === 'featured'" type="button" class="btn-ghost" @click="setView('all')">
-          <span>Show all {{ state['projects'].length }} projects</span>
+          <span>{{ t('projects.showAll', { count: state['projects'].length }) }}</span>
           <Icon name="mdi:arrow-right" aria-hidden="true" />
         </button>
 
-        <p v-else class="footnote eyebrow">…and many unfinished ones.</p>
+        <p v-else class="footnote eyebrow">{{ t('projects.unfinished') }}</p>
       </div>
     </div>
 
@@ -59,16 +59,18 @@ import ProjectModal from '~/components/projects/ProjectModal.vue'
 type Project = PROJECTS_QUERY_RESULT[number]
 type View = 'featured' | 'all'
 
+const { t } = useTranslation()
+
 const { settings, query, siteTitle, siteDescription } = useSiteSettings()
 await query
 
 // Newest first, as ordered by the query
-const { data: projects } = await useSanityQuery<PROJECTS_QUERY_RESULT>(PROJECTS_QUERY)
+const { data: projects } = await useContentQuery<PROJECTS_QUERY_RESULT>(PROJECTS_QUERY)
 const sortedProjects: Project[] = projects.value || []
 
 usePageMeta({
   title: computed(function () {
-    return `Projects | ${siteTitle.value}`
+    return `${t('projects.title')} | ${siteTitle.value}`
   }),
   description: computed(function () {
     return settings.value?.projects?.description || siteDescription.value
@@ -87,9 +89,9 @@ const years = sortedProjects
   .filter(Boolean)
 const yearSpan = years.length ? `${Math.min(...years)} — ${Math.max(...years)}` : ''
 
-const VIEWS: { id: View; label: string; icon: string | null }[] = [
-  { id: 'featured', label: 'Featured', icon: 'mdi:star-four-points' },
-  { id: 'all', label: 'All', icon: null },
+const VIEWS: { id: View; labelKey: string; icon: string | null }[] = [
+  { id: 'featured', labelKey: 'projects.featured', icon: 'mdi:star-four-points' },
+  { id: 'all', labelKey: 'projects.all', icon: null },
 ]
 
 const state = reactive<{ projects: Project[]; view: View; selectedProject: Project | null; modalVisible: boolean }>({

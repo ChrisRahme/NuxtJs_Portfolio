@@ -11,7 +11,7 @@
         <h3 class="edu-title">{{ item['title'] }}</h3>
 
         <p class="edu-institution">
-          <a v-if="item['link']" :href="item['link']" target="_blank" rel="noopener noreferrer" title="Visit website">
+          <a v-if="item['link']" :href="item['link']" target="_blank" rel="noopener noreferrer" :title="t('common.visitWebsite')">
             <span>{{ item['institution'] }}</span>
             <Icon name="solar:link-bold" />
           </a>
@@ -25,7 +25,9 @@
 <script setup lang="ts">
 import type { EDUCATION_QUERY_RESULT } from '~~/sanity.types'
 
-const { data: education } = await useSanityQuery<EDUCATION_QUERY_RESULT>(EDUCATION_QUERY)
+const { t } = useTranslation()
+
+const { data: education } = await useContentQuery<EDUCATION_QUERY_RESULT>(EDUCATION_QUERY)
 </script>
 
 <style lang="scss" scoped>

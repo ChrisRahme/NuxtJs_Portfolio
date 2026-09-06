@@ -10,7 +10,13 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup lang="ts">
+const { locale } = useLocale()
+
+useHead({
+  htmlAttrs: { lang: locale },
+})
+</script>
 
 <style scoped lang="scss">
 #default-layout {

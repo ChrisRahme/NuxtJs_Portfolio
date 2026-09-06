@@ -3,7 +3,7 @@
     class="track"
     :class="{ interactive }"
     :role="interactive ? 'tablist' : undefined"
-    :aria-label="interactive ? 'Roles by year' : undefined"
+    :aria-label="interactive ? t('resume.rolesByYear') : undefined"
     @keydown="onKeydown"
   >
     <span class="axis" aria-hidden="true"></span>
@@ -41,8 +41,11 @@
 </template>
 
 <script setup>
-import { currentMonth, formatMonth, monthIndex, yearOf } from '~/utils/dates'
+import { currentMonth, monthIndex, yearOf } from '~/utils/dates'
 import { slugify } from '~/utils/text'
+
+const { t } = useTranslation()
+const { formatMonth } = useDates()
 
 const NuxtLink = resolveComponent('NuxtLink')
 

@@ -55,7 +55,7 @@
 import type { SKILL_CATEGORIES_QUERY_RESULT } from '~~/sanity.types'
 import { hashString, mulberry32 } from '~/utils/random'
 
-const { data: categories } = await useSanityQuery<SKILL_CATEGORIES_QUERY_RESULT>(SKILL_CATEGORIES_QUERY)
+const { data: categories } = await useContentQuery<SKILL_CATEGORIES_QUERY_RESULT>(SKILL_CATEGORIES_QUERY)
 
 // The category order in the Studio is the cluster order below
 const skills = categories.value || []

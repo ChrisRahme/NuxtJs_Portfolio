@@ -6,8 +6,7 @@
     "build": "sanity build",
     "deploy": "sanity deploy",
     "typegen": "sanity schemas extract --force && sanity typegen generate",
-    "lint": "eslint . --fix && prettier --write .",
-    "import:legacy": "sanity exec scripts/import-legacy-data.ts --with-user-token"
+    "lint": "eslint . --fix && prettier --write ."
   },
   "dependencies": {
     "@sanity/icons": "^5.2.1",
@@ -17,6 +16,7 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "sanity": "^6.12.0",
+    "sanity-plugin-internationalized-array": "^5.2.4",
     "styled-components": "^6.1.18"
   },
   "devDependencies": {

@@ -15,13 +15,12 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-05-18',
   ssr: true,
 
-  // Server-rendered (Nitro picks the Netlify preset on Netlify).
-  // Every page is cached at the edge and refreshed in the background; Studio edits go live in a few minutes.
+  // Server-rendered (Nitro picks the Netlify preset on Netlify). Pages render per request so the
+  // server can read the `chrisrahme_locale` cookie and render the right language. The HTML must not
+  // sit in a shared/edge cache, which caches one version per URL and cannot vary by cookie; `private`
+  // keeps it per-viewer. Studio edits therefore go live immediately. Images/assets keep their own caching.
   routeRules: {
-    '/**': { swr: 300 },
-    // ipx 4 streams its response and Nitro's cache handler cannot capture it (request hangs or 500).
-    // ipx sets its own Cache-Control, so skip the SWR cache for it.
-    '/_ipx/**': { cache: false },
+    '/**': { headers: { 'cache-control': 'private, no-cache' } },
   },
 
   // Debug & Development

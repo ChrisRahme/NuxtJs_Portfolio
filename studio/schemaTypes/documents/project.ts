@@ -1,7 +1,7 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
 import { RocketIcon } from '@sanity/icons/Rocket'
 import { orderRankField, orderRankOrdering } from '../objects/orderRank'
-import { ICON_DESCRIPTION, showField } from '../constants'
+import { ICON_DESCRIPTION, localizedPreview, showField } from '../constants'
 
 // A side project. The site sorts by year (newest first), then by the drag order in the Studio.
 export const project = defineType({
@@ -20,7 +20,7 @@ export const project = defineType({
       name: 'name',
       title: 'Name',
       group: 'content',
-      type: 'string',
+      type: 'internationalizedArrayString',
       validation: function (rule) {
         return rule.required()
       },
@@ -28,10 +28,23 @@ export const project = defineType({
     defineField({
       name: 'slug',
       title: 'Slug',
-      description: 'Used in the ?project= link from the home page. Click "Generate" after typing the name.',
+      description: 'Used in the ?project= link from the home page. Generated from the English name; keep it stable so links keep working.',
       group: 'meta',
       type: 'slug',
-      options: { source: 'name' },
+      options: {
+        // Name is localized, so read the English value for the slug source.
+        source: function (doc) {
+          const name = (doc as { name?: unknown }).name
+          if (Array.isArray(name)) {
+            const entry = name.find(function (item: { _key?: string; language?: string }) {
+              return item?._key === 'en' || item?.language === 'en'
+            }) as { value?: string } | undefined
+            return entry?.value || ''
+          }
+
+          return typeof name === 'string' ? name : ''
+        },
+      },
       validation: function (rule) {
         return rule.required()
       },
@@ -41,7 +54,7 @@ export const project = defineType({
       title: 'Summary',
       description: 'One line shown on the card.',
       group: 'content',
-      type: 'string',
+      type: 'internationalizedArrayString',
       validation: function (rule) {
         return rule.required()
       },
@@ -51,7 +64,7 @@ export const project = defineType({
       title: 'Description',
       description: 'First paragraph is the story; the paragraphs after it are shown as smaller notes.',
       group: 'content',
-      type: 'richText',
+      type: 'internationalizedArrayRichText',
     }),
     defineField({
       name: 'images',
@@ -140,7 +153,11 @@ export const project = defineType({
   preview: {
     select: { title: 'name', year: 'year', featured: 'featured', media: 'images.0', show: 'show' },
     prepare: function ({ title, year, featured, media, show }) {
-      return { title, subtitle: [show === false ? 'Hidden' : null, year, featured ? 'Featured' : null].filter(Boolean).join(' · '), media }
+      return {
+        title: localizedPreview(title),
+        subtitle: [show === false ? 'Hidden' : null, year, featured ? 'Featured' : null].filter(Boolean).join(' · '),
+        media,
+      }
     },
   },
 })

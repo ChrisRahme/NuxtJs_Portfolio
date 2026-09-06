@@ -27,6 +27,7 @@ logs/
 !.env.example
 
 # Other
+.archive/
 .claude/
 website/scripts/
 .fallowrc.jsonc

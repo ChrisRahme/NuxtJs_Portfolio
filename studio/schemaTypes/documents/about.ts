@@ -1,7 +1,7 @@
 import { defineField, defineType } from 'sanity'
 import { UserIcon } from '@sanity/icons/User'
 import { orderRankField, orderRankOrdering } from '../objects/orderRank'
-import { showField } from '../constants'
+import { localizedPreview, showField } from '../constants'
 
 // One facet of the "About me" section on the home page (Programmer, Astronomer, ...).
 export const about = defineType({
@@ -16,7 +16,7 @@ export const about = defineType({
       name: 'title',
       title: 'Title',
       description: 'Label of the tab, e.g. "Programmer".',
-      type: 'string',
+      type: 'internationalizedArrayString',
       validation: function (rule) {
         return rule.required()
       },
@@ -34,7 +34,7 @@ export const about = defineType({
       name: 'text',
       title: 'Text',
       description: 'The greeting from Site settings is added before the first paragraph.',
-      type: 'richText',
+      type: 'internationalizedArrayRichText',
       validation: function (rule) {
         return rule.required()
       },
@@ -44,7 +44,7 @@ export const about = defineType({
       name: 'caption',
       title: 'Photo caption',
       description: 'Handwritten line under the photo.',
-      type: 'string',
+      type: 'internationalizedArrayString',
     }),
     defineField({
       name: 'button',
@@ -52,7 +52,7 @@ export const about = defineType({
       description: 'Optional call to action under the text.',
       type: 'object',
       fields: [
-        defineField({ name: 'text', title: 'Text', type: 'string' }),
+        defineField({ name: 'text', title: 'Text', type: 'internationalizedArrayString' }),
         defineField({ name: 'link', title: 'Link', description: 'Site path (e.g. /resume) or full URL.', type: 'string' }),
       ],
     }),
@@ -62,7 +62,7 @@ export const about = defineType({
     select: { title: 'title', emoji: 'emoji', media: 'image', show: 'show' },
     prepare: function ({ title, emoji, media, show }) {
       return {
-        title: [emoji, title].filter(Boolean).join(' '),
+        title: [emoji, localizedPreview(title)].filter(Boolean).join(' '),
         subtitle: show === false ? 'Hidden' : undefined,
         media,
       }

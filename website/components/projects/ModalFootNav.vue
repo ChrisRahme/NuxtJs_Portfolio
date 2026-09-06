@@ -1,5 +1,5 @@
 <template>
-  <nav class="modal-foot" aria-label="Older and newer projects">
+  <nav class="modal-foot" :aria-label="t('projects.olderNewer')">
     <button type="button" class="foot-btn foot-older" :disabled="!older" @click="pick(older)">
       <span class="eyebrow foot-dir">
         <Icon :name="olderSide['icon']" aria-hidden="true" />
@@ -36,13 +36,15 @@ const emit = defineEmits<{
   select: [project: Project]
 }>()
 
+const { t } = useTranslation()
+
 // Navigation wraps around, so at a seam the button reads "Newest"/"Oldest" with a loop icon
 const olderSide = computed(function () {
-  return props['olderWraps'] ? { label: 'Newest', icon: 'mdi:autorenew' } : { label: 'Older', icon: 'mdi:arrow-left' }
+  return props['olderWraps'] ? { label: t('projects.newest'), icon: 'mdi:autorenew' } : { label: t('projects.older'), icon: 'mdi:arrow-left' }
 })
 
 const newerSide = computed(function () {
-  return props['newerWraps'] ? { label: 'Oldest', icon: 'mdi:autorenew' } : { label: 'Newer', icon: 'mdi:arrow-right' }
+  return props['newerWraps'] ? { label: t('projects.oldest'), icon: 'mdi:autorenew' } : { label: t('projects.newer'), icon: 'mdi:arrow-right' }
 })
 
 // Methods

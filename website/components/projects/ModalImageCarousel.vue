@@ -16,11 +16,17 @@
     </div>
 
     <template v-if="images.length > 1">
-      <button type="button" class="image-nav image-nav-left" title="Previous image" aria-label="Previous image" @click.stop="previousImage">
+      <button
+        type="button"
+        class="image-nav image-nav-left"
+        :title="t('projects.previousImage')"
+        :aria-label="t('projects.previousImage')"
+        @click.stop="previousImage"
+      >
         <Icon name="mdi:chevron-left" />
       </button>
 
-      <button type="button" class="image-nav image-nav-right" title="Next image" aria-label="Next image" @click.stop="nextImage">
+      <button type="button" class="image-nav image-nav-right" :title="t('projects.nextImage')" :aria-label="t('projects.nextImage')" @click.stop="nextImage">
         <Icon name="mdi:chevron-right" />
       </button>
 
@@ -31,8 +37,8 @@
           type="button"
           class="image-dot"
           :class="{ active: state['imageIndex'] === index }"
-          :title="`Image ${index + 1} of ${images.length}`"
-          :aria-label="`Show image ${index + 1} of ${images.length}`"
+          :title="t('projects.imageOf', { index: index + 1, total: images.length })"
+          :aria-label="t('projects.showImageOf', { index: index + 1, total: images.length })"
           :aria-current="state['imageIndex'] === index ? 'true' : undefined"
           @click.stop="state['imageIndex'] = index"
         ></button>
@@ -43,6 +49,8 @@
 
 <script setup lang="ts">
 import type { PROJECTS_QUERY_RESULT } from '~~/sanity.types'
+
+const { t } = useTranslation()
 
 type ProjectImage = NonNullable<PROJECTS_QUERY_RESULT[number]['images']>[number]
 

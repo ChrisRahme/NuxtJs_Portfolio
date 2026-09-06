@@ -1,8 +1,8 @@
 <template>
   <p class="eyebrow project-meta">
-    <b v-if="project['featured']" class="featured-mark" title="Featured project">
+    <b v-if="project['featured']" class="featured-mark" :title="t('projects.featuredTitle')">
       <Icon name="mdi:star-four-points" aria-hidden="true" />
-      <span class="sr-only">Featured</span>
+      <span class="sr-only">{{ t('projects.featuredMark') }}</span>
     </b>
     <span>{{ project['year'] }}</span>
     <span v-for="tag in project['tags']" :key="tag">{{ tag }}</span>
@@ -16,6 +16,8 @@ import type { PROJECTS_QUERY_RESULT } from '~~/sanity.types'
 defineProps<{
   project: PROJECTS_QUERY_RESULT[number]
 }>()
+
+const { t } = useTranslation()
 </script>
 
 <style scoped lang="scss">

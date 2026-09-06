@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import { formatMonth } from '~/utils/dates'
+const { formatMonth } = useDates()
 
 defineProps({
   // `start` / `end` as 'YYYY-MM'; `end: null` while the role is ongoing

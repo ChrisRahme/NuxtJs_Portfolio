@@ -11,8 +11,8 @@
         <p v-if="hero?.heroLead" class="lead">{{ hero.heroLead }}</p>
 
         <div class="actions">
-          <NuxtLink to="/projects" class="btn">See projects</NuxtLink>
-          <NuxtLink to="/resume" class="btn-ghost on-sky">Read resume</NuxtLink>
+          <NuxtLink to="/projects" class="btn">{{ t('hero.seeProjects') }}</NuxtLink>
+          <NuxtLink to="/resume" class="btn-ghost on-sky">{{ t('hero.readResume') }}</NuxtLink>
         </div>
       </div>
 
@@ -26,6 +26,8 @@
 <script setup lang="ts">
 import SkillConstellation from '~/components/home/SkillConstellation.vue'
 import QuoteBar from '~/components/home/QuoteBar.vue'
+
+const { t } = useTranslation()
 
 const { settings, query } = useSiteSettings()
 await query

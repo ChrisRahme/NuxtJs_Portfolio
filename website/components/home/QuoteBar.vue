@@ -1,6 +1,6 @@
 <template>
   <p v-if="state['quote']" id="quote" class="wrap">
-    <button type="button" class="quote-button" title="Another one" @click="changeQuote">
+    <button type="button" class="quote-button" :title="t('quote.another')" @click="changeQuote">
       <span class="text">{{ state['quote'] }}</span>
     </button>
   </p>
@@ -9,7 +9,9 @@
 <script setup lang="ts">
 import type { QUOTES_QUERY_RESULT } from '~~/sanity.types'
 
-const { data: quotes } = await useSanityQuery<QUOTES_QUERY_RESULT>(QUOTES_QUERY)
+const { t } = useTranslation()
+
+const { data: quotes } = await useContentQuery<QUOTES_QUERY_RESULT>(QUOTES_QUERY)
 
 const texts = computed(function () {
   return (quotes.value || [])

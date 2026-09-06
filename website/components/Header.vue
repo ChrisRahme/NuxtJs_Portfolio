@@ -1,25 +1,31 @@
 <template>
   <header id="header">
-    <nav class="wrap" aria-label="Main">
+    <nav class="wrap" :aria-label="t('nav.aria')">
       <NuxtLink to="/" class="brand">
         <NuxtImg src="/img/icon.min.svg" alt="" width="34" height="34" />
         <span class="wordmark">Chris Rahmé</span>
       </NuxtLink>
 
-      <ul class="links">
-        <li v-for="link in links" :key="link['to']">
-          <NuxtLink :to="link['to']">{{ link['text'] }}</NuxtLink>
-        </li>
-      </ul>
+      <div class="nav-right">
+        <ul class="links">
+          <li v-for="link in links" :key="link['to']">
+            <NuxtLink :to="link['to']">{{ t(link['key']) }}</NuxtLink>
+          </li>
+        </ul>
+
+        <LanguageToggle />
+      </div>
     </nav>
   </header>
 </template>
 
 <script setup>
+const { t } = useTranslation()
+
 const links = [
-  { text: 'Home', to: '/' },
-  { text: 'Resume', to: '/resume' },
-  { text: 'Projects', to: '/projects' },
+  { key: 'nav.home', to: '/' },
+  { key: 'nav.resume', to: '/resume' },
+  { key: 'nav.projects', to: '/projects' },
 ]
 </script>
 
@@ -77,6 +83,12 @@ const links = [
     &:focus-visible {
       outline-color: var(--green-light);
     }
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .links {

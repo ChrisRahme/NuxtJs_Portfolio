@@ -2,10 +2,10 @@
   <section id="about">
     <div class="wrap about-inner">
       <div class="section-head reveal">
-        <h2>About me</h2>
+        <h2>{{ t('home.aboutTitle') }}</h2>
       </div>
 
-      <div class="facets reveal" role="tablist" aria-label="Abouts">
+      <div class="facets reveal" role="tablist" :aria-label="t('home.aboutsAria')">
         <button
           v-for="(about, index) in list"
           :key="about['_id']"
@@ -45,7 +45,9 @@
 import type { ABOUTS_QUERY_RESULT } from '~~/sanity.types'
 import AboutBody from './AboutBody.vue'
 
-const { data: abouts } = await useSanityQuery<ABOUTS_QUERY_RESULT>(ABOUTS_QUERY)
+const { t } = useTranslation()
+
+const { data: abouts } = await useContentQuery<ABOUTS_QUERY_RESULT>(ABOUTS_QUERY)
 const { settings, query } = useSiteSettings()
 await query
 

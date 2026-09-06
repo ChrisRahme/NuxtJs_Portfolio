@@ -17,31 +17,31 @@
 
       <div class="wrap error-inner">
         <div class="error-copy">
-          <p class="eyebrow error-eyebrow">Error {{ statusCode }}</p>
+          <p class="eyebrow error-eyebrow">{{ t('error.eyebrow', { code: statusCode }) }}</p>
 
           <h1 class="error-title">{{ title }}</h1>
 
           <p class="lead">{{ lead }}</p>
 
           <p v-if="is404 && requestedPath" class="requested">
-            <span class="requested-label">Requested</span>
+            <span class="requested-label">{{ t('error.requested') }}</span>
             <code class="requested-path">{{ requestedPath }}</code>
           </p>
 
           <div class="actions">
             <template v-if="is404">
-              <button type="button" class="btn" @click="go('/')">Go home</button>
-              <button type="button" class="btn-ghost on-sky" @click="go('/projects')">See projects</button>
+              <button type="button" class="btn" @click="go('/')">{{ t('error.goHome') }}</button>
+              <button type="button" class="btn-ghost on-sky" @click="go('/projects')">{{ t('error.seeProjects') }}</button>
             </template>
 
             <template v-else>
-              <button type="button" class="btn" @click="retry">Try again</button>
-              <button type="button" class="btn-ghost on-sky" @click="go('/')">Go home</button>
+              <button type="button" class="btn" @click="retry">{{ t('error.tryAgain') }}</button>
+              <button type="button" class="btn-ghost on-sky" @click="go('/')">{{ t('error.goHome') }}</button>
             </template>
           </div>
         </div>
 
-        <figure class="error-sky" :aria-label="`The number ${statusCode} drawn as a constellation`">
+        <figure class="error-sky" :aria-label="t('error.constellation', { code: statusCode })">
           <svg class="code-sky" :viewBox="figure.viewBox" aria-hidden="true">
             <line
               v-for="(line, index) in figure.lines"
@@ -85,13 +85,22 @@ const props = defineProps({
   },
 })
 
+const { t } = useTranslation()
+
 const statusCode = Number(props['error']?.['statusCode']) || 500
 const is404 = statusCode === 404
 
-const title = is404 ? 'Nothing charted here.' : 'Something broke along the way.'
-const lead = is404
-  ? 'This address does not point to a page. It may have moved, or it may never have existed.'
-  : props['error']?.['message'] || 'The page failed to load. Reloading usually fixes it.'
+const title = computed(function () {
+  return is404 ? t('error.title404') : t('error.title500')
+})
+
+const lead = computed(function () {
+  if (is404) {
+    return t('error.lead404')
+  }
+
+  return props['error']?.['message'] || t('error.lead500')
+})
 
 useHead({
   title: `${statusCode} · Chris Rahmé`,

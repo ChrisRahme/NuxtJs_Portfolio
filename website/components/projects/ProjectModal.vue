@@ -3,7 +3,7 @@
     <Transition name="modal">
       <div v-if="props['visible']" ref="overlayRef" class="modal-overlay" @click.self="close" @touchstart.passive="handleTouchStart" @touchend="handleTouchEnd">
         <div ref="panelRef" class="modal-panel" role="dialog" aria-modal="true" :aria-labelledby="titleId" tabindex="-1">
-          <button type="button" class="modal-close" title="Close" aria-label="Close project details" @click="close">
+          <button type="button" class="modal-close" :title="t('projects.close')" :aria-label="t('projects.closeDetails')" @click="close">
             <Icon name="mdi:close" />
           </button>
 
@@ -54,6 +54,8 @@ const props = defineProps({
 
 // Emits
 const emit = defineEmits(['close', 'select'])
+
+const { t } = useTranslation()
 
 const overlayRef = ref(null)
 const panelRef = ref(null)

@@ -1,10 +1,9 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
 import { TagIcon } from '@sanity/icons/Tag'
 import { orderRankField, orderRankOrdering } from '../objects/orderRank'
-import { COLOR_DESCRIPTION, HEX_COLOR, plural, showField } from '../constants'
+import { COLOR_DESCRIPTION, HEX_COLOR, localizedPreview, plural, showField } from '../constants'
 
-// A group of skills (Back-end, Front-end, ...). The order of the categories is the order of the
-// clusters in the home constellation and of the cards in the resume skills list.
+// The order of the categories is the order of the clusters in the home constellation and of the cards in the resume skills list.
 export const skillCategory = defineType({
   name: 'skillCategory',
   title: 'Skill category',
@@ -16,7 +15,7 @@ export const skillCategory = defineType({
     defineField({
       name: 'title',
       title: 'Title',
-      type: 'string',
+      type: 'internationalizedArrayString',
       validation: function (rule) {
         return rule.required()
       },
@@ -46,7 +45,7 @@ export const skillCategory = defineType({
     select: { title: 'title', skills: 'skills', show: 'show' },
     prepare: function ({ title, skills, show }) {
       const count = Array.isArray(skills) ? skills.length : 0
-      return { title, subtitle: [show === false ? 'Hidden' : null, plural(count, 'skill')].filter(Boolean).join(' · ') }
+      return { title: localizedPreview(title), subtitle: [show === false ? 'Hidden' : null, plural(count, 'skill')].filter(Boolean).join(' · ') }
     },
   },
 })

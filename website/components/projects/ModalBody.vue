@@ -12,7 +12,7 @@
     </div>
 
     <section v-if="hasSkills" class="modal-section">
-      <p class="eyebrow modal-label">Built with</p>
+      <p class="eyebrow modal-label">{{ t('projects.builtWith') }}</p>
 
       <ul class="skills">
         <li
@@ -59,6 +59,8 @@ const props = defineProps<{
   titleId?: string
 }>()
 
+const { t } = useTranslation()
+
 // First paragraph is the story; the paragraphs after it are smaller notes
 const story = computed(function () {
   return (props['project']['description'] || [])[0] || null
@@ -81,9 +83,9 @@ function hasGlyph(skill: Skill) {
 }
 
 const LINK_LABELS: Record<string, string> = {
-  'mdi:github': 'Source',
-  'mdi:web': 'Open',
-  'mdi:youtube': 'Video',
+  'mdi:github': 'projects.linkSource',
+  'mdi:web': 'projects.linkOpen',
+  'mdi:youtube': 'projects.linkVideo',
 }
 
 const published = computed(function () {
@@ -99,8 +101,8 @@ const published = computed(function () {
         key: link['_key'],
         icon,
         link: link['url'] || '',
-        label: link['label'] || LINK_LABELS[icon] || 'Open',
-        title: 'Opens in a new tab',
+        label: link['label'] || t(LINK_LABELS[icon] || 'projects.linkOpen'),
+        title: t('projects.linkNewTab'),
       }
     })
 })

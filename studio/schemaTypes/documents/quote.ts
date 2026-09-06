@@ -1,6 +1,6 @@
 import { defineField, defineType } from 'sanity'
 import { BlockquoteIcon } from '@sanity/icons/Blockquote'
-import { showField } from '../constants'
+import { localizedPreview, showField } from '../constants'
 
 // One-liners shown at random under the hero.
 export const quote = defineType({
@@ -12,7 +12,7 @@ export const quote = defineType({
     defineField({
       name: 'text',
       title: 'Text',
-      type: 'string',
+      type: 'internationalizedArrayString',
       validation: function (rule) {
         return rule.required()
       },
@@ -22,7 +22,7 @@ export const quote = defineType({
   preview: {
     select: { title: 'text', show: 'show' },
     prepare: function ({ title, show }) {
-      return { title, subtitle: show === false ? 'Hidden' : undefined }
+      return { title: localizedPreview(title), subtitle: show === false ? 'Hidden' : undefined }
     },
   },
 })

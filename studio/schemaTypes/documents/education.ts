@@ -1,6 +1,6 @@
 import { defineField, defineType } from 'sanity'
 import { BookIcon } from '@sanity/icons/Book'
-import { COLOR_DESCRIPTION, HEX_COLOR, ICON_DESCRIPTION, showField } from '../constants'
+import { COLOR_DESCRIPTION, HEX_COLOR, ICON_DESCRIPTION, localizedPreview, showField } from '../constants'
 
 export const education = defineType({
   name: 'education',
@@ -18,7 +18,7 @@ export const education = defineType({
     defineField({
       name: 'title',
       title: 'Degree',
-      type: 'string',
+      type: 'internationalizedArrayString',
       validation: function (rule) {
         return rule.required()
       },
@@ -69,7 +69,11 @@ export const education = defineType({
   preview: {
     select: { title: 'title', institution: 'institution', start: 'start', end: 'end', media: 'logo', show: 'show' },
     prepare: function ({ title, institution, start, end, media, show }) {
-      return { title, subtitle: [show === false ? 'Hidden' : null, `${institution} · ${start} – ${end}`].filter(Boolean).join(' · '), media }
+      return {
+        title: localizedPreview(title),
+        subtitle: [show === false ? 'Hidden' : null, `${institution} · ${start} – ${end}`].filter(Boolean).join(' · '),
+        media,
+      }
     },
   },
 })

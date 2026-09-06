@@ -23,7 +23,7 @@
       <template #aside>
         <a v-if="resume?.cv" class="btn" :href="resume.cv" target="_blank" rel="noopener noreferrer">
           <Icon name="material-symbols:download-rounded" />
-          <span>Download CV</span>
+          <span>{{ t('resume.downloadCv') }}</span>
         </a>
       </template>
     </PageBand>
@@ -36,27 +36,27 @@
 
         <dl class="facts">
           <div v-if="currentRole" class="fact">
-            <dt>Now</dt>
+            <dt>{{ t('resume.now') }}</dt>
             <dd>
               <span>{{ currentRole['title'] }}</span>
-              <small>{{ currentRole['company'] }} · since {{ formatMonth(currentRole['start']) }}</small>
+              <small>{{ currentRole['company'] }} · {{ t('resume.since', { date: formatMonth(currentRole['start']) }) }}</small>
             </dd>
           </div>
           <div class="fact">
-            <dt>Experience</dt>
+            <dt>{{ t('resume.experience') }}</dt>
             <dd>
-              <span>{{ careerRoles.length }} roles in {{ experienceLabel }}</span>
+              <span>{{ t('resume.rolesIn', { count: careerRoles.length, span: experienceLabel }) }}</span>
             </dd>
           </div>
           <div v-if="latestDegree" class="fact">
-            <dt>Education</dt>
+            <dt>{{ t('resume.education') }}</dt>
             <dd>
               <span>{{ latestDegree['title'] }}</span>
               <small>{{ latestDegree['institution'] }} · {{ latestDegree['end'] }}</small>
             </dd>
           </div>
           <div class="fact">
-            <dt>Languages</dt>
+            <dt>{{ t('resume.languages') }}</dt>
             <dd>
               <span>{{ spokenLanguages }}</span>
             </dd>
@@ -66,8 +66,8 @@
 
       <section id="experience" class="section reveal">
         <div class="section-head">
-          <h2>Experience</h2>
-          <p class="eyebrow">{{ experienceLabel }} full-time</p>
+          <h2>{{ t('resume.experience') }}</h2>
+          <p class="eyebrow">{{ t('resume.fullTime', { span: experienceLabel }) }}</p>
         </div>
 
         <Experience />
@@ -75,7 +75,7 @@
 
       <section id="education" class="section reveal">
         <div class="section-head">
-          <h2>Education</h2>
+          <h2>{{ t('resume.education') }}</h2>
           <p class="eyebrow">{{ educationSpan }}</p>
         </div>
 
@@ -84,7 +84,7 @@
 
       <section id="skills" class="section reveal">
         <div class="section-head">
-          <h2>Skills</h2>
+          <h2>{{ t('resume.skills') }}</h2>
         </div>
 
         <Skills />
@@ -99,13 +99,16 @@ import PageBand from '~/components/PageBand.vue'
 import Experience from '~/components/resume/Experience.vue'
 import Education from '~/components/resume/Education.vue'
 import Skills from '~/components/resume/Skills.vue'
-import { formatMonth, formatYears, yearsBetween } from '~/utils/dates'
+import { yearsBetween } from '~/utils/dates'
+
+const { t } = useTranslation()
+const { formatMonth, formatYears } = useDates()
 
 const { settings, query, siteTitle, siteDescription } = useSiteSettings()
 await query
-const { data: experience } = await useSanityQuery<EXPERIENCE_QUERY_RESULT>(EXPERIENCE_QUERY)
-const { data: education } = await useSanityQuery<EDUCATION_QUERY_RESULT>(EDUCATION_QUERY)
-const { data: languages } = await useSanityQuery<LANGUAGES_QUERY_RESULT>(LANGUAGES_QUERY)
+const { data: experience } = await useContentQuery<EXPERIENCE_QUERY_RESULT>(EXPERIENCE_QUERY)
+const { data: education } = await useContentQuery<EDUCATION_QUERY_RESULT>(EDUCATION_QUERY)
+const { data: languages } = await useContentQuery<LANGUAGES_QUERY_RESULT>(LANGUAGES_QUERY)
 
 const resume = computed(function () {
   return settings.value?.resume
@@ -113,7 +116,7 @@ const resume = computed(function () {
 
 usePageMeta({
   title: computed(function () {
-    return `Resume | ${siteTitle.value}`
+    return `${t('nav.resume')} | ${siteTitle.value}`
   }),
   description: computed(function () {
     return resume.value?.description || siteDescription.value
