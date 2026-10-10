@@ -1,7 +1,7 @@
 <template>
-  <article class="project-card card" :class="{ mirror }">
+  <article class="project-card card" :class="{ mirror }" @pointerenter="onPointerEnter" @pointerleave="hovered = false">
     <div class="project-inner">
-      <ProjectCardImage v-if="previewImage" :image="previewImage" :alt="previewImage['alt'] || project['name'] || ''" />
+      <ProjectCardImage v-if="previewImage" :image="previewImage" :alt="previewImage['alt'] || project['name'] || ''" :play="hovered" />
 
       <div class="project-body">
         <ProjectMeta :project="project" />
@@ -46,6 +46,15 @@ const props = withDefaults(
 const previewImage = computed(function () {
   return (props['project']['images'] || []).find(hasImage) || null
 })
+
+// A mouse over the card plays the preview's clip, if it has one; touch never does
+const hovered = ref(false)
+
+function onPointerEnter(event: PointerEvent) {
+  if (event.pointerType === 'mouse') {
+    hovered.value = true
+  }
+}
 
 type Skill = NonNullable<PROJECTS_QUERY_RESULT[number]['skills']>[number]
 

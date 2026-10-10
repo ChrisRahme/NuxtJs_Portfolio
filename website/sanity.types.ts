@@ -161,6 +161,13 @@ export type SanityImageAssetReference = {
   [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
 };
 
+export type SanityFileAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+};
+
 export type Figure = {
   _type: "figure";
   asset?: SanityImageAssetReference;
@@ -168,6 +175,11 @@ export type Figure = {
   hotspot?: SanityImageHotspot;
   crop?: SanityImageCrop;
   alt?: string;
+  video?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
 };
 
 export type Experience = {
@@ -219,13 +231,6 @@ export type About = {
     link?: string;
   };
   show?: boolean;
-};
-
-export type SanityFileAssetReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
 };
 
 export type SiteSettings = {
@@ -424,7 +429,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = Social | Quote | InternationalizedArrayString | SkillReference | Project | InternationalizedArrayRichText | Slug | Skill | SkillCategory | Language | Education | SanityImageAssetReference | Figure | Experience | InternationalizedArrayText | About | SanityFileAssetReference | SiteSettings | RichText | SanityImageCrop | SanityImageHotspot | InternationalizedArrayRichTextValue | InternationalizedArrayTextValue | InternationalizedArrayStringValue | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = Social | Quote | InternationalizedArrayString | SkillReference | Project | InternationalizedArrayRichText | Slug | Skill | SkillCategory | Language | Education | SanityImageAssetReference | SanityFileAssetReference | Figure | Experience | InternationalizedArrayText | About | SiteSettings | RichText | SanityImageCrop | SanityImageHotspot | InternationalizedArrayRichTextValue | InternationalizedArrayTextValue | InternationalizedArrayStringValue | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 
 // Source: ../website/sanity/queries.ts
 // Variable: SITE_SETTINGS_QUERY
@@ -581,7 +586,7 @@ export type LANGUAGES_QUERY_RESULT = Array<{
 
 // Source: ../website/sanity/queries.ts
 // Variable: PROJECTS_QUERY
-// Query: *[_type == "project" && show != false] | order(year desc, orderRank asc){    _id,    "name": coalesce(name[language == $lang][0].value, name[language == "en"][0].value),    slug,    "summary": coalesce(summary[language == $lang][0].value, summary[language == "en"][0].value),    "description": coalesce(description[language == $lang][0].value, description[language == "en"][0].value),    "images": images[]{ _key, asset, alt, hotspot, crop },    links[]{ _key, icon, url, label },    "skills": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList },    tags,    year,    featured  }
+// Query: *[_type == "project" && show != false] | order(year desc, orderRank asc){    _id,    "name": coalesce(name[language == $lang][0].value, name[language == "en"][0].value),    slug,    "summary": coalesce(summary[language == $lang][0].value, summary[language == "en"][0].value),    "description": coalesce(description[language == $lang][0].value, description[language == "en"][0].value),    "images": images[]{ _key, asset, alt, hotspot, crop, "video": video.asset->{ url, mimeType } },    links[]{ _key, icon, url, label },    "skills": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList },    tags,    year,    featured  }
 export type PROJECTS_QUERY_RESULT = Array<{
   _id: string;
   name: string | null;
@@ -594,6 +599,10 @@ export type PROJECTS_QUERY_RESULT = Array<{
     alt: string | null;
     hotspot: SanityImageHotspot | null;
     crop: SanityImageCrop | null;
+    video: {
+      url: string | null;
+      mimeType: string | null;
+    } | null;
   }> | null;
   links: Array<{
     _key: string;
@@ -643,7 +652,7 @@ declare global {
     "\n  *[_type == \"experience\" && show != false] | order(start asc){\n    _id,\n    \"title\": coalesce(title[language == $lang][0].value, title[language == \"en\"][0].value),\n    company,\n    type,\n    career,\n    start,\n    end,\n    \"logo\": logo{ asset, alt, hotspot, crop },\n    link,\n    color,\n    \"description\": coalesce(description[language == $lang][0].value, description[language == \"en\"][0].value),\n    tasks[]{\n      _key,\n      \"title\": coalesce(title[language == $lang][0].value, title[language == \"en\"][0].value),\n      \"lines\": coalesce(lines[language == $lang][0].value, lines[language == \"en\"][0].value),\n      \"skills\": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList }\n    }\n  }\n": EXPERIENCE_QUERY_RESULT;
     "\n  *[_type == \"education\" && show != false] | order(start asc){\n    _id,\n    \"title\": coalesce(title[language == $lang][0].value, title[language == \"en\"][0].value),\n    institution,\n    start,\n    end,\n    \"logo\": logo{ asset, alt, hotspot, crop },\n    link,\n    color,\n    icon\n  }\n": EDUCATION_QUERY_RESULT;
     "\n  *[_type == \"language\" && show != false] | order(orderRank asc){\n    _id,\n    \"name\": coalesce(name[language == $lang][0].value, name[language == \"en\"][0].value),\n    flag,\n    reading,\n    speaking,\n    writing,\n    listening,\n    proficiency\n  }\n": LANGUAGES_QUERY_RESULT;
-    "\n  *[_type == \"project\" && show != false] | order(year desc, orderRank asc){\n    _id,\n    \"name\": coalesce(name[language == $lang][0].value, name[language == \"en\"][0].value),\n    slug,\n    \"summary\": coalesce(summary[language == $lang][0].value, summary[language == \"en\"][0].value),\n    \"description\": coalesce(description[language == $lang][0].value, description[language == \"en\"][0].value),\n    \"images\": images[]{ _key, asset, alt, hotspot, crop },\n    links[]{ _key, icon, url, label },\n    \"skills\": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList },\n    tags,\n    year,\n    featured\n  }\n": PROJECTS_QUERY_RESULT;
+    "\n  *[_type == \"project\" && show != false] | order(year desc, orderRank asc){\n    _id,\n    \"name\": coalesce(name[language == $lang][0].value, name[language == \"en\"][0].value),\n    slug,\n    \"summary\": coalesce(summary[language == $lang][0].value, summary[language == \"en\"][0].value),\n    \"description\": coalesce(description[language == $lang][0].value, description[language == \"en\"][0].value),\n    \"images\": images[]{ _key, asset, alt, hotspot, crop, \"video\": video.asset->{ url, mimeType } },\n    links[]{ _key, icon, url, label },\n    \"skills\": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList },\n    tags,\n    year,\n    featured\n  }\n": PROJECTS_QUERY_RESULT;
     "\n  *[_type == \"quote\" && show != false]{\n    _id,\n    \"text\": coalesce(text[language == $lang][0].value, text[language == \"en\"][0].value)\n  }\n": QUOTES_QUERY_RESULT;
     "\n  *[_type == \"social\" && show != false] | order(orderRank asc){\n    _id,\n    name,\n    icon,\n    color,\n    url\n  }\n": SOCIALS_QUERY_RESULT;
   }

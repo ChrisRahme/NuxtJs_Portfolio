@@ -5,6 +5,6 @@
 </template>
 
 <script setup lang="ts">
-// Remount the page when the language changes.The header, footer, and chrome stay mounted and switch via t().
+// Remount the page when the language changes.
 const { locale } = useLocale()
 </script>

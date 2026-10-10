@@ -123,7 +123,7 @@ export const PROJECTS_QUERY = defineQuery(`
     slug,
     "summary": coalesce(summary[language == $lang][0].value, summary[language == "en"][0].value),
     "description": coalesce(description[language == $lang][0].value, description[language == "en"][0].value),
-    "images": images[]{ _key, ${IMAGE_FIELDS} },
+    "images": images[]{ _key, ${IMAGE_FIELDS}, "video": video.asset->{ url, mimeType } },
     links[]{ _key, icon, url, label },
     "skills": skills[@->show != false]->{ ${SKILL_FIELDS} },
     tags,
