@@ -44,15 +44,29 @@
 </template>
 
 <script setup lang="ts">
-import type { SOCIALS_QUERY_RESULT } from '~~/sanity.types'
+import type { LAST_UPDATE_QUERY_RESULT, SOCIALS_QUERY_RESULT } from '~~/sanity.types'
 
 // Resolved during setup so the server and the client render the same footer.
 const { t } = useTranslation()
 
 const config = useRuntimeConfig()
-const lastUpdated = config['public']['lastCommit']
 
 const { data: socials } = await useContentQuery<SOCIALS_QUERY_RESULT>(SOCIALS_QUERY)
+const { data: contentUpdatedAt } = await useContentQuery<LAST_UPDATE_QUERY_RESULT>(LAST_UPDATE_QUERY)
+
+const beirutDate = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Beirut' })
+const lastUpdated = computed(function () {
+  const times = [config['public']['lastCommit'], contentUpdatedAt.value]
+    .map(function (value) {
+      return value ? new Date(value).getTime() : NaN
+    })
+    .filter(function (time) {
+      return !Number.isNaN(time)
+    })
+
+  return times.length ? beirutDate.format(Math.max(...times)) : ''
+})
+
 const { settings, query } = useSiteSettings()
 await query
 

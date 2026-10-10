@@ -39,7 +39,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       baseUrl: 'https://chrisrahme.dev',
-      lastCommit: execSync('git log -1 --format=%cd --date=short').toString().trim(),
+      lastCommit: execSync('git log -1 --format=%cI').toString().trim(),
     },
   },
 

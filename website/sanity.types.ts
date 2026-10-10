@@ -633,6 +633,11 @@ export type QUOTES_QUERY_RESULT = Array<{
 }>;
 
 // Source: ../website/sanity/queries.ts
+// Variable: LAST_UPDATE_QUERY
+// Query: *[!(_id in path("drafts.**")) && !(_type match "sanity.*")] | order(_updatedAt desc)[0]._updatedAt
+export type LAST_UPDATE_QUERY_RESULT = string | null;
+
+// Source: ../website/sanity/queries.ts
 // Variable: SOCIALS_QUERY
 // Query: *[_type == "social" && show != false] | order(orderRank asc){    _id,    name,    icon,    color,    url  }
 export type SOCIALS_QUERY_RESULT = Array<{
@@ -654,6 +659,7 @@ declare global {
     "\n  *[_type == \"language\" && show != false] | order(orderRank asc){\n    _id,\n    \"name\": coalesce(name[language == $lang][0].value, name[language == \"en\"][0].value),\n    flag,\n    reading,\n    speaking,\n    writing,\n    listening,\n    proficiency\n  }\n": LANGUAGES_QUERY_RESULT;
     "\n  *[_type == \"project\" && show != false] | order(year desc, orderRank asc){\n    _id,\n    \"name\": coalesce(name[language == $lang][0].value, name[language == \"en\"][0].value),\n    slug,\n    \"summary\": coalesce(summary[language == $lang][0].value, summary[language == \"en\"][0].value),\n    \"description\": coalesce(description[language == $lang][0].value, description[language == \"en\"][0].value),\n    \"images\": images[]{ _key, asset, alt, hotspot, crop, \"video\": video.asset->{ url, mimeType } },\n    links[]{ _key, icon, url, label },\n    \"skills\": skills[@->show != false]->{ _id, name, icon, svg, color, inConstellation, inSkillsList },\n    tags,\n    year,\n    featured\n  }\n": PROJECTS_QUERY_RESULT;
     "\n  *[_type == \"quote\" && show != false]{\n    _id,\n    \"text\": coalesce(text[language == $lang][0].value, text[language == \"en\"][0].value)\n  }\n": QUOTES_QUERY_RESULT;
+    "\n  *[!(_id in path(\"drafts.**\")) && !(_type match \"sanity.*\")] | order(_updatedAt desc)[0]._updatedAt\n": LAST_UPDATE_QUERY_RESULT;
     "\n  *[_type == \"social\" && show != false] | order(orderRank asc){\n    _id,\n    name,\n    icon,\n    color,\n    url\n  }\n": SOCIALS_QUERY_RESULT;
   }
 }

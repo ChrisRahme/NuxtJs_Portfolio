@@ -139,6 +139,10 @@ export const QUOTES_QUERY = defineQuery(`
   }
 `)
 
+export const LAST_UPDATE_QUERY = defineQuery(`
+  *[!(_id in path("drafts.**")) && !(_type match "sanity.*")] | order(_updatedAt desc)[0]._updatedAt
+`)
+
 export const SOCIALS_QUERY = defineQuery(`
   *[_type == "social" && show != false] | order(orderRank asc){
     _id,
