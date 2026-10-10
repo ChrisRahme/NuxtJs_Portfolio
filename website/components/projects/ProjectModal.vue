@@ -9,7 +9,7 @@
 
           <template v-if="props['project']">
             <div class="modal-stage">
-              <ModalImageCarousel v-if="images.length" ref="carouselRef" :images="images" :alt="props['project']['name']" />
+              <ModalImageCarousel v-if="images.length" ref="carouselRef" :images="images" :alt="props['project']['name']" :upcoming="upcoming" />
 
               <ModalYearRail v-if="hasSiblings" :projects="props['projects']" :current="props['project']" @select="select" />
             </div>
@@ -102,6 +102,16 @@ const older = computed(function () {
   }
 
   return props['projects'][(index + 1) % count]
+})
+
+const upcoming = computed(function () {
+  return [newer.value, older.value]
+    .map(function (project) {
+      return project?.['images']?.[0]
+    })
+    .filter(function (image) {
+      return Boolean(image)
+    })
 })
 
 const newerWraps = computed(function () {

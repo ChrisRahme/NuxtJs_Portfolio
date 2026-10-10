@@ -1,5 +1,5 @@
 <template>
-  <div class="project-image">
+  <div ref="rootRef" class="project-image">
     <NuxtImg provider="sanity" :src="imageRef(image)" :alt="alt" width="640" height="360" loading="lazy" format="webp" />
 
     <video
@@ -36,6 +36,8 @@ const state = reactive({
   showing: false,
 })
 
+const armed = ref(false)
+const rootRef = ref<HTMLElement | null>(null)
 const videoRef = ref<HTMLVideoElement | null>(null)
 
 const videoUrl = computed(function () {
@@ -43,9 +45,6 @@ const videoUrl = computed(function () {
 })
 
 const preferredMotion = usePreferredReducedMotion()
-
-// The clip loads on the first hover only, so the page does not download every clip up front
-const armed = ref(false)
 
 // Hover plays the clip over the image from the start; leaving pauses it and fades back to the image
 watch(
@@ -73,6 +72,14 @@ watch(
     }
   },
 )
+
+// Lifecycle
+onMounted(function () {
+  const image = rootRef.value?.querySelector('img')
+  if (image) {
+    queueImages([lazyImageTask(image)])
+  }
+})
 </script>
 
 <style scoped lang="scss">

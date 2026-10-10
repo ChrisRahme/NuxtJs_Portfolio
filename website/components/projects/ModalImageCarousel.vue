@@ -32,6 +32,7 @@
         :src="imageRef(current)"
         :alt="current['alt'] || alt"
         densities="x1"
+        fetchpriority="high"
         class="stage-img"
         :class="{ 'is-loaded': state['loaded'] }"
         decoding="async"
@@ -118,8 +119,14 @@ const props = withDefaults(
   defineProps<{
     images: ProjectImage[]
     alt?: string
+    upcoming?: ProjectImage[]
   }>(),
-  { alt: '' },
+  {
+    alt: '',
+    upcoming: function () {
+      return []
+    },
+  },
 )
 
 const state = reactive({
@@ -138,15 +145,35 @@ const videoUrl = computed(function () {
 
 const img = useImage()
 
-const posterUrl = computed(function () {
-  if (!current.value || !hasImage(current.value)) {
-    return undefined
+// The URL a slide shows: its clip's poster, or the image as the stage's <NuxtImg> requests it
+function slideUrl(image: ProjectImage) {
+  if (!hasImage(image)) {
+    return ''
   }
 
+  const modifiers = image['video']?.['url'] ? { format: 'webp' } : {}
   // The provider must be passed here: @nuxt/image resolves it before merging the preset.
   // @ts-expect-error -- @nuxt/image types $img() options with the default provider only
-  return img(imageRef(current.value), { format: 'webp' }, { provider: 'sanity' })
+  return img(imageRef(image), modifiers, { provider: 'sanity' })
+}
+
+const posterUrl = computed(function () {
+  return (current.value && slideUrl(current.value)) || undefined
 })
+
+function queueSlides() {
+  const count = props['images'].length
+  const offsets = count > 2 ? [1, count - 1] : count === 2 ? [1] : []
+  for (let step = 2; step < count - 1; step++) {
+    offsets.push(step)
+  }
+
+  const slides = offsets.map(function (offset) {
+    return props['images'][(state['imageIndex'] + offset) % count] as ProjectImage
+  })
+  const urls = [...slides, ...props['upcoming']].map(slideUrl).filter(Boolean)
+  queueImages(urls.map(urlTask), true)
+}
 
 // Clips never play on their own. Hovering plays them, except with reduced motion, where only the play button does.
 const preferredMotion = usePreferredReducedMotion()
@@ -213,7 +240,10 @@ watch(
 watch(current, function () {
   state['loaded'] = false
   clip.reset()
+  queueSlides()
 })
+
+onMounted(queueSlides)
 
 // Expose
 defineExpose({ nextImage, previousImage })
